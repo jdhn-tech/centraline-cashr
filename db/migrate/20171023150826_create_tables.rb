@@ -1,4 +1,4 @@
-class CreateTableTable < ActiveRecord::Migration[5.1]
+class CreateTables < ActiveRecord::Migration[5.1]
 	def change
 		create_table :tables do |t|
 			t.integer :table_number
@@ -6,6 +6,7 @@ class CreateTableTable < ActiveRecord::Migration[5.1]
 			t.integer :floor_number
 			t.boolean :terrace
 			t.boolean :smoker
+			t.timestamps
 		end
 	end
 end
