@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 20171019151125) do
     t.integer "price"
   end
 
-  create_table "table_tables", force: :cascade do |t|
+  create_table "tables", force: :cascade do |t|
     t.integer "table_number"
     t.integer "table_capacity"
     t.integer "floor_number"
