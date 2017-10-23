@@ -16,7 +16,7 @@
 #
 default: &default
   adapter: postgresql
-  encoding: unicode
+  encoding: UTF8
   database: <%= ENV['CENTRALINE_CASHR_DATABASE'] %>
   username: <%= ENV['CENTRALINE_CASHR_DATABASE_USERNAME'] %>
   password: <%= ENV['CENTRALINE_CASHR_DATABASE_PASSWORD'] %>
