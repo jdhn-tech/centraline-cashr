@@ -50,46 +50,52 @@ a { color: inherit; }
 
 
 .content .image1 { 
-   position: relative; 
+	position: relative; 
+	vertical-align: middle;
+	display: table-cell;
    margin-left: 0%;
-   /* width: calc(40% - 20px); */
 }
 
 .content .image2 { 
-   position: relative; 
-   margin-left: 10%;
+	position: relative; 
+	vertical-align: middle;
+	display: table-cell; 
 }
 
 .content .image3 { 
    position: relative; 
-   margin-left: 20%;
+   vertical-align: middle;
+	display: table-cell;
 }
 
 .content .image4 { 
    position: relative; 
-   margin-left: 30%;
+   vertical-align: middle;
+	display: table-cell;
 }
 
 .content .image5 { 
    position: relative; 
-   margin-left: 40%;
-}
-#image{ 
-	position: absolute; 
-}
-#text{ 
-	position: absolute; 
-	left:75px;
-	font-size:20px;
-    font-weight:bold;
+   vertical-align: middle;
+	display: table-cell;
 }
 
- #text2{ 
-	position: absolute; 
-	left:50px;
-	font-size:20px;
-    font-weight:bold;
-}
+/* #image{  */
+	/* position: absolute;  */
+/* } */
+/* #text{  */
+	/* position: absolute;  */
+	/* left:75px; */
+	/* font-size:20px; */
+    /* font-weight:bold; */
+/* } */
+
+ /* #text2{  */
+	/* position: absolute;  */
+	/* left:50px; */
+	/* font-size:20px; */
+    /* font-weight:bold; */
+/* } */
 
 
 .content table  {
