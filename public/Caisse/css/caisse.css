@@ -1,0 +1,165 @@
+ /*
+ Les couleurs :
+ Violet groupe : #581D74
+ Bleu filiere : 0087c0 / 006e97
+ Gris : #E9E9E9
+ */
+
+body {
+	font-size: 14px;
+	margin: 0;
+	padding: 0;
+	background-color: black;
+	color: white;
+	font-family : Arial, Sans-Serif;
+}
+
+.header {
+	margin-right : auto;
+	margin-left : auto;	
+}
+
+.Head {
+    border-collapse: collapse;
+	border: 0;
+    padding: 0;
+    margin: 0;
+	margin-bottom : 15px;
+	text-align:center;
+	width: 100%;
+	height: 8%;
+	font-weight : bold;
+}
+table, th, td {
+    border: 1px solid black;
+}
+.Head td {
+    background-color: #696969;
+	color: white;
+}
+
+a { color: inherit; }
+
+.content {
+    padding: 10px 0 25px 0;
+	margin-top: 2%;
+	margin-left: 2%;
+	margin-right: 2%;
+	margin-bottom: 1%;
+}
+
+
+.content .image1 { 
+   position: relative; 
+   margin-left: 0%;
+   /* width: calc(40% - 20px); */
+}
+
+.content .image2 { 
+   position: relative; 
+   margin-left: 10%;
+}
+
+.content .image3 { 
+   position: relative; 
+   margin-left: 20%;
+}
+
+.content .image4 { 
+   position: relative; 
+   margin-left: 30%;
+}
+
+.content .image5 { 
+   position: relative; 
+   margin-left: 40%;
+}
+#image{ 
+	position: absolute; 
+}
+#text{ 
+	position: absolute; 
+	left:75px;
+	font-size:20px;
+    font-weight:bold;
+}
+
+ #text2{ 
+	position: absolute; 
+	left:50px;
+	font-size:20px;
+    font-weight:bold;
+}
+
+
+.content table  {
+	background : #63C9D4;
+	height: 15%;
+	width : 100%;
+	margin-bottom:5%;
+}
+.content table th {
+	background : #63C9D4;
+	text-align: center;
+}
+
+.content table td {
+	background : #4e99a3;
+	max-width: 200px;
+}
+
+.content table tbody{
+	height: 100px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.content #Table_Bottom  {
+    background-color: #696969;
+	color: white;
+	width: 100%;
+	text-align:center;
+	height: 8%;
+}
+
+button {
+	color: black;
+}
+
+.right{
+    float:right;
+	font-size:20px;
+	margin-right: 20%;
+}
+
+.left{
+    float:left;
+	font-size:20px;
+	margin-left: 20%;
+	
+}
+
+.content .Gauche, .Centre , .Droite , .Quarter {
+	float:left;
+	margin-right: 2%
+}
+
+.content .Gauche, .Centre , .Droite  {
+	width:25%;
+}
+
+.content  .Quarter {
+	width:10%;
+}
+
+.content  .Quarter  button {
+    width: 100%;
+	margin-bottom:5%;
+}
+
+select{
+	color: black;
+}
+textarea {
+	color: black;
+}
