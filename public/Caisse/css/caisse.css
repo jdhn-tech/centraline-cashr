@@ -46,57 +46,23 @@ a { color: inherit; }
 	margin-left: 2%;
 	margin-right: 2%;
 	margin-bottom: 1%;
+	/* width:100% */
 }
 
-
-.content .image1 { 
-	position: relative; 
-	vertical-align: middle;
-	display: table-cell;
-   margin-left: 0%;
+.tableImage {
+	position: relative;
+}
+#text{ 
+	position: absolute; 
+	left:100px;
+	top:0;
 }
 
-.content .image2 { 
-	position: relative; 
-	vertical-align: middle;
-	display: table-cell; 
+ #text2{ 
+	position: absolute; 
+	left:66px;
+	top:0;
 }
-
-.content .image3 { 
-   position: relative; 
-   vertical-align: middle;
-	display: table-cell;
-}
-
-.content .image4 { 
-   position: relative; 
-   vertical-align: middle;
-	display: table-cell;
-}
-
-.content .image5 { 
-   position: relative; 
-   vertical-align: middle;
-	display: table-cell;
-}
-
-/* #image{  */
-	/* position: absolute;  */
-/* } */
-/* #text{  */
-	/* position: absolute;  */
-	/* left:75px; */
-	/* font-size:20px; */
-    /* font-weight:bold; */
-/* } */
-
- /* #text2{  */
-	/* position: absolute;  */
-	/* left:50px; */
-	/* font-size:20px; */
-    /* font-weight:bold; */
-/* } */
-
 
 .content table  {
 	background : #63C9D4;
@@ -104,7 +70,7 @@ a { color: inherit; }
 	width : 100%;
 	margin-bottom:5%;
 }
-.content table th {
+.content table th , tfoot{
 	background : #63C9D4;
 	text-align: center;
 }
@@ -114,10 +80,12 @@ a { color: inherit; }
 	max-width: 200px;
 }
 
-.content table tbody{
-	height: 100px;
-    overflow-y: auto;
-    overflow-x: hidden;
+
+.content .half{
+	width:45%;
+	margin-left: 2%;
+	float:left;
+	height:30%
 }
 
 .content #Table_Bottom  {
@@ -136,6 +104,7 @@ button {
     float:right;
 	font-size:20px;
 	margin-right: 20%;
+	color: white;
 }
 
 .left{
