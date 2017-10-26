@@ -6,7 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 # Inject gentelella back-office in rails
-gem 'gentelella-rails', '~> 0.1.8'
+# gem 'gentelella-rails', '~> 0.1.8'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.4'

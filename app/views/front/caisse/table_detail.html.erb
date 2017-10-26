@@ -1,0 +1,99 @@
+<div class="content">
+	<table id='Table_Detail' class='table'>
+	<thead>
+		<tr>
+		<th colspan="2" rowspan="2"><img src="/assets/table1.png"></th>
+		<th colspan="5">N° Table</th>
+		</tr>
+		<tr>
+		<th>Dés.</th><th>Dénomination</th><th>Prix Unité</th><th>Note</th><th>Etat</th>
+		</tr>
+	</thead>
+	
+	<tbody>
+		<tr>
+		<td><button type="button" class="add btn btn-default btn-lg">1
+			</button></td>
+		<td><button type="button" class="del btn btn-default btn-lg">
+			<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+			</button></td>
+		<td>1</td><td>Sushi</td><td>3.00€</td><td></td><td></td>
+		</tr>
+		<tr>
+		<td><button type="button" class="add btn btn-default btn-lg">1
+			</button></td>
+		<td><button type="button" class="del btn btn-default btn-lg">
+			<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+			</button></td>
+		<td>2</td><td>Maki</td><td>5.00€</td><td></td><td></td>
+		</tr>
+		<tr>
+		<td><button type="button" class="add btn btn-default btn-lg">1
+			</button></td>
+		<td><button type="button" class="del btn btn-default btn-lg">
+			<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+			</button></td>
+		<td>3</td><td>Maki</td><td>5.00€</td><td></td><td></td>
+		</tr>
+		<tr>
+		<td><button type="button" class="add btn btn-default btn-lg">1
+			</button></td>
+		<td><button type="button" class="del btn btn-default btn-lg">
+			<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+			</button></td>
+		<td>4</td><td>Maki</td><td>5.00€</td><td></td><td></td>
+		</tr>
+		<tr>
+		<td><button type="button" class="add btn btn-default btn-lg">1
+			</button></td>
+		<td><button type="button" class="del btn btn-default btn-lg">
+			<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+			</button></td>
+		<td>5</td><td>Maki</td><td>5.00€</td><td></td><td></td>
+		</tr>
+		<tr>
+		<td><button type="button" class="add btn btn-default btn-lg">1
+			</button></td>
+		<td><button type="button" class="del btn btn-default btn-lg">
+			<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+			</button></td>
+		<td>6</td><td>Maki</td><td>5.00€</td><td></td><td></td>
+		</tr>
+		<tr>
+		<td><button type="button" class="add btn btn-default btn-lg">1
+			</button></td>
+		<td><button type="button" class="del btn btn-default btn-lg">
+			<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+			</button></td>
+		<td>7</td><td>Maki</td><td>5.00€</td><td></td><td></td>
+		</tr>
+	</tbody>
+	<tfoot>
+		<tr>
+		<th colspan="7">SUM=554415</th>
+		</tr>
+	</tfoot>
+	</table>
+	
+	<table id='Table_Bottom' class='Table_Bottom'>
+	<tr>
+	<td><a href="edition_liste">Edition liste</a></td><td><a href="edition_client">Edition Client</a></td><td><a href="encaisser">Encaisser</a></td><td><a href="annulation">Annulation</a></td>
+	</tr>
+	</table>
+</div>	
+<script>
+$('.add').on('click', function(){
+  var count = $(this).text();
+  count++;
+  $(this).text(count);
+});
+$('.del').on('click', function(){
+  var count = $(this).parent().parent().find('td:eq(0)').text();
+  if (count > 1){ 
+	count--; 
+	$(this).parent().parent().find('td:eq(0)').children().text(count);
+  } else{
+	$(this).parent().parent().remove();
+  }
+});
+</script>

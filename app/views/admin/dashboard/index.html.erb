@@ -1,6 +1,9 @@
-<h1>Dashboard</h1>
-<p>
-	<%= @menus.count %> menus<br>
-	<%= @articles.count %> articles<br>
-	<%= @categories.count %> catégories
-</p>
+<div class="container">
+	<h1>Administration</h1>
+	<div>
+		<p><%= @tables.count %> tables <a href=""><span class="glyphicon glyphicon-plus"></span></a></p>
+		<p><%= @menus.count %> menus</p>
+		<p><%= @articles.count %> articles</p>
+		<p><%= @categories.count %> catégories</p>
+	</div>
+</div>

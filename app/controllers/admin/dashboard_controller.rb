@@ -1,7 +1,8 @@
 class Admin::DashboardController < ApplicationController
 	def index
-	end
-	def createMenu
-		@menu = Menu.new()
+		@tables = Table.all
+		@menus = Menu.all
+		@articles = Article.all
+		@categories = Category.all
 	end
 end
