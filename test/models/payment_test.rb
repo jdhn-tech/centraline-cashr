@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Front::WaiterControllerTest < ActionDispatch::IntegrationTest
+class PaymentTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

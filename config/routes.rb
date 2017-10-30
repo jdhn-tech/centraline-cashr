@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   namespace :front do
-    get "waiter" => "waiter#index"
+    root to: "caisse#tables"
     get "caisse" => "caisse#tables"
     get "emporter" => "caisse#emporter"
     get "table_detail" => "caisse#table_detail"
@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   end
   namespace :admin do
   	root to: "dashboard#index"
+    get "add_table" => "dashboard#add_table"
+    get "del_table" => "dashboard#del_table"
   	resources :tables, :categories, :articles, :menus, :notes
   end
 end
