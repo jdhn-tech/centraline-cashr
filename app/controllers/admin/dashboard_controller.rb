@@ -6,8 +6,10 @@ class Admin::DashboardController < ApplicationController
 		@categories = Category.all
 	end
 	def add_table
-		Table.create(:table_number => Table.count + 1)
-		redirect_to (:back) 
+		table = Table.new
+		table.table_number = Table.count + 1
+		table.save
+		redirect_to ('admin')
 	end
 	def del_table(id)
 		Table.find(id).destroy

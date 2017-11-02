@@ -1,63 +1,9 @@
 <div class="content">
-	<div class='tableImage col-xs-5 col-sm-4 col-md-3 col-lg-2 col-xl-1'>
-		<a href="table_detail"><img id='image' src="/assets/table1.png" ></a>
-		<p id="text">T01</p>
-		<p id="text2">5 </p>
-	</div>
-	
-	<div class='tableImage col-xs-5 col-sm-4 col-md-3 col-lg-2 col-xl-1'>
-		<a href="table_detail"><img id='image' src="/assets/table1.png" ></a>
-		<p id="text">T02</p>
-		<p id="text2">5 </p>
-	</div>
-	<div class='tableImage col-xs-5 col-sm-4 col-md-3 col-lg-2 col-xl-1'>
-		<a href="table_detail"><img id='image' src="/assets/table1.png" ></a>
-		<p id="text">T03</p>
-		<p id="text2">5 </p>
-	</div>
-	<div class='tableImage col-xs-5 col-sm-4 col-md-3 col-lg-2 col-xl-1'>
-		<a href="table_detail"><img id='image' src="/assets/table1.png" ></a>
-		<p id="text">T04</p>
-		<p id="text2">5 </p>
-	</div>
-	<div class='tableImage col-xs-5 col-sm-4 col-md-3 col-lg-2 col-xl-1'>
-		<a href="table_detail"><img id='image' src="/assets/table1.png" ></a>
-		<p id="text">T04</p>
-		<p id="text2">5 </p>
-	</div>
-	<div class='tableImage col-xs-5 col-sm-4 col-md-3 col-lg-2 col-xl-1'>
-		<a href="table_detail"><img id='image' src="/assets/table1.png" ></a>
-		<p id="text">T04</p>
-		<p id="text2">5 </p>
-	</div>
-	<div class='tableImage col-xs-5 col-sm-4 col-md-3 col-lg-2 col-xl-1'>
-		<a href="table_detail"><img id='image' src="/assets/table1.png" ></a>
-		<p id="text">T04</p>
-		<p id="text2">5 </p>
-	</div>
-	<div class='tableImage col-xs-5 col-sm-4 col-md-3 col-lg-2 col-xl-1'>
-		<a href="table_detail"><img id='image' src="/assets/table1.png" ></a>
-		<p id="text">T04</p>
-		<p id="text2">5 </p>
-	</div>
-	<div class='tableImage col-xs-5 col-sm-4 col-md-3 col-lg-2 col-xl-1'>
-		<a href="table_detail"><img id='image' src="/assets/table1.png" ></a>
-		<p id="text">T04</p>
-		<p id="text2">5 </p>
-	</div>
-	<div class='tableImage col-xs-5 col-sm-4 col-md-3 col-lg-2 col-xl-1'>
-		<a href="table_detail"><img id='image' src="/assets/table1.png" ></a>
-		<p id="text">T04</p>
-		<p id="text2">5 </p>
-	</div>
-	<div class='tableImage col-xs-5 col-sm-4 col-md-3 col-lg-2 col-xl-1'>
-		<a href="table_detail"><img id='image' src="/assets/table1.png" ></a>
-		<p id="text">T04</p>
-		<p id="text2">5 </p>
-	</div>
-	<div class='tableImage col-xs-5 col-sm-4 col-md-3 col-lg-2 col-xl-1'>
-		<a href="table_detail"><img id='image' src="/assets/table1.png" ></a>
-		<p id="text">T04</p>
-		<p id="text2">5 </p>
-	</div>
+	<% @tables.each do |table| %>
+		<div class='tableImage col-xs-5 col-sm-4 col-md-3 col-lg-2 col-xl-1'>
+			<a href="table_detail"><img id='image' src="/assets/table1.png" ></a>
+			<p id="text">T<%=table.table_number%></p>
+			<p id="text2">5 </p>
+		</div>
+	<% end %>
 </div>	

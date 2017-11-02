@@ -84,6 +84,8 @@ ActiveRecord::Schema.define(version: 20171027191039) do
   end
 
   create_table "tickets", force: :cascade do |t|
+    t.integer "value"
+    t.string "currency"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

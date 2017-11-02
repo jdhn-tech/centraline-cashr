@@ -1,5 +1,6 @@
 class Front::CaisseController < ApplicationController
 	def tables
+		@tables = Table.all
 	end
 	def emporter
 	end
