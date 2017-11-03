@@ -2,19 +2,20 @@
 	<h1>Administration</h1>
 	<div>
 		<p>
-			<%= @tables.count %> tables <a href="add_table"><span class="glyphicon glyphicon-plus"></span></a>
+			<%= @tables.count %> tables
 			<ul>
 				<% @tables.each do |table| %>
 					<li>table <%= table.table_number %>
-						<%= link_to 'del_table', {:id => 1} do %>
-							<span class="glyphicon glyphicon-minus"></span>
-						<% end %>
 					</li>
 				<% end %>
 			</ul>
 		</p>
-		<p><%= @menus.count %> menus</p>
-		<p><%= @articles.count %> articles</p>
+		<p>
+			<%= @menus.count %> menus <a href="add_table"><span class="glyphicon glyphicon-plus"></span></a>
+		</p>
+		<p>
+			<%= @articles.count %> articles
+		</p>
 		<p>
 			<%= @categories.count %> catégories
 			<ul>

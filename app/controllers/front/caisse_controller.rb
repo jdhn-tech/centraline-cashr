@@ -5,6 +5,7 @@ class Front::CaisseController < ApplicationController
 	def emporter
 	end
 	def table_detail
+		@table = Table.find(params[:id])
 	end
 	def table_detail_bis
 	end

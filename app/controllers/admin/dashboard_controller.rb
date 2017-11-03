@@ -9,9 +9,10 @@ class Admin::DashboardController < ApplicationController
 		table = Table.new
 		table.table_number = Table.count + 1
 		table.save
-		redirect_to ('admin')
+		redirect_to "/"
 	end
-	def del_table(id)
-		Table.find(id).destroy
+	def del_table
+		Table.last.destroy
+		redirect_to "/"
 	end
 end

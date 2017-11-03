@@ -1,6 +1,12 @@
 class Table < ApplicationRecord
 
-	validates :table_number, presence: true, uniqueness: true
+	validates :table_number, :presence => true, :uniqueness => true
 
-	attr_accessor :table_number, :table_capacity, :floor_number
+	def init
+		self.table_number = Table.count + 1
+	end
+
+	def seats
+		return (Seat.where(:table_id => self.id))
+	end
 end

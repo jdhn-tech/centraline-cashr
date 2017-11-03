@@ -1,21 +1,27 @@
 Rails.application.routes.draw do
   devise_for :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  # Root path is in front
+  root to: "front/caisse#tables"
+  get "/front/caisse" => "front/caisse#tables"
+  get "/front/emporter" => "front/caisse#emporter"
+  get "/front/table_detail/:id" => "front/caisse#table_detail"
+  get "/front/table_detail_bis" => "front/caisse#table_detail_bis"
+  get "/front/edition_liste" => "front/caisse#edition_liste"
+  get "/front/edition_client" => "front/caisse#edition_client"
+  get "/front/encaisser" => "front/caisse#encaisser"
+  get "/front/annulation" => "front/caisse#annulation"
   namespace :front do
-    root to: "caisse#tables"
-    get "caisse" => "caisse#tables"
-    get "emporter" => "caisse#emporter"
-    get "table_detail" => "caisse#table_detail"
-    get "table_detail_bis" => "caisse#table_detail_bis"
-    get "edition_liste" => "caisse#edition_liste"
-    get "edition_client" => "caisse#edition_client"
-    get "encaisser" => "caisse#encaisser"
-    get "annulation" => "caisse#annulation"
+    resources :tables
   end
+
+  # Admin contains no root path
+  get "/admin/dashboard" => "admin/dashboard#index"
+  get "/admin/add_table" => "admin/dashboard#add_table"
+  get "/admin/del_table" => "admin/dashboard#del_table"
+  
   namespace :admin do
-  	root to: "dashboard#index"
-    get "add_table" => "dashboard#add_table"
-    get "del_table" => "dashboard#del_table"
   	resources :tables, :categories, :articles, :menus, :notes
   end
 end
