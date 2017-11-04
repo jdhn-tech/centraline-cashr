@@ -3,7 +3,7 @@
 		<div class='tableImage col-xs-5 col-sm-4 col-md-3 col-lg-2 col-xl-1'>
 			<a href="/front/table_detail/<%=table.id%>"><img id='image' src="/assets/table1.png" ></a>
 			<p id="text">T<%=table.table_number.to_s.rjust(2,'0')%></p>
-			<p id="text2">5 </p>
+			<p id="text2"><%=table.seats.count%> </p>
 		</div>
 	<% end %>
 	<div class='tableImage col-xs-5 col-sm-4 col-md-3 col-lg-2 col-xl-1'>

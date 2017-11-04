@@ -2,12 +2,8 @@ class Front::CaisseController < ApplicationController
 	def tables
 		@tables = Table.all
 	end
-	def emporter
-	end
 	def table_detail
 		@table = Table.find(params[:id])
-	end
-	def table_detail_bis
 	end
 	def edition_liste
 	end
@@ -16,5 +12,13 @@ class Front::CaisseController < ApplicationController
 	def encaisser
 	end
 	def annulation
+	end
+
+	def takeaway_detail
+	end
+
+	# Method calls
+	def table_add_seat
+		Seat.create(:table_id => params[:id])
 	end
 end

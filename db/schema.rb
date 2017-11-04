@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171027191039) do
+ActiveRecord::Schema.define(version: 20171104084829) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20171027191039) do
     t.string "name"
     t.string "portion"
     t.integer "price"
+    t.text "category_ids", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -48,11 +49,17 @@ ActiveRecord::Schema.define(version: 20171027191039) do
     t.string "code"
     t.string "name"
     t.integer "price"
+    t.bigint "category_id"
+    t.text "article_ids", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_menus_on_category_id"
   end
 
   create_table "notes", force: :cascade do |t|
+    t.integer "value"
+    t.string "currency"
+    t.text "table_ids", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -69,8 +76,11 @@ ActiveRecord::Schema.define(version: 20171027191039) do
   end
 
   create_table "seats", force: :cascade do |t|
+    t.bigint "table_id"
+    t.boolean "occupied"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["table_id"], name: "index_seats_on_table_id"
   end
 
   create_table "tables", force: :cascade do |t|
@@ -86,8 +96,10 @@ ActiveRecord::Schema.define(version: 20171027191039) do
   create_table "tickets", force: :cascade do |t|
     t.integer "value"
     t.string "currency"
+    t.bigint "note_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["note_id"], name: "index_tickets_on_note_id"
   end
 
   create_table "transactions", force: :cascade do |t|
