@@ -1,30 +1,58 @@
 <div class="container">
 	<h1>Administration</h1>
 	<div>
+	<!-- Tables -->
 		<p>
 			<%= @tables.count %> tables
 			<ul>
 				<% @tables.each do |table| %>
-					<li>table <%= table.table_number %>
-					</li>
+					<li>table <%= table.table_number %> </li>
 				<% end %>
 			</ul>
 		</p>
+	<!-- Categories -->
 		<p>
-			<%= @menus.count %> menus <a href="add_table"><span class="glyphicon glyphicon-plus"></span></a>
-		</p>
-		<p>
-			<%= @articles.count %> articles
-		</p>
-		<p>
-			<%= @categories.count %> catégories
+			<%= @categories.count %> catégories => <%= @articles.count %> articles<!-- <button type="button" data-toggle="modal" data-target="#newCategoryModal"><span class="glyphicon glyphicon-plus"/></button> -->
 			<ul>
 				<% @categories.each do |category| %>
-					<li> <%= category.code %> : <%= category.name %>
-
-					</li>
+					<li> <%= category.code %> : <%= category.name %> </li>
+					<ul>
+						<% @articles.each do |article| %>
+						<% if article.category_ids.include? category.id.to_s %>
+							<li> <%= article.code %> : <%= article.name %> .. <%= article.price.to_d / 100 %> € </li>
+						<% end %>
+						<% end %>
+					</ul>
+				<% end %>
+			</ul>
+		</p>
+	<!-- Menus -->
+		<p>
+			<%= @menus.count %> menus <!-- <a href="add_table"><span class="glyphicon glyphicon-plus"></span></a> -->
+			<ul>
+				<% @menus.each do |menu| %>
+					<li> <%= menu.code %> : <%= menu.name %> .. <%= menu.price.to_d / 100 %> € </li>
 				<% end %>
 			</ul>
 		</p>
 	</div>
 </div>
+
+<!-- Modal -->
+<!-- <div id="newCategoryModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Ajouter une cagégorie</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div> -->

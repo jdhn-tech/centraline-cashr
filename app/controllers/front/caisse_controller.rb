@@ -4,6 +4,8 @@ class Front::CaisseController < ApplicationController
 	end
 	def table_detail
 		@table = Table.find(params[:id])
+		@menus = Menu.all
+		@articles = Article.all
 	end
 	def edition_liste
 	end
