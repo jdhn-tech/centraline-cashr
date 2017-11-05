@@ -1,0 +1,108 @@
+// Place all the styles related to the front/caisse controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+ /*
+ Les couleurs :
+ Violet groupe : #581D74
+ Bleu filiere : 0087c0 / 006e97
+ Gris : #E9E9E9
+ */
+.content {
+    padding: 10px 0 25px 0;
+	margin-top: 2%;
+	margin-left: 2%;
+	margin-right: 2%;
+	margin-bottom: 1%;
+	/* width:100% */
+}
+
+.tableImage {
+	position: relative;
+}
+#text{ 
+	position: absolute; 
+	left:100px;
+	top:0;
+}
+
+ #text2{ 
+	position: absolute; 
+	left:66px;
+	top:0;
+}
+
+.content table  {
+	background : #63C9D4;
+	height: 15%;
+	width : 100%;
+	margin-bottom:5%;
+}
+.content table th , tfoot{
+	background : #63C9D4;
+	text-align: center;
+}
+
+.content table td {
+	background : #4e99a3;
+	max-width: 200px;
+}
+
+
+.content .half{
+	width:45%;
+	margin-left: 2%;
+	float:left;
+	height:30%
+}
+
+.content #Table_Bottom  {
+    background-color: #696969;
+	color: white;
+	width: 100%;
+	text-align:center;
+	height: 8%;
+}
+
+button {
+	color: black;
+}
+
+.right{
+    float:right;
+	font-size:20px;
+	margin-right: 20%;
+	color: white;
+}
+
+.left{
+    float:left;
+	font-size:20px;
+	margin-left: 20%;
+	
+}
+
+.content .Gauche, .Centre , .Droite , .Quarter {
+	float:left;
+	margin-right: 2%
+}
+
+.content .Gauche, .Centre , .Droite  {
+	width:25%;
+}
+
+.content  .Quarter {
+	width:10%;
+}
+
+.content  .Quarter  button {
+    width: 100%;
+	margin-bottom:5%;
+}
+
+select{
+	color: black;
+}
+textarea {
+	color: black;
+}

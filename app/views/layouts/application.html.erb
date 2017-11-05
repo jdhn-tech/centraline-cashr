@@ -1,14 +1,30 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>CentralineCashr</title>
-    <%= csrf_meta_tags %>
+<head>
+	<title>CentralineCashr</title>
+	<%= csrf_meta_tags %>
+	<link href="/assets/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+	<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+	<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
-
-  <body>
-    <%= yield %>
-  </body>
+<body>
+	<div class="header">
+		<table id='Head' class='Head' style="height:60px">
+		<tr>
+			<td><a href="/front/caisse">TABLE</a></td>
+			<!-- <td><a href="/front/caisse" style="vertical-align:center;display:block;height:100%;">TABLE</a></td> -->
+			<td><a href="/front/emporter">EMPORTER</a></td>
+			<td style="background-color: #000;"><a>LIVRAISON</a></td>
+			<td style="background-color: #000;"><a>EN LIGNE</a></td>
+			<td style="background-color: #000;"><a>AUTRES</a></td>
+			<!-- <td><a>COM. PAYE</a></td> -->
+			<td><a href="/admin/dashboard">ADMIN</a></td>
+		</tr>
+		</table>
+	</div>
+	<%= yield %>
+	<p class="notice"><%= notice %></p>
+	<p class="alert"><%= alert %></p>
+</body>
 </html>

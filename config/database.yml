@@ -16,11 +16,11 @@
 #
 default: &default
   adapter: postgresql
-  encoding: unicode
-  database: <%= ENV['CENTRALINE_CASHR_DATABASE'] %>
-  username: <%= ENV['CENTRALINE_CASHR_DATABASE_USERNAME'] %>
-  password: <%= ENV['CENTRALINE_CASHR_DATABASE_PASSWORD'] %>
-  host: 127.0.0.1
+  encoding: UTF8
+  database: test
+  username: tester
+  password: tester
+  host: localhost
   port: 5432
   # For details on connection pooling, see Rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling

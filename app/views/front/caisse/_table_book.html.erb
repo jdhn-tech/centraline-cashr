@@ -1,0 +1,57 @@
+<div id="table_book" class="content" style="display:none;">
+	<table id='Table_Menu_Image' class='table'>
+		<tr>
+		<th><img id='image' src="/assets/table1.png" onclick="toggleTableDetail()"></th><th><img id='image' src="/assets/menu.png"></th><th><img id='image' src="/assets/couvert.png"></th><th><img id='image' src="/assets/cloche.png"></th><th><img id='image' src="/assets/boisson.png"></th><th><img id='image' src="/assets/dessert.png"></th>
+		</tr>
+	</table>
+	<div class="row">
+	<div class="col col-lg-3">
+		<table id='Table_Menu'>
+			<tbody>
+			<% @menus.each do |menu| %>
+				<tr>
+					<td><%= menu.name %></td>
+				</tr>
+			<% end %>
+			</tbody>
+		</table>
+	</div>
+	<div class="col col-lg-3">
+		<table id='Table_xxxx' class="col col-lg-6">
+			<tr>
+				<td>Entree</td><td>Plat</td>
+			</tr>
+			<tr>
+				<td>Dessert</td><td>Boisson</td>
+			</tr>
+			<tr>
+				<td>Autres</td><td>Autres</td>
+			</tr>
+		</table>
+	</div>
+	<table id='Table_Selection' class="half">
+		<tbody>
+		<tr>
+			<td>Détail Sélection</td>
+		</tr>
+		<tr>
+			
+		</tr>
+		<tr>
+			
+		</tr>
+		</tbody>
+	</table>
+	<table id='Table_Entree' class="half">
+		<tr>
+			<td>Entree 1</td><td>Entree 2</td>
+		</tr>
+		<tr>
+			<td>Entree 3</td><td>Entree 4</td>
+		</tr>
+		<tr>
+			<td>Entree 5</td><td>Entree 6</td>
+		</tr>
+	</table>
+	</div>
+</div>

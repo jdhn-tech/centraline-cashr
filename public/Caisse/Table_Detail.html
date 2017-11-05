@@ -1,0 +1,119 @@
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/caisse.css" type="text/css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="header">
+		<table id='Head' class='Head'>
+		<tr>
+		<td><a href="Table.html">TABLE</a></td><td><a href="Emporter.html">EMPORTER</a></td><td><a href="#">LIVRAISON</a></td><td><a href="#">EN LIGNE</a></td><td><a href="#">AUTRES</a></td><td><a href="#">COM. PAYE</a></td>
+		</tr>
+		</table>
+	</div>
+	<div class="content">
+		<table id='Table_Detail' class='table'>
+		<thead>
+			<tr>
+			<th colspan="2" rowspan="2"><img src="image/table1.png"><a fref="table_detail_bis"></a></th>
+			<th colspan="5">N° Table</th>
+			</tr>
+			<tr>
+			<th>Dés.</th><th>Dénomination</th><th>Prix Unité</th><th>Note</th><th>Etat</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr>
+			<td><button type="button" class="add btn btn-default btn-lg">1
+				</button></td>
+			<td><button type="button" class="del btn btn-default btn-lg">
+				<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+				</button></td>
+			<td>1</td><td>Sushi</td><td>3.00€</td><td></td><td></td>
+			</tr>
+			<tr>
+			<td><button type="button" class="add btn btn-default btn-lg">1
+				</button></td>
+			<td><button type="button" class="del btn btn-default btn-lg">
+				<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+				</button></td>
+			<td>2</td><td>Maki</td><td>5.00€</td><td></td><td></td>
+			</tr>
+			<tr>
+			<td><button type="button" class="add btn btn-default btn-lg">1
+				</button></td>
+			<td><button type="button" class="del btn btn-default btn-lg">
+				<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+				</button></td>
+			<td>3</td><td>Maki</td><td>5.00€</td><td></td><td></td>
+			</tr>
+			<tr>
+			<td><button type="button" class="add btn btn-default btn-lg">1
+				</button></td>
+			<td><button type="button" class="del btn btn-default btn-lg">
+				<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+				</button></td>
+			<td>4</td><td>Maki</td><td>5.00€</td><td></td><td></td>
+			</tr>
+			<tr>
+			<td><button type="button" class="add btn btn-default btn-lg">1
+				</button></td>
+			<td><button type="button" class="del btn btn-default btn-lg">
+				<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+				</button></td>
+			<td>5</td><td>Maki</td><td>5.00€</td><td></td><td></td>
+			</tr>
+			<tr>
+			<td><button type="button" class="add btn btn-default btn-lg">1
+				</button></td>
+			<td><button type="button" class="del btn btn-default btn-lg">
+				<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+				</button></td>
+			<td>6</td><td>Maki</td><td>5.00€</td><td></td><td></td>
+			</tr>
+			<tr>
+			<td><button type="button" class="add btn btn-default btn-lg">1
+				</button></td>
+			<td><button type="button" class="del btn btn-default btn-lg">
+				<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+				</button></td>
+			<td>7</td><td>Maki</td><td>5.00€</td><td></td><td></td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+			<th colspan="7">SUM=554415</th>
+			</tr>
+		</tfoot>
+		</table>
+		
+		<table id='Table_Bottom' class='Table_Bottom'>
+		<tr>
+		<td><a href="Edition_liste.html">Edition liste</a></td><td><a href="Edition_client.html">Edition Client</a></td><td><a href="Encaisser.html">Encaisser</a></td><td><a href="Annulation.html">Annulation</a></td>
+		</tr>
+		</table>
+	</div>	
+<script>
+$('.add').on('click', function(){
+  var count = $(this).text();
+  count++;
+  $(this).text(count);
+});
+$('.del').on('click', function(){
+  var count = $(this).parent().parent().find('td:eq(0)').text();
+  if (count > 1){ 
+	count--; 
+	$(this).parent().parent().find('td:eq(0)').children().text(count);
+  } else{
+	$(this).parent().parent().remove();
+  }
+});
+</script>
+</body>
+
+
+</html>

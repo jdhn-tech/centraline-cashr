@@ -6,7 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 # Inject gentelella back-office in rails
-gem 'gentelella-rails', '~> 0.1.8'
+# gem 'gentelella-rails', '~> 0.1.8'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.4'
@@ -23,6 +23,7 @@ gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
+gem 'paperclip', '~> 5.1.0'
 gem 'devise', '~> 4.3.0'
 gem 'cancancan', '~> 2.0.0'
 
