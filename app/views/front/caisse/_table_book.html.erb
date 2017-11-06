@@ -5,19 +5,19 @@
 		</tr>
 	</table>
 	<div class="row">
-	<div class="col col-lg-3">
-		<table id='Table_Menu'>
+	<div class="col col-md-3">
+		<table id='Table_Menu' class='table'>
 			<tbody>
 			<% @menus.each do |menu| %>
 				<tr>
-					<td><%= menu.name %></td>
+					<td><a class="btn-group btn-group-justified"><%= menu.name %></a></td>
 				</tr>
 			<% end %>
 			</tbody>
 		</table>
 	</div>
-	<div class="col col-lg-3">
-		<table id='Table_xxxx' class="col col-lg-6">
+	<div class="col col-md-3">
+		<table id='Table_xxxx' class="col col-md-6">
 			<tr>
 				<td>Entree</td><td>Plat</td>
 			</tr>
