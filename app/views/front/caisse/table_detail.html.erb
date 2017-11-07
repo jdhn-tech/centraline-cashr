@@ -6,30 +6,20 @@
 			<th colspan="5">N° Table : <%=@table.table_number.to_s.rjust(2,'0')%></th>
 		</tr>
 		<tr>
-			<th>Code</th><th>Description</th><th>Prix Unité</th><th>Note</th><th>Etat</th>
+			<th>Code</th>
+			<th>Nom</th>
+			<th>Prix Unité</th>
+			<th>Note</th>
+			<th>Etat</th>
 		</tr>
 	</thead>
 	
-	<tbody>
-		<%=  %>
-		<tr>
-			<td>
-				<button type="button" class="add btn btn-default btn-lg">1</button>
-			</td>
-			<td>
-				<button type="button" class="del btn btn-default btn-lg"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
-			</td>
-			<td>1</td>
-			<td>Sushi</td>
-			<td>3.00€</td>
-			<td></td>
-			<td></td>
-		</tr>
-		<%  %>
+	<tbody id='table_detail_note'>
+		
 	</tbody>
 	<tfoot>
 		<tr>
-		<th colspan="7">SUM=554415</th>
+			<th colspan="7" id="table_note_sum">SUM=0 €</th>
 		</tr>
 	</tfoot>
 	</table>
@@ -44,6 +34,27 @@
 <%= render "table_book" %>
 
 <script >
+$(document).ready(function() {
+	var table_detail_line = "<tr><td><button type='button' class='add btn btn-default btn-lg'>%QUANTITE%</button></td><td><button type='button' class='del btn btn-default btn-lg'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td><td>%CODE%</td><td>%NOM%</td><td>%PRIX%</td><td>%NOTE%</td><td>%ETAT%</td></tr>";
+	var tableNote = {
+		'menu1' : 'data menu1',
+		'menu2' : 'data menu2',
+		'article1' : 'data menu3'
+	};
+	var tableKeys = Object.keys(tableNote);
+	tableKeys.forEach(function(element) {
+		console.log(tableNote[element]);
+	});
+});
+
+function addElementToTableNote() {
+
+}
+
+function updateNote() {
+
+}
+
 function toggleTableDetail() {
 	if ($("#table_detail").is(":visible")) {
 		$("#table_detail").hide();

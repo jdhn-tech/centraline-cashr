@@ -8,10 +8,8 @@ namespace :admin do
   	Category.create(:id => 4, :code => 'EN', :name => 'entrée')
   	Category.create(:id => 5, :code => 'PS', :name => 'plat chaud')
   	Category.create(:id => 6, :code => 'PF', :name => 'plat froid')
-  	Category.create(:id => 7, :code => 'DE', :name => 'dessert')
-  	Category.create(:id => 8, :code => 'MA', :name => 'menu matin')
-  	Category.create(:id => 9, :code => 'MI', :name => 'menu midi')
-  	Category.create(:id => 10, :code => 'MS', :name => 'menu soir')
+    Category.create(:id => 7, :code => 'DE', :name => 'dessert')
+  	Category.create(:id => 8, :code => 'ME', :name => 'menu')
 
   	# Articles
   	Article.create(:id => 1, :code => 'BS01', :name => 'CocaCola 50ml', :price => 200, :category_ids => ["1"])
@@ -24,9 +22,15 @@ namespace :admin do
   	Article.create(:id => 8, :code => 'DE01', :name => 'Tiramisu', :price => 550, :category_ids => ["7"])
 
   	# Menus
-  	Menu.create(:id => 1, :code => 'MA01', :name => 'Menu du Matin', :price => 950, :category_id => 8, :article_ids => ["6"])
-  	Menu.create(:id => 2, :code => 'MI01', :name => 'Menu du Midi', :price => 1550, :category_id => 9, :article_ids => ["1", "2", "3", "4", "5", "6", "7", "8"])
-  	Menu.create(:id => 3, :code => 'MS01', :name => 'Menu du Soir', :price => 1750, :category_id => 10, :article_ids => ["1", "2", "3", "4", "5", "6", "7", "8"])
+  	Menu.create(:id => 1, :code => 'ME01', :name => 'Menu 1', :price => 950, :category_id => 8, :article_ids => ["1","6"])
+    Menu.create(:id => 2, :code => 'ME02', :name => 'Menu 2', :price => 1550, :category_id => 8, :article_ids => ["1","6","8"])
+  	Menu.create(:id => 3, :code => 'ME03', :name => 'Menu 3', :price => 1550, :category_id => 8, :article_ids => ["1","5","8"])
+    Menu.create(:id => 4, :code => 'ME04', :name => 'Menu 4', :price => 1750, :category_id => 8, :article_ids => ["2","5","7","8"])
+    Menu.create(:id => 5, :code => 'ME05', :name => 'Menu 5', :price => 1750, :category_id => 8, :article_ids => ["2","5","7","8"])
+    Menu.create(:id => 6, :code => 'ME06', :name => 'Menu 6', :price => 1750, :category_id => 8, :article_ids => ["2","5","7","8"])
+    Menu.create(:id => 7, :code => 'ME07', :name => 'Menu 7', :price => 1750, :category_id => 8, :article_ids => ["2","5","7","8"])
+    Menu.create(:id => 8, :code => 'ME08', :name => 'Menu 8', :price => 1750, :category_id => 8, :article_ids => ["2","5","7","8"])
+  	Menu.create(:id => 9, :code => 'ME09', :name => 'Menu 9', :price => 1750, :category_id => 8, :article_ids => ["2","5","7","8"])
 
   	# 
   end
