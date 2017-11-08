@@ -8,15 +8,19 @@ class Front::CaisseController < ApplicationController
 		@articles = Article.all
 	end
 	def edition_liste
+		@note = Note.find(params[:id])
 	end
 	def edition_client
 	end
 	def encaisser
+		@note = Note.find(params[:id])
 	end
 	def annulation
 	end
 
 	def takeaway_detail
+		@menus = Menu.all
+		@articles = Article.all
 	end
 
 	# Method calls
