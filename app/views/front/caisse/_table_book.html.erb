@@ -103,7 +103,7 @@
 </div>
 
 <script>
-var table_detail_line = "<tr><td><button type='button' class='btn btn-default btn-lg' onclick='duplicateLineNote(this)'><span class='glyphicon glyphicon-duplicate' aria-hidden='true'></span></button></td><td><button type='button' class='btn btn-default btn-lg' onClick='removeLineNote(this)'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td><td>%CODE%</td><td>%NOM%</td><td class='table_note_price'>%PRIX%</td><td>%NOTE%</td><td>%ETAT%</td></tr>";
+var table_detail_line = "<tr><td><button type='button' class='btn btn-default btn-lg' onclick='duplicateLineNote(this)'><span class='glyphicon glyphicon-duplicate' aria-hidden='true'></span></button></td><td><button type='button' class='btn btn-default btn-lg' onClick='removeLineNote(this)'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td><td class='table_note_code'>%CODE%</td><td>%NOM%</td><td class='table_note_price'>%PRIX%</td><td>%NOTE%</td><td>%ETAT%</td></tr>";
 function tableBookToggleMenus(menuDiv) {
 	$("div[id^='table_book_select_menu'").hide();
 	$("#"+menuDiv).show();

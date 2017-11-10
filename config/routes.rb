@@ -9,12 +9,13 @@ Rails.application.routes.draw do
   get "/front/table_detail/:id" => "front/caisse#table_detail"
   get "/front/edition_liste" => "front/caisse#edition_liste"
   get "/front/edition_client" => "front/caisse#edition_client"
-  get "/front/encaisser" => "front/caisse#encaisser"
+  get "/front/encaisser/:id" => "front/caisse#encaisser"
   get "/front/annulation" => "front/caisse#annulation"
   get "/front/takeaway_detail" => "front/caisse#takeaway_detail"
 
   # Method calls
-  get "front/table_add_seat/:id" => "front/caisse#table_add_seat"
+  get "/front/table_add_seat/:id" => "front/caisse#table_add_seat"
+  post "/front/notes/create" => "front/notes#create"
 
   namespace :front do
     resources :tables

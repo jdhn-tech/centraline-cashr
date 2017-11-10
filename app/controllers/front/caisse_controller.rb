@@ -13,7 +13,7 @@ class Front::CaisseController < ApplicationController
 	def edition_client
 	end
 	def encaisser
-		@note = Note.new
+		@note = Note.find(params[:id])
 	end
 	def annulation
 	end

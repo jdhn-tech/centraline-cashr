@@ -38,11 +38,10 @@
 
 <script >
 $(document).ready(function() {
-	var tableNote = {};
-	var tableKeys = Object.keys(tableNote);
-	tableKeys.forEach(function(element) {
-		// console.log(tableNote[element]);
-	});
+	// var tableNote = {};
+	// var tableKeys = Object.keys(tableNote);
+	// tableKeys.forEach(function(element) {
+	// });
 });
 
 function toggleTableDetail() {
@@ -69,6 +68,26 @@ function updateSum() {
 		sum += parseFloat($(obj).text());
 	});
 	$("#table_note_sum").text("Somme = "+sum+" €");
+}
+function cashIn() {
+	var tableNote = {
+		"table_id"	: "<%=@table.id%>",
+		"articles"	: ($(".table_note_code").map(function(){return $(this).text();}).get()).join(";")
+	};
+	if (tableNote['articles'] != ""){
+		$.ajax({
+			async: false,
+			url: "/front/notes/create",
+			type: "POST",
+			data: tableNote,
+			dataType: "json",
+			success : function(data) {
+				if (data["success"]){
+					window.location.href = "/front/encaisser/"+data["note_id"];
+				}
+			}
+		});
+	}
 }
 
 </script>
