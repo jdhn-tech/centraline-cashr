@@ -19,15 +19,18 @@
 	</tbody>
 	<tfoot>
 		<tr>
-			<th colspan="7" id="table_note_sum">SUM=0 €</th>
+			<th colspan="7" id="table_note_sum">Somme = 0 €</th>
 		</tr>
 	</tfoot>
 	</table>
 	
 	<table id='Table_Bottom' class='Table_Bottom'>
-	<tr>
-	<td><a href="/front/edition_liste">Edition liste</a></td><td><a href="/front/edition_client">Edition Client</a></td><td><a href="/front/encaisser">Encaisser</a></td><td><a href="/front/annulation">Annulation</a></td>
-	</tr>
+		<tr style="height:50px;">
+			<td><a href="/front/edition_liste">Edition liste</a></td>
+			<td><a href="/front/edition_client">Edition Client</a></td>
+			<td><a class="btn" onclick="cashIn()">Encaisser</a></td>
+			<td><a href="/front/annulation">Annulation</a></td>
+		</tr>
 	</table>
 </div>
 
@@ -35,25 +38,12 @@
 
 <script >
 $(document).ready(function() {
-	var table_detail_line = "<tr><td><button type='button' class='add btn btn-default btn-lg'>%QUANTITE%</button></td><td><button type='button' class='del btn btn-default btn-lg'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td><td>%CODE%</td><td>%NOM%</td><td>%PRIX%</td><td>%NOTE%</td><td>%ETAT%</td></tr>";
-	var tableNote = {
-		'menu1' : 'data menu1',
-		'menu2' : 'data menu2',
-		'article1' : 'data menu3'
-	};
+	var tableNote = {};
 	var tableKeys = Object.keys(tableNote);
 	tableKeys.forEach(function(element) {
-		console.log(tableNote[element]);
+		// console.log(tableNote[element]);
 	});
 });
-
-function addElementToTableNote() {
-
-}
-
-function updateNote() {
-
-}
 
 function toggleTableDetail() {
 	if ($("#table_detail").is(":visible")) {
@@ -64,18 +54,21 @@ function toggleTableDetail() {
 		$("#table_book").hide();
 	}
 }
-$('.add').on('click', function(){
-  var count = $(this).text();
-  count++;
-  $(this).text(count);
-});
-$('.del').on('click', function(){
-  var count = $(this).parent().parent().find('td:eq(0)').text();
-  if (count > 1){ 
-	count--; 
-	$(this).parent().parent().find('td:eq(0)').children().text(count);
-  } else{
-	$(this).parent().parent().remove();
-  }
-});
+function duplicateLineNote(e) {
+	var thisLine = $(e).parent().parent();
+	$("#table_detail_note").append(thisLine.clone());
+	updateSum();
+}
+function removeLineNote(e) {
+	$(e).parent().parent().remove();
+	updateSum();
+}
+function updateSum() {
+	var sum = 0;
+	$(".table_note_price").each(function(i,obj) {
+		sum += parseFloat($(obj).text());
+	});
+	$("#table_note_sum").text("Somme = "+sum+" €");
+}
+
 </script>
