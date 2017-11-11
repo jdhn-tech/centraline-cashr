@@ -1,4 +1,4 @@
-<div class="content">
+<div class="content row">
 	<div class="Gauche">
 		<table id='Table_Selection' class='Table_Selection'>
 			<thead>
@@ -16,21 +16,21 @@
 					<tr>
 						<td><%=menu.code%></td>
 						<td><%=menu.name%></td>
-						<td class="apayer"><%=menu.price.to_f / 100%> €</td>
+						<td class="selection"><%=menu.price.to_f / 100%> €</td>
 					</tr>
 				<%end%>
 				<%@note.getArticles.each do |menu|%>
 					<tr>
 						<td><%=menu.code%></td>
 						<td><%=menu.name%></td>
-						<td class="apayer"><%=menu.price.to_f / 100%> €</td>
+						<td class="selection"><%=menu.price.to_f / 100%> €</td>
 					</tr>
 				<%end%>
 			<tr>
-				<th colspan="2">Total</th><th id="total_apayer"> €</th>
+				<th colspan="2">Total</th><th><%=@note.value.to_f / 100%> €</th>
 			</tr>
 			<tr>
-				<th colspan="2">Restant</th><th>100€</th>
+				<th colspan="2">Restant</th><th id="remaining_selection">100€</th>
 			</tr>
 			</tbody>
 		</table>
@@ -56,13 +56,13 @@
 				<tr>
 					<td>code</td>
 					<td>nom</td>
-					<td>prix €</td>
+					<td class="apayer">prix €</td>
 				</tr>
 				<tr>
-					<th colspan="2">Total</th><th><%=@note.value%> €</th>
+					<th colspan="2">Total</th><th id="total_apayer">x €</th>
 				</tr>
 				<tr>
-					<th colspan="2">1 repas</th><th>100€</th>
+					<th colspan="2">1 repas</th><th>x €</th>
 				</tr>
 			</tbody>
 		</table>
@@ -118,3 +118,16 @@
 		<button>EDITION FACTURE</button>
 	</div>
 </div>
+<script>
+function totalSelection(){
+	var sum = 0;
+	$(".selection").each(function(i,obj) {
+		sum += parseFloat($(obj).text());
+	});
+	$("#remaining_selection").text(sum+" €");
+
+}
+$(document).ready(function(){
+	totalSelection();
+});
+</script>
