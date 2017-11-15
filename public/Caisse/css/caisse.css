@@ -46,8 +46,25 @@ a { color: inherit; }
 	margin-left: 2%;
 	margin-right: 2%;
 	margin-bottom: 1%;
-	/* width:100% */
 }
+
+.content_table_detail{
+	height: 400px; 
+	margin: 1%;
+	overflow: auto;
+	width: 100%;
+	position: relative;
+}
+
+#Table_Detail{
+	border: 0 none;
+	height: auto;
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
 
 .tableImage {
 	position: relative;
@@ -56,6 +73,7 @@ a { color: inherit; }
 	position: absolute; 
 	left:100px;
 	top:0;
+	color: black;
 }
 
  #text2{ 
