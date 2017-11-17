@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get "/front/encaisser/:id" => "front/caisse#encaisser"
   get "/front/annulation" => "front/caisse#annulation"
   get "/front/takeaway_detail" => "front/caisse#takeaway_detail"
+  get "/front/get_code/:code" => "front/caisse#get_code"
 
   # Method calls
   get "/front/table_add_seat/:id" => "front/caisse#table_add_seat"

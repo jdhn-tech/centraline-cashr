@@ -27,4 +27,15 @@ class Front::CaisseController < ApplicationController
 	def table_add_seat
 		Seat.create(:table_id => params[:id])
 	end
+	def get_code
+		menu = Menu.where(code: params[:code]).first
+		article = Article.where(code: params[:code]).first
+		if !menu.nil?
+			render :json => {:success => true, :code => menu.code,:name => menu.name, :price => menu.price}.to_json
+		elsif !article.nil?
+			render :json => {:success => true, :code => article.code,:name => article.name, :price => article.price}.to_json
+		else
+			render :json => {:success => false}.to_json
+		end	
+	end
 end
