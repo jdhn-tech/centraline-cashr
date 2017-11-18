@@ -1,34 +1,39 @@
-<div class="content">
+<div class="content row">
 	<div class="Gauche">
 		<table id='Table_Selection' class='Table_Selection'>
-		<thead>
-		<tr>
-		<th colspan="3">SELECTION</th>
-		</tr>
-		<tr>
-		<th>Nb</th><th>Dénomination</th><th>Prix Unité</th>
-		</tr>
-		</thead>
-		<tbody>
-		<tr>
-		<td>T1/1</td>
-		<td>Sushi</td>
-		<td>3€</td>
-		</tr>
-		<tr>
-		<td>T1/2</td>
-		<td>Maki</td>
-		<td>5€</td>
-		</tr>
-		<tr>
-		<th colspan="2">Total</th><th>100€</th>
-		</tr>
-		<tr>
-		<th colspan="2">Restant</th><th>100€</th>
-		</tr>
-		</tbody>
+			<thead>
+				<tr>
+					<th colspan="3">SELECTION</th>
+				</tr>
+				<tr>
+					<th>Nb</th>
+					<th>Dénomination</th>
+					<th>Prix Unité</th>
+				</tr>
+			</thead>
+			<tbody>
+				<%@note.getMenus.each do |menu|%>
+					<tr>
+						<td><%=menu.code%></td>
+						<td><%=menu.name%></td>
+						<td class="selection"><%=menu.price.to_f / 100%> €</td>
+					</tr>
+				<%end%>
+				<%@note.getArticles.each do |menu|%>
+					<tr>
+						<td><%=menu.code%></td>
+						<td><%=menu.name%></td>
+						<td class="selection"><%=menu.price.to_f / 100%> €</td>
+					</tr>
+				<%end%>
+			<tr>
+				<th colspan="2">Total</th><th><%=@note.value.to_f / 100%> €</th>
+			</tr>
+			<tr>
+				<th colspan="2">Restant</th><th id="remaining_selection">100€</th>
+			</tr>
+			</tbody>
 		</table>
-		
 		<button>REEDITION TICKET CLIENT</button>
 	</div>
 	
@@ -39,34 +44,28 @@
 
 	<div class="Centre">
 		<table id='Table_Article' class='Table_Article'>
-		<thead>
-		<tr>
-		<th colspan="3">ARTICLE A ENCAISSER</th>
-		</tr>
-		<tr>
-		<th>Nb</th><th>Dénomination</th><th>Prix Unité</th>
-		</tr>
-		</thead>
-		<tbody>
-		<tr>
-		<td>T1/1</td>
-		<td>Sushi</td>
-		<td>3€</td>
-		</tr>
-		<tr>
-		<td>T1/2</td>
-		<td>Maki</td>
-		<td>5€</td>
-		</tr>
-		<tr>
-		<th colspan="2">Total</th><th>100€</th>
-		</tr>
-		<tr>
-		<th colspan="2">1 repas</th><th>100€</th>
-		</tr>
-		</tbody>
+			<thead>
+				<tr>
+					<th colspan="3">ARTICLE A ENCAISSER</th>
+				</tr>
+				<tr>
+					<th>Nb</th><th>Dénomination</th><th>Prix Unité</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>code</td>
+					<td>nom</td>
+					<td class="apayer">prix €</td>
+				</tr>
+				<tr>
+					<th colspan="2">Total</th><th id="total_apayer">x €</th>
+				</tr>
+				<tr>
+					<th colspan="2">1 repas</th><th>x €</th>
+				</tr>
+			</tbody>
 		</table>
-		
 	</div>	
 	
 	<div class="Droite">
@@ -119,3 +118,16 @@
 		<button>EDITION FACTURE</button>
 	</div>
 </div>
+<script>
+function totalSelection(){
+	var sum = 0;
+	$(".selection").each(function(i,obj) {
+		sum += parseFloat($(obj).text());
+	});
+	$("#remaining_selection").text(sum+" €");
+
+}
+$(document).ready(function(){
+	totalSelection();
+});
+</script>

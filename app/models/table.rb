@@ -4,8 +4,8 @@ class Table < ApplicationRecord
 
 	has_many :seats
 
-	def init
-		self.table_number = Table.count + 1
+	def getActiveNote
+		# return Note.where()
 	end
 	
 end

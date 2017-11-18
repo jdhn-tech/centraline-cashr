@@ -1,4 +1,5 @@
 #!/bin/bash
-export CENTRALINE_CASHR_DATABASE=test
-export CENTRALINE_CASHR_DATABASE_USERNAME=tester
-export CENTRALINE_CASHR_DATABASE_PASSWORD=tester
+rake db:drop
+rake db:setup
+rake db:migrate
+rake admin:generate_test_data
