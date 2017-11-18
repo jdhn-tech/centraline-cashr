@@ -4,6 +4,7 @@ class CreateTables < ActiveRecord::Migration[5.1]
 			t.integer :table_number, :table_capacity, :floor_number
 			t.boolean :terrace
 			t.boolean :smoker
+			t.boolean :active
 			t.timestamps
 		end
 	end

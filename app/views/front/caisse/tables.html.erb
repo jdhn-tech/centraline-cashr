@@ -1,12 +1,14 @@
 <div class="content">
 	<% @tables.each do |table| %>
+		<% unless table.id == 1 %>
 		<div class='tableImage col-xs-5 col-sm-4 col-md-3 col-lg-2 col-xl-1'>
 			<a href="/front/table_detail/<%=table.id%>"><img id='image' src="/assets/table1.png" ></a>
 			<p id="text">T<%=table.table_number.to_s.rjust(2,'0')%></p>
-			<p id="text2"><%=table.seats.count%> </p>
+			<p id="text2">0</p>
 		</div>
+		<% end %>
 	<% end %>
-	<div class='tableImage col-xs-5 col-sm-4 col-md-3 col-lg-2 col-xl-1'>
+	<!-- <div class='tableImage col-xs-5 col-sm-4 col-md-3 col-lg-2 col-xl-1'>
 		<div style="width:113px; height:113px; vertical-align: center; text-align: center;">
 			<a href="/admin/add_table"><span class="glyphicon glyphicon-plus" aria-hidden="true" style="font-size:75px;"></span></a>
 		</div>
@@ -15,5 +17,5 @@
 		<div style="width:113px; height:113px; vertical-align: center; text-align: center;">
 			<a href="/admin/del_table"><span class="glyphicon glyphicon-minus" aria-hidden="true" style="font-size:75px;"></span></a>
 		</div>
-	</div>
+	</div> -->
 </div>

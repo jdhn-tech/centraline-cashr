@@ -4,6 +4,18 @@ class Front::CaisseController < ApplicationController
 	end
 	def table_detail
 		@table = Table.find(params[:id])
+		if @table.occupied
+			@note = Note.where(table_id: params[:id], active: true).first
+		else
+			@note = Note.new
+			@note.table_id = params[:id]
+			@note.active = true
+			@note.value = 0
+			@note.currency = "Euro"
+			@note.save
+			@table.occupied = true
+			@table.save
+		end
 		@menus = Menu.all
 		@articles = Article.all
 	end
@@ -18,6 +30,9 @@ class Front::CaisseController < ApplicationController
 	def annulation
 	end
 
+	def emporter
+		@notes = Note.where(table_id: 1, active: true).compact
+	end
 	def takeaway_detail
 		@menus = Menu.all
 		@articles = Article.all
