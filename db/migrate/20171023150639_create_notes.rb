@@ -4,7 +4,7 @@ class CreateNotes < ActiveRecord::Migration[5.1]
 			t.integer :value
 			t.string :currency
 			t.string :reference
-			t.integer :table_id
+			t.integer :table_number
 			t.integer :seats
 			t.text :menu_ids, array: true, default: []
 			t.text :article_ids, array: true, default: []
