@@ -3,14 +3,14 @@
 	<thead>
 		<tr>
 			<th colspan="2" rowspan="2"><img src="/assets/table1.png" onclick="toggleTableDetail()"></th>
-			<th colspan="5">N° Table : <%=@table.table_number.to_s.rjust(2,'0')%></th>
+			<th colspan="5">Ref : <%=@table.table_number%><br>N° Table : <%=@table.table_number.to_s.rjust(2,'0')%></th>
 		</tr>
 		<tr>
-			<th>Code</th>
-			<th>Nom</th>
-			<th>Prix Unité</th>
-			<th>Note</th>
-			<th>Etat</th>
+			<th style="width:10%">Code</th>
+			<th style="width:10%">Nom</th>
+			<th style="width:10%">Prix Unité</th>
+			<th style="width:45%">Note</th>
+			<th style="width:10%">Etat</th>
 		</tr>
 	</thead>
 	
@@ -32,10 +32,12 @@
 			<td><a class="btn" onclick="cashIn()">Encaisser</a></td>
 			<td><a href="/front/annulation">Annulation</a></td>
 		</tr>
-	</table>
+	</table>	
 </div>
 
 <%= render "table_book" %>
+<%= render "keyboard" %>
+<%= render "keyboard_notice" %>
 
 <script >
 $(document).ready(function() {
@@ -90,5 +92,14 @@ function cashIn() {
 		});
 	}
 }
+function addCodeManually(){
+	$('#modalAddCodeManually').modal('show');
+}
 
+function addNotice(e) {
+	alert($(e).parent().parent());
+	//alert(("#table_detail_note").rows[0]);
+	///$('#hide_ligne').text($(e).index()+1);
+	//$('#modalAddNotice').modal('show');	
+}
 </script>
