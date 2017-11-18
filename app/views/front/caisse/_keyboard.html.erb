@@ -46,7 +46,7 @@
 	</div>
 </div>	
 <script>
-var table_detail_line = "<tr><td><button type='button' class='btn btn-default btn-lg' onclick='duplicateLineNote(this)'><span class='glyphicon glyphicon-duplicate' aria-hidden='true'></span></button></td><td><button type='button' class='btn btn-default btn-lg' onClick='removeLineNote(this)'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td><td class='table_note_code'>%CODE%</td><td>%NOM%</td><td class='table_note_price'>%PRIX%</td><td><button type='button' class='btn btn-default btn-lg' onclick='addNotice()'><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span></button>%NOTE%</td><td>%ETAT%</td></tr>";
+var table_detail_line = "<tr><td><button type='button' class='btn btn-default btn-lg' onclick='duplicateLineNote(this)'><span class='glyphicon glyphicon-duplicate' aria-hidden='true'></span></button></td><td><button type='button' class='btn btn-default btn-lg' onClick='removeLineNote(this)'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td><td class='table_note_code'>%CODE%</td><td>%NOM%</td><td class='table_note_price'>%PRIX%</td><td><button type='button' class='btn btn-default btn-lg' onclick='addNotice(this)'><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span></button>%NOTE%</td><td>%ETAT%</td></tr>";
 
 $(function(){
 	var $write = $('#write');

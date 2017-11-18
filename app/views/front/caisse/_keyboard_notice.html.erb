@@ -2,7 +2,6 @@
     <div class="modal-dialog">
 		<div class="modal-content" style="text-align: center;">
 			<textarea id="write_notice" rows="6" cols="60"></textarea>
-			<textarea id="hide_ligne" style="display:none;"></textarea>
 			<ul id="keyboard_notice">
 				<li class="symbol">1</li>
 				<li class="symbol">2</li>
@@ -66,11 +65,8 @@ $(function(){
 		// Enter
 		if ($this.hasClass('enter')) {
 			var code = $write_notice.html();
-			$write_notice.html("");
-			var nbLine = $hide_ligne.html();
-			$("#table_detail_note").rows[]
+			//$write_notice.html("");
 			return code;
-
 		}
 
 		// Add the character
