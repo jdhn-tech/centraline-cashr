@@ -2,6 +2,7 @@
     <div class="modal-dialog">
 		<div class="modal-content" style="text-align: center;">
 			<textarea id="write_notice" rows="6" cols="60"></textarea>
+			<input type="text" name="hide_tableIndex" id="hide_tableIndex" style="display:none;" value=""/>
 			<ul id="keyboard_notice">
 				<li class="symbol">1</li>
 				<li class="symbol">2</li>
@@ -39,6 +40,7 @@
 				<li class="letter">X</li>
 				<li class="letter">Y</li>
 				<li class="letter">Z</li>
+				<li class="symbol">,</li>
 				<li class="delete">Delete</li>
 				<li class="enter" data-dismiss="modal">Enter</li>
 			</ul>
@@ -65,7 +67,12 @@ $(function(){
 		// Enter
 		if ($this.hasClass('enter')) {
 			var code = $write_notice.html();
-			//$write_notice.html("");
+			var rowIndex=document.getElementById('hide_tableIndex').value;
+			var button=$("#table_detail_note tr:eq("+rowIndex+") td:eq(5)").find('button');
+			$("#table_detail_note tr:eq("+rowIndex+") td:eq(5)").text("");
+			$("#table_detail_note tr:eq("+rowIndex+") td:eq(5)").append(button);
+			$("#table_detail_note tr:eq("+rowIndex+") td:eq(5)").append(code);
+			$write_notice.html("");
 			return code;
 		}
 
