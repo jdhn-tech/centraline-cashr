@@ -1,16 +1,17 @@
 class Note < ApplicationRecord
+	has_many :tickets
 	def getMenus
-		table = []
+		tab = []
 		self.menu_ids.each do |id|
-			table << Menu.find(id)
+			tab << Menu.find(id)
 		end
-		return table.compact
+		return tab.compact
 	end
 	def getArticles
-		table = []
+		tab = []
 		self.article_ids.each do |id|
-			table << Article.find(id)
+			tab << Article.find(id)
 		end
-		return table.compact
+		return tab.compact
 	end
 end
