@@ -6,12 +6,13 @@ Rails.application.routes.draw do
   root to: "front/caisse#tables"
   get "/front/caisse" => "front/caisse#tables"
   get "/front/emporter" => "front/caisse#emporter"
-  get "/front/table_detail/:id" => "front/caisse#table_detail"
-  get "/front/edition_liste" => "front/caisse#edition_liste"
   get "/front/edition_client" => "front/caisse#edition_client"
-  get "/front/encaisser/:id" => "front/caisse#encaisser"
-  get "/front/annulation" => "front/caisse#annulation"
   get "/front/takeaway_detail" => "front/caisse#takeaway_detail"
+  
+  get "/front/encaisser/:id" => "front/caisse#encaisser"
+  get "/front/edition_liste/:id" => "front/caisse#edition_liste"
+  get "/front/annulation/:id" => "front/caisse#annulation"
+  get "/front/table_detail/:id" => "front/caisse#table_detail"
   get "/front/get_code/:code" => "front/caisse#get_code"
 
   # Method calls
@@ -27,7 +28,7 @@ Rails.application.routes.draw do
 
   # Method calls
   get "/admin/add_table" => "admin/dashboard#add_table"
-  get "/admin/del_table" => "admin/dashboard#del_table"
+  get "/admin/del_table/:id" => "admin/dashboard#del_table"
   
   namespace :admin do
   	resources :tables, :categories, :articles, :menus, :notes

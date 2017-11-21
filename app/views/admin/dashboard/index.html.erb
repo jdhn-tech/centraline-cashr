@@ -3,10 +3,21 @@
 	<div>
 	<!-- Tables -->
 		<p>
-			<%= @tables.count %> tables
+			<%= @tables.count %> tables <a href="/admin/add_table"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
 			<ul>
-				<% @tables.each do |table| %>
-					<li>table <%= table.table_number %> </li>
+				<% @tables.sort.each do |table| %>
+					<li>table <%= table.table_number %>
+					<% if table.table_number > 0 %>
+						<a href="/admin/del_table/<%=table.id%>"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a></li>
+					<% end %>
+				<% end %>
+			</ul>
+		</p>
+		<p>
+			Notes non réglées : <br>
+			<ul>
+				<% @activeNotes.each do |note| %>
+					<li> Référence <%=note.reference%> : <%=note.value%> €
 				<% end %>
 			</ul>
 		</p>

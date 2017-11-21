@@ -1,16 +1,17 @@
 class Front::CaisseController < ApplicationController
 	def tables
-		@tables = Table.all
+		@tables = Table.all.sort
 	end
 	def table_detail
 		@table = Table.find(params[:id])
 		if @table.occupied
-			@note = Note.where(table_id: params[:id], active: true).first
+			@note = Note.where(table_number: @table.table_number, active: true).first
 		else
 			@note = Note.new
-			@note.table_id = params[:id]
+			@note.table_number = @table.table_number
 			@note.active = true
 			@note.value = 0
+			@note.reference = "T" + @table.table_number.to_s + "-" + Time.now.to_f.to_s
 			@note.currency = "Euro"
 			@note.save
 			@table.occupied = true
@@ -28,10 +29,16 @@ class Front::CaisseController < ApplicationController
 		@note = Note.find(params[:id])
 	end
 	def annulation
+		@table = Table.find(params[:id])
+		@note = Note.where(table_number: @table.table_number, active: true).first
+		@table.occupied = false
+		@note.active = false
+		@table.save
+		@note.save
 	end
 
 	def emporter
-		@notes = Note.where(table_id: 1, active: true).compact
+		@notes = Note.where(table_number: 0, active: true).compact
 	end
 	def takeaway_detail
 		@menus = Menu.all

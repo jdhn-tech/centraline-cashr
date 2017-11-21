@@ -24,34 +24,6 @@
 			</tbody>
 		</table>
 	</div>
-	<!-- <div id="table_book_menus" class="row">
-		<div class="col col-md-2">
-			<table class='table'>
-				<tbody>
-				<%# @menus.each do |menu| %>
-					<tr>
-						<td><a class="btn-group btn-group-justified" onclick="tableBookToggleMenus('table_book_select_menu<%#=menu.id%>')"><%#= menu.name %></a></td>
-					</tr>
-				<%# end %>
-				</tbody>
-			</table>
-		</div>
-		<%# @menus.each do |menu| %>
-			<div id="table_book_select_menu<%#=menu.id%>" class="col col-md-9" style="display:none;">
-				<table class="table col col-md-6">
-					<thead><tr><th colspan="10"><h3 style="text-align:center;"><%#=menu.name%></h3></th></tr></thead>
-					<%# menu.get_articles.each do |article| %>
-						<tr>
-							<td><input type="checkbox"></td>
-							<td><%#= article.code %></td>
-							<td><%#= article.name %></td>
-							<td><%#= article.price.to_f / 100 %> €</td>
-						</tr>
-					<%# end %>
-				</table>
-			</div>
-		<%# end %>
-	</div> -->
 	<div id="table_book_entries" class="row" style="display:none;">
 		<table class='table'>
 			<% @articles.map{|a| a if a.category_ids.include?("4")}.compact.each do |article| %>

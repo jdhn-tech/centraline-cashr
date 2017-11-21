@@ -2,8 +2,9 @@
 	<table id='Table_Detail' class='table'>
 	<thead>
 		<tr>
-			<th colspan="2" rowspan="2"><img src="/assets/table1.png" onclick="toggleTableDetail()"></th>
-			<th colspan="5">Ref : <%=@table.table_number%><br>N° Table : <%=@table.table_number.to_s.rjust(2,'0')%></th>
+			<th colspan="2" rowspan="2"><img src="/assets/table1.png" onclick="toggleTableDetail()"> 
+			<button class="btn" onclick="addCodeManually()">Ajouter Manuellement</button> </th>
+			<th colspan="5">Ref : <%=@note.reference%><br>N° Table : <%=@table.table_number.to_s.rjust(2,'0')%></th>
 		</tr>
 		<tr>
 			<th style="width:10%">Code</th>
@@ -15,8 +16,40 @@
 	</thead>
 	
 	<tbody id='table_detail_note'>
-		<% @note. %>
-		<%  %>
+		<% @note.getMenus.each do |menu| %>
+			<tr>
+				<td>
+					<button type='button' class='btn btn-default btn-lg' onClick='duplicateLineNote(this)'><span class='glyphicon glyphicon-duplicate' aria-hidden='true'></span></button>
+				</td>
+				<td>
+					<button type='button' class='btn btn-default btn-lg' onClick='removeLineNote(this)'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button>
+				</td>
+				<td class='table_note_code'><%=menu.code%></td>
+				<td><%=menu.name%></td>
+				<td class='table_note_price'><%=menu.price%></td>
+				<td>
+					<button type='button' class='btn btn-default btn-lg' onClick='addNotice(this)'><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span></button>
+				</td>
+				<td></td>
+			</tr>
+		<% end %>
+		<% @note.getArticles.each do |aticle| %>
+			<tr>
+				<td>
+					<button type='button' class='btn btn-default btn-lg' onClick='duplicateLineNote(this)'><span class='glyphicon glyphicon-duplicate' aria-hidden='true'></span></button>
+				</td>
+				<td>
+					<button type='button' class='btn btn-default btn-lg' onClick='removeLineNote(this)'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button>
+				</td>
+				<td class='table_note_code'><%=article.code%></td>
+				<td><%=article.name%></td>
+				<td class='table_note_price'><%=article.price%></td>
+				<td>
+					<button type='button' class='btn btn-default btn-lg' onClick='addNotice(this)'><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span></button>
+				</td>
+				<td></td>
+			</tr>
+		<% end %>
 	</tbody>
 	<tfoot>
 		<tr>
@@ -27,10 +60,10 @@
 	
 	<table id='Table_Bottom' class='Table_Bottom'>
 		<tr style="height:50px;">
-			<td><a href="/front/edition_liste">Edition liste</a></td>
+			<td><a href="/front/edition_liste/<%=@note.id%>">Edition liste</a></td>
 			<td><a href="/front/edition_client">Edition Client</a></td>
 			<td><a class="btn" onclick="cashIn()">Encaisser</a></td>
-			<td><a href="/front/annulation">Annulation</a></td>
+			<td><a href="/front/annulation/<%=@table.id%>">Annulation</a></td>
 		</tr>
 	</table>	
 </div>
@@ -45,6 +78,7 @@ $(document).ready(function() {
 	// var tableKeys = Object.keys(tableNote);
 	// tableKeys.forEach(function(element) {
 	// });
+	updateSum();
 });
 
 function toggleTableDetail() {
