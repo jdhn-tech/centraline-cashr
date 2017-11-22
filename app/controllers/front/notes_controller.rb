@@ -11,24 +11,29 @@ class Front::NotesController < ApplicationController
 		redirect_to "/front/takeaway_detail/" + my_note.id
 	end
 	def update_note
-		my_note = Note.find params[:note_id]
+		my_note = Note.find params[:id]
 		elements = params[:articles].split(";")
 		my_note.value = 0
+		my_menu_ids = []
+		my_article_ids = []
 		elements.each do |e|
 			if (Menu.exists?(code: e))
 				my_menu = Menu.find_by(code: e)
-				my_note.menu_ids << my_menu.id
+				my_menu_ids << my_menu.id
 				my_note.value += my_menu.price
 
 			end
 			if (Article.exists?(code: e))
 				my_article = Article.find_by(code: e)
-				my_note.article_ids << my_article.id
+				my_article_ids << my_article.id
 				my_note.value += my_article.price
 			end
 		end
+		my_note.menu_ids = my_menu_ids
+		my_note.article_ids = my_article_ids
 		my_note.menu_ids.sort!
 		my_note.article_ids.sort!
 		my_note.save
+		render :json => {:success => true, :code => 200}.to_json
 	end
 end

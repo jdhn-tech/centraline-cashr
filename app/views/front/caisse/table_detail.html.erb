@@ -26,14 +26,14 @@
 				</td>
 				<td class='table_note_code'><%=menu.code%></td>
 				<td><%=menu.name%></td>
-				<td class='table_note_price'><%=menu.price%></td>
+				<td class='table_note_price'><%=menu.price.to_f / 100%> €</td>
 				<td>
 					<button type='button' class='btn btn-default btn-lg' onClick='addNotice(this)'><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span></button>
 				</td>
 				<td></td>
 			</tr>
 		<% end %>
-		<% @note.getArticles.each do |aticle| %>
+		<% @note.getArticles.each do |article| %>
 			<tr>
 				<td>
 					<button type='button' class='btn btn-default btn-lg' onClick='duplicateLineNote(this)'><span class='glyphicon glyphicon-duplicate' aria-hidden='true'></span></button>
@@ -43,7 +43,7 @@
 				</td>
 				<td class='table_note_code'><%=article.code%></td>
 				<td><%=article.name%></td>
-				<td class='table_note_price'><%=article.price%></td>
+				<td class='table_note_price'><%=article.price.to_f / 100%> €</td>
 				<td>
 					<button type='button' class='btn btn-default btn-lg' onClick='addNotice(this)'><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span></button>
 				</td>
@@ -53,7 +53,7 @@
 	</tbody>
 	<tfoot>
 		<tr>
-			<th colspan="7" id="table_note_sum">Somme = <%=@note.value.to_f / 100%> €</th>
+			<th colspan="7" id="table_note_sum">Somme = 0 €</th>
 		</tr>
 	</tfoot>
 	</table>
@@ -81,12 +81,12 @@ $(document).ready(function() {
 	updateSum();
 });
 
-function updateNote(event){
+function updateNote(){
 	var items = ($(".table_note_code").map(function(){return $(this).text();}).get()).join(";");
 	
 	$.ajax({
 		async: false,
-		url: "front/notes/update/"+items,
+		url: "/front/notes/update/<%=@note.id%>?articles="+escape(items),
 		type: "GET",
 		success : function(data) {
 
@@ -110,10 +110,12 @@ function duplicateLineNote(e) {
 	var thisLine = $(e).parent().parent();
 	$("#table_detail_note").append(thisLine.clone());
 	updateSum();
+	updateNote();
 }
 function removeLineNote(e) {
 	$(e).parent().parent().remove();
 	updateSum();
+	updateNote();
 }
 function updateSum() {
 	var sum = 0;
@@ -121,26 +123,6 @@ function updateSum() {
 		sum += parseFloat($(obj).text());
 	});
 	$("#table_note_sum").text("Somme = "+sum+" €");
-}
-function cashIn() {
-	var tableNote = {
-		"table_id"	: "<%=@table.id%>",
-		"articles"	: ($(".table_note_code").map(function(){return $(this).text();}).get()).join(";")
-	};
-	if (tableNote['articles'] != ""){
-		$.ajax({
-			async: false,
-			url: "/front/notes/create",
-			type: "POST",
-			data: tableNote,
-			dataType: "json",
-			success : function(data) {
-				if (data["success"]){
-					window.location.href = "/front/encaisser/"+data["note_id"];
-				}
-			}
-		});
-	}
 }
 function addCodeManually(){
 	$('#modalAddCodeManually').modal('show');

@@ -15,7 +15,7 @@
 			<tbody>
 				<% @menus.each do |menu| %>
 					<tr>
-						<td><button type='button' onClick="addMenuToNote('<%=menu.id%>','<%=menu.code%>','<%=menu.name%>','<%=menu.price%>')">Ajouter</button></td>
+						<td><button type='button' onClick="addMenuToNote('<%=menu.id%>','<%=menu.code%>','<%=menu.name%>','<%=menu.price%>',this)">Ajouter</button></td>
 						<td><%=menu.code%> : <%=menu.name%></td>
 						<td><%= menu.get_articles.map{|a| a.name}.join(" ; ") %></td>
 						<td><%= menu.price.to_f / 100 %> €</td>
@@ -28,7 +28,7 @@
 		<table class='table'>
 			<% @articles.map{|a| a if a.category_ids.include?("4")}.compact.each do |article| %>
 				<tr>
-					<td><button type='button' onClick="addEntryToNote('<%=article.id%>','<%=article.code%>','<%=article.name%>','<%=article.price%>')">Ajouter</button></td>
+					<td><button type='button' onClick="addEntryToNote('<%=article.id%>','<%=article.code%>','<%=article.name%>','<%=article.price%>',this)">Ajouter</button></td>
 					<td><%= article.code %></td>
 					<td><%= article.name %></td>
 					<td><%= article.price.to_f / 100 %> €</td>
@@ -40,7 +40,7 @@
 		<table class='table'>
 			<% @articles.map{|a| a if (a.category_ids & ["5"]).any?}.compact.each do |article| %>
 				<tr>
-					<td><button type='button' onClick="addDishToNote('<%=article.id%>','<%=article.code%>','<%=article.name%>','<%=article.price%>')">Ajouter</button></td>
+					<td><button type='button' onClick="addDishToNote('<%=article.id%>','<%=article.code%>','<%=article.name%>','<%=article.price%>',this)">Ajouter</button></td>
 					<td><%= article.code %></td>
 					<td><%= article.name %></td>
 					<td><%= article.price.to_f / 100 %> €</td>
@@ -52,7 +52,7 @@
 		<table class='table'>
 			<% @articles.map{|a| a if (a.category_ids & ["1","2"]).any?}.compact.each do |article| %>
 				<tr>
-					<td><button type='button' onClick="addDrinkToNote('<%=article.id%>','<%=article.code%>','<%=article.name%>','<%=article.price%>')">Ajouter</button></td>
+					<td><button type='button' onClick="addDrinkToNote('<%=article.id%>','<%=article.code%>','<%=article.name%>','<%=article.price%>',this)">Ajouter</button></td>
 					<td><%= article.code %></td>
 					<td><%= article.name %></td>
 					<td><%= article.price.to_f / 100 %> €</td>
@@ -64,7 +64,7 @@
 		<table class='table'>
 			<% @articles.map{|a| a if (a.category_ids & ["7"]).any?}.compact.each do |article| %>
 				<tr>
-					<td><button type='button' onClick="addDessertToNote('<%=article.id%>','<%=article.code%>','<%=article.name%>','<%=article.price%>')">Ajouter</button></td>
+					<td><button type='button' onClick="addDessertToNote('<%=article.id%>','<%=article.code%>','<%=article.name%>','<%=article.price%>',this)">Ajouter</button></td>
 					<td><%= article.code %></td>
 					<td><%= article.name %></td>
 					<td><%= article.price.to_f / 100 %> €</td>
@@ -116,7 +116,7 @@ function toggleDessertSelect() {
 	$("#table_book_desserts").show();
 }
 
-function addMenuToNote(id,code,name,price) {
+function addMenuToNote(id,code,name,price,e) {
 	var line = table_detail_line.replace('%CODE%', code);
 	line = line.replace('%NOM%', name);
 	line = line.replace('%PRIX%', price / 100 + ' €');
@@ -125,8 +125,9 @@ function addMenuToNote(id,code,name,price) {
 	$("#table_detail_note").append(line);
 	updateSum();
 	toggleTableDetail();
+	updateNote();
 }
-function addEntryToNote(id,code,name,price) {
+function addEntryToNote(id,code,name,price,e) {
 	var line = table_detail_line.replace('%CODE%', code);
 	line = line.replace('%NOM%', name);
 	line = line.replace('%PRIX%', price / 100 + ' €');
@@ -135,8 +136,9 @@ function addEntryToNote(id,code,name,price) {
 	$("#table_detail_note").append(line);
 	updateSum();
 	toggleTableDetail();
+	updateNote();
 }
-function addDishToNote(id,code,name,price) {
+function addDishToNote(id,code,name,price,e) {
 	var line = table_detail_line.replace('%CODE%', code);
 	line = line.replace('%NOM%', name);
 	line = line.replace('%PRIX%', price / 100 + ' €');
@@ -145,8 +147,9 @@ function addDishToNote(id,code,name,price) {
 	$("#table_detail_note").append(line);
 	updateSum();
 	toggleTableDetail();
+	updateNote();
 }
-function addDrinkToNote(id,code,name,price) {
+function addDrinkToNote(id,code,name,price,e) {
 	var line = table_detail_line.replace('%CODE%', code);
 	line = line.replace('%NOM%', name);
 	line = line.replace('%PRIX%', price / 100 + ' €');
@@ -155,8 +158,9 @@ function addDrinkToNote(id,code,name,price) {
 	$("#table_detail_note").append(line);
 	updateSum();
 	toggleTableDetail();
+	updateNote();
 }
-function addDessertToNote(id,code,name,price) {
+function addDessertToNote(id,code,name,price,e) {
 	var line = table_detail_line.replace('%CODE%', code);
 	line = line.replace('%NOM%', name);
 	line = line.replace('%PRIX%', price / 100 + ' €');
@@ -165,5 +169,6 @@ function addDessertToNote(id,code,name,price) {
 	$("#table_detail_note").append(line);
 	updateSum();
 	toggleTableDetail();
+	updateNote();
 }
 </script>
