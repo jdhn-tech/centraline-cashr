@@ -53,67 +53,71 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
+				<!-- <tr>
 					<td>code</td>
 					<td>nom</td>
 					<td class="apayer">prix €</td>
-				</tr>
+				</tr> -->
+			</tbody>
+			<tfoot>
 				<tr>
 					<th colspan="2">Total</th><th id="total_apayer">x €</th>
 				</tr>
 				<tr>
 					<th colspan="2">1 repas</th><th>x €</th>
 				</tr>
-			</tbody>
+			</tfoot>	
 		</table>
 	</div>	
 	
 	<div class="Droite">
 		<table id='Table_Paiement' class='Table_Paiement'>
-		<thead>
-		<tr>
-		<th colspan="2">PAIEMENT</th>
-		</tr>
-		<tr>
-		<th>Montant</th><th>Mode</th>
-		</tr>
-		</thead>
-		<tbody>
-		<tr>
-		<td>3€</td>
-		<td>
-			<select>
-			  <option value="ES">ES</option>
-			  <option value="CB" selected="selected">CB</option>
-			  <option value="TR">TR</option>
-			  <option value="CH">CH</option>
-			  <option value="AUTRES">AUTRES</option>
-			</select>
-		</td>
-		</tr>
-		<tr>
-		<td>5€</td>
-		<td>
-			<select>
-			  <option value="ES">ES</option>
-			  <option value="CB" selected="selected">CB</option>
-			  <option value="TR">TR</option>
-			  <option value="CH">CH</option>
-			  <option value="AUTRES">AUTRES</option>
-			</select>
+			<thead>
+				<tr>
+					<th colspan="2">PAIEMENT</th>
+				</tr>
+				<tr>
+					<th>Montant</th><th>Mode</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>3€</td>
+					<td>
+						<select>
+						  <option value="ES">ES</option>
+						  <option value="CB" selected="selected">CB</option>
+						  <option value="TR">TR</option>
+						  <option value="CH">CH</option>
+						  <option value="AUTRES">AUTRES</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>5€</td>
+					<td>
+						<select>
+						  <option value="ES">ES</option>
+						  <option value="CB" selected="selected">CB</option>
+						  <option value="TR">TR</option>
+						  <option value="CH">CH</option>
+						  <option value="AUTRES">AUTRES</option>
+						</select>
 
-		</td>
-		</tr>
-		<tr>
-		<th>Total</th><th>25€</th>
-		</tr>
-		<tr>
-		<th>Paiement</th><th>8€</th>
-		</tr>
-		<tr>
-		<th>Reste/à rendre</th><th>17€</th>
-		</tr>
-		</tbody>
+					</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<th>Total</th><th>25€</th>
+				</tr>
+				<tr>
+					<th>Paiement</th><th>8€</th>
+				</tr>
+				<tr>
+					<th>Reste/à rendre</th><th>17€</th>
+				</tr>
+			</tfoot>
 		</table>
 		<button>EDITION FACTURE</button>
 	</div>
@@ -130,4 +134,33 @@ function totalSelection(){
 $(document).ready(function(){
 	totalSelection();
 });
+
+function ajouteLigne(tableID,text) {
+  var table_body= document.getElementById(tableID).getElementsByTagName('tbody')[0];
+  var nouvelleLigne   = table_body.insertRow(0);
+  var nouvelleCellule1  = nouvelleLigne.insertCell(0);
+  var nouvelleCellule2  = nouvelleLigne.insertCell(1);
+  nouvelleCellule.appendChild(text);
+}
+
+
+var selection_table_body = document.getElementById("Table_Selection").getElementsByTagName('tbody')[0];
+
+
+$("#Table_Selection tbody tr").on('click', function(e) {
+	var article_table_body = document.getElementById("Table_Article").getElementsByTagName('tbody')[0];
+	var row = article_table_body.insertRow(article_table_body.rows.length);
+	
+	document.getElementById("Table_Selection").deleteRow();
+	var i=0;
+	$("td",this).each(function(el){
+		var cell= row.insertCell(i);
+		cell.innerHTML = $(this).text();
+		i++;
+
+	})
+	
+
+});
+
 </script>
