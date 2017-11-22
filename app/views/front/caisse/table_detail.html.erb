@@ -53,7 +53,7 @@
 	</tbody>
 	<tfoot>
 		<tr>
-			<th colspan="7" id="table_note_sum">Somme = 0 €</th>
+			<th colspan="7" id="table_note_sum">Somme = <%=@note.value.to_f / 100%> €</th>
 		</tr>
 	</tfoot>
 	</table>
@@ -62,7 +62,7 @@
 		<tr style="height:50px;">
 			<td><a class="btn" href="/front/edition_liste/<%=@note.id%>">Edition liste</a></td>
 			<td><a class="btn" href="/front/edition_client">Edition Client</a></td>
-			<td><a class="btn" href="/front/encaisser/<%=note.id%>">Encaisser</a></td>
+			<td><a class="btn" href="/front/encaisser/<%=@note.id%>">Encaisser</a></td>
 			<td><a class="btn" href="/front/annulation/<%=@table.id%>">Annulation</a></td>
 		</tr>
 	</table>	
@@ -80,6 +80,22 @@ $(document).ready(function() {
 	// });
 	updateSum();
 });
+
+function updateNote(event){
+	var items = ($(".table_note_code").map(function(){return $(this).text();}).get()).join(";");
+	
+	$.ajax({
+		async: false,
+		url: "front/notes/update/"+items,
+		type: "GET",
+		success : function(data) {
+
+		},
+		error : function(data) {
+
+		}
+	})
+}
 
 function toggleTableDetail() {
 	if ($("#table_detail").is(":visible")) {
