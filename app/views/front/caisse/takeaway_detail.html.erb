@@ -3,7 +3,7 @@
 	<thead>
 		<tr>
 			<th colspan="2" rowspan="2"><img src="/assets/ecommerce.png" onclick="toggleTakeawayDetail()"></th>
-			<th colspan="5"><%=@table.table_number.to_s.rjust(2,'0')%></th>
+			<th colspan="5">Ref : <%=@note.reference%><br>Emporter</th>
 		</tr>
 		<tr>
 			<th>Code</th>
@@ -15,7 +15,40 @@
 	</thead>
 	
 	<tbody id='takeaway_detail_note'>
-		
+		<% @note.getMenus.each do |menu| %>
+			<tr>
+				<td>
+					<button type='button' class='btn btn-default btn-lg' onClick='duplicateLineNote(this)'><span class='glyphicon glyphicon-duplicate' aria-hidden='true'></span></button>
+				</td>
+				<td>
+					<button type='button' class='btn btn-default btn-lg' onClick='removeLineNote(this)'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button>
+				</td>
+				<td class='table_note_code'><%=menu.code%></td>
+				<td><%=menu.name%></td>
+				<td class='table_note_price'><%=menu.price%></td>
+				<td>
+					<button type='button' class='btn btn-default btn-lg' onClick='addNotice(this)'><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span></button>
+				</td>
+				<td></td>
+			</tr>
+		<% end %>
+		<% @note.getArticles.each do |aticle| %>
+			<tr>
+				<td>
+					<button type='button' class='btn btn-default btn-lg' onClick='duplicateLineNote(this)'><span class='glyphicon glyphicon-duplicate' aria-hidden='true'></span></button>
+				</td>
+				<td>
+					<button type='button' class='btn btn-default btn-lg' onClick='removeLineNote(this)'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button>
+				</td>
+				<td class='table_note_code'><%=article.code%></td>
+				<td><%=article.name%></td>
+				<td class='table_note_price'><%=article.price%></td>
+				<td>
+					<button type='button' class='btn btn-default btn-lg' onClick='addNotice(this)'><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span></button>
+				</td>
+				<td></td>
+			</tr>
+		<% end %>
 	</tbody>
 	<tfoot>
 		<tr>

@@ -14,4 +14,7 @@ class Note < ApplicationRecord
 		end
 		return tab.compact
 	end
+	def get_remaining_due
+		return (self.value - self.tickets.map(&:value).sum)
+	end
 end

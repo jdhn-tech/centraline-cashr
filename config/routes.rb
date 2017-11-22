@@ -7,17 +7,18 @@ Rails.application.routes.draw do
   get "/front/caisse" => "front/caisse#tables"
   get "/front/emporter" => "front/caisse#emporter"
   get "/front/edition_client" => "front/caisse#edition_client"
-  get "/front/takeaway_detail" => "front/caisse#takeaway_detail"
   
   get "/front/encaisser/:id" => "front/caisse#encaisser"
   get "/front/edition_liste/:id" => "front/caisse#edition_liste"
   get "/front/annulation/:id" => "front/caisse#annulation"
   get "/front/table_detail/:id" => "front/caisse#table_detail"
-  get "/front/get_code/:code" => "front/caisse#get_code"
+  get "/front/takeaway_detail/:noteId" => "front/caisse#takeaway_detail"
 
   # Method calls
   get "/front/table_add_seat/:id" => "front/caisse#table_add_seat"
   post "/front/notes/create" => "front/notes#create"
+  post "/front/takeaway/create" => "front/notes#create_takeaway"
+  get "/front/get_code/:code" => "front/caisse#get_code"
 
   namespace :front do
     resources :tables

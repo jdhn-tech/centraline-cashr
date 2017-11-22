@@ -41,6 +41,7 @@ class Front::CaisseController < ApplicationController
 		@notes = Note.where(table_number: 0, active: true).compact
 	end
 	def takeaway_detail
+		@note = Note.find(params[:noteId])
 		@menus = Menu.all
 		@articles = Article.all
 	end

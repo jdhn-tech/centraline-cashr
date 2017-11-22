@@ -30,7 +30,7 @@
 				<th colspan="2">Total</th><th><%=@note.value.to_f / 100%> €</th>
 			</tr>
 			<tr>
-				<th colspan="2">Restant</th><th id="remaining_selection">100€</th>
+				<th colspan="2">Restant</th><th id="remaining_selection"><%=@note.get_remaining_due%></th>
 			</tr>
 			</tbody>
 		</table>

@@ -1,4 +1,15 @@
 class Front::NotesController < ApplicationController
+	def create_takeaway # creates and redirects on takeaway page for edition
+		my_note = Note.new
+		my_note.table_number = 0
+		my_note.value = 0
+		my_note.active = true
+		my_note.state = ""
+		my_note.currency = "Euro"
+		my_note.reference = "EMP-" + Time.now.to_f.to_s
+		my_note.save
+		redirect_to "/front/takeaway_detail/" + my_note.id
+	end
 	def update_note
 		my_note = Note.find params[:note_id]
 		elements = params[:articles].split(";")
