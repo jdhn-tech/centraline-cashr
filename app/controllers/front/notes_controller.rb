@@ -12,7 +12,7 @@ class Front::NotesController < ApplicationController
 	end
 	def update_note
 		my_note = Note.find params[:id]
-		if (my_note.status != "ACTIVE")
+		if (my_note.state != "ACTIVE")
 			render :json => {:success => false, :code => 403}.to_json
 			return
 		end

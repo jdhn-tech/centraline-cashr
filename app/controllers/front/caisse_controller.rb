@@ -13,9 +13,9 @@ class Front::CaisseController < ApplicationController
 			@note.value = 0
 			@note.reference = "T" + @table.table_number.to_s + "-" + Time.now.to_f.to_s
 			@note.currency = "Euro"
+			@note.state = "ACTIVE"
 			@note.save
 			@table.occupied = true
-			@note.state = "ACTIVE"
 			@table.save
 		end
 		@menus = Menu.all
