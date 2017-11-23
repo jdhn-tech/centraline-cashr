@@ -12,6 +12,10 @@ class Front::NotesController < ApplicationController
 	end
 	def update_note
 		my_note = Note.find params[:id]
+		if (my_note.status != "ACTIVE")
+			render :json => {:success => false, :code => 403}.to_json
+			return
+		end
 		elements = params[:articles].split(";")
 		my_note.value = 0
 		my_menu_ids = []
@@ -29,10 +33,8 @@ class Front::NotesController < ApplicationController
 				my_note.value += my_article.price
 			end
 		end
-		my_note.menu_ids = my_menu_ids
-		my_note.article_ids = my_article_ids
-		my_note.menu_ids.sort!
-		my_note.article_ids.sort!
+		my_note.menu_ids = my_menu_ids.sort
+		my_note.article_ids = my_article_ids.sort
 		my_note.save
 		render :json => {:success => true, :code => 200}.to_json
 	end

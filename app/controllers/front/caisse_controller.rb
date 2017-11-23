@@ -5,7 +5,7 @@ class Front::CaisseController < ApplicationController
 	def table_detail
 		@table = Table.find(params[:id])
 		if @table.occupied
-			@note = Note.where(table_number: @table.table_number, active: true).first
+			@note = Note.where(table_number: @table.table_number, active: true, state: "ACTIVE").first
 		else
 			@note = Note.new
 			@note.table_number = @table.table_number
@@ -15,6 +15,7 @@ class Front::CaisseController < ApplicationController
 			@note.currency = "Euro"
 			@note.save
 			@table.occupied = true
+			@note.state = "ACTIVE"
 			@table.save
 		end
 		@menus = Menu.all
