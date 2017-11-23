@@ -128,10 +128,10 @@ function addCodeManually(){
 	$('#modalAddCodeManually').modal('show');
 }
 
+
 function addNotice(e) {
-	alert($(e).parent().parent());
-	//alert(("#table_detail_note").rows[0]);
-	///$('#hide_ligne').text($(e).index()+1);
-	//$('#modalAddNotice').modal('show');	
+	var rowIndex = $(e).closest('tr').index();
+	$('#modalAddNotice #hide_tableIndex').val(rowIndex);
 }
+
 </script>
