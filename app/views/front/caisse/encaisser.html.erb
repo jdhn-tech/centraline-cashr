@@ -78,8 +78,8 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>3€</td>
+				<!-- <tr>
+					<td class="paiement">0€</td>
 					<td>
 						<select>
 						  <option value="ES">ES</option>
@@ -89,7 +89,7 @@
 						  <option value="AUTRES">AUTRES</option>
 						</select>
 					</td>
-				</tr>
+				</tr> -->
 				<!-- <tr>
 					<td>5€</td>
 					<td>
@@ -108,16 +108,19 @@
 					<th>Total</th><th id="totaux_payes">0€</th>
 				</tr>
 				<tr>
-					<th>Paiement</th><th>8€</th>
+					<th>Payé</th><th>8€</th>
 				</tr>
 				<tr>
-					<th>Reste/à rendre</th><th>17€</th>
+					<th>Reste à payer</th><th>17€</th>
 				</tr>
 			</tfoot>
 		</table>
 		<button>EDITION FACTURE</button>
 	</div>
 </div>
+
+<%= render "keyboard_paiement" %>
+
 <script>
 
 
@@ -168,6 +171,19 @@ $("#Table_Article tfoot").delegate("tr",'click',function(e) {
 	mode.innerHTML = mode_paiement;
 	$("#Table_Article tbody tr").remove();
 	totalSelection();
+});
+
+
+
+
+$("#Table_Paiement tbody").delegate("tr td:first-child",'click',function(e) {
+	$(this).each(function(el){
+		$('#modalPaiement').modal('show');
+		var rowIndex = $(this).closest('tr').index();
+		$('#modalPaiement #hide_paiementIndex').val(rowIndex);
+		totalSelection();
+	});
+	
 });
 
 function totalSelection(){

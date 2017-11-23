@@ -1,8 +1,9 @@
 <div class="modal fade" id="modalPaiement" role="dialog">
     <div class="modal-dialog">
 		<div class="modal-content" style="text-align: center;">
-			<textarea id="write" rows="6" cols="60"></textarea>
-			<ul id="keyboard">
+			<textarea id="write_paiement" rows="6" cols="60"></textarea>
+			<input type="text" name="hide_paiementIndex" id="hide_paiementIndex" style="display:none;" value=""/>
+			<ul id="keyboard_paiement">
 				<li class="symbol">1</li>
 				<li class="symbol">2</li>
 				<li class="symbol">3</li>
@@ -13,9 +14,43 @@
 				<li class="symbol">8</li>
 				<li class="symbol">9</li>
 				<li class="symbol">0</li>
+				<li class="symbol">,</li>
 				<li class="delete">Delete</li>
 				<li class="enter" data-dismiss="modal">Enter</li>
 			</ul>
 		</div>
 	</div>
 </div>	
+
+<script>
+$(function(){
+	var $write_paiement = $('#write_paiement');
+	
+	$('#keyboard_paiement li').click(function(){
+		var $this = $(this),
+			character = $this.html(); 
+		
+		// Delete
+		if ($this.hasClass('delete')) {
+			var html = $write_paiement.html();
+			
+			$write_paiement.html(html.substr(0, html.length - 1));
+			return false;
+		}
+		
+		// Enter
+		if ($this.hasClass('enter')) {
+			var code = $write_paiement.html();
+			var rowIndex=document.getElementById('hide_paiementIndex').value;
+			$("#Table_Paiement tbody tr:eq("+rowIndex+") td:eq(0)").text(code+"€");
+			$write_paiement.html("");
+			totalSelection();
+			return code;
+		}
+
+		// Add the character
+		$write_paiement.html($write_paiement.html() + character);
+	});
+});
+
+</script>
