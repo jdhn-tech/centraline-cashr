@@ -44,7 +44,16 @@ $(function(){
 			var rowIndex=document.getElementById('hide_paiementIndex').value;
 			$("#Table_Paiement tbody tr:eq("+rowIndex+") td:eq(0)").text(code+"€");
 			$write_paiement.html("");
-			totalSelection();
+			var remain_due=resteAPayer();
+			$("#Table_Paiement tfoot tr:eq(1) th:eq(1)").text(remain_due+"€");
+			if(remain_due <= 0 ){
+				$("#Table_Article tbody tr").remove();
+				var asum = 0;
+				$(".article").each(function(i,obj) {
+					asum += parseFloat($(obj).text());
+				});
+				$("#total_apayer").text(asum+" €");
+			}
 			return code;
 		}
 

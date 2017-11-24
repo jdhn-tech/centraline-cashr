@@ -25,6 +25,7 @@ class Front::CaisseController < ApplicationController
 		@note = Note.find(params[:id])
 	end
 	def edition_client
+		@notes=Note.all
 	end
 	def encaisser
 		@note = Note.find(params[:id])
