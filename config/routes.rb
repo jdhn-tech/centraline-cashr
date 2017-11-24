@@ -6,17 +6,20 @@ Rails.application.routes.draw do
   root to: "front/caisse#tables"
   get "/front/caisse" => "front/caisse#tables"
   get "/front/emporter" => "front/caisse#emporter"
-  get "/front/table_detail/:id" => "front/caisse#table_detail"
-  get "/front/edition_liste" => "front/caisse#edition_liste"
   get "/front/edition_client" => "front/caisse#edition_client"
+  
   get "/front/encaisser/:id" => "front/caisse#encaisser"
-  get "/front/annulation" => "front/caisse#annulation"
-  get "/front/takeaway_detail" => "front/caisse#takeaway_detail"
-  get "/front/get_code/:code" => "front/caisse#get_code"
+  get "/front/edition_liste/:id" => "front/caisse#edition_liste"
+  get "/front/annulation/:id" => "front/caisse#annulation"
+  get "/front/table_detail/:id" => "front/caisse#table_detail"
+  get "/front/takeaway_detail/:noteId" => "front/caisse#takeaway_detail"
 
   # Method calls
   get "/front/table_add_seat/:id" => "front/caisse#table_add_seat"
   post "/front/notes/create" => "front/notes#create"
+  get "/front/notes/update/:id" => "front/notes#update_note"
+  post "/front/takeaway/create" => "front/notes#create_takeaway"
+  get "/front/get_code/:code" => "front/caisse#get_code"
 
   namespace :front do
     resources :tables
@@ -27,7 +30,7 @@ Rails.application.routes.draw do
 
   # Method calls
   get "/admin/add_table" => "admin/dashboard#add_table"
-  get "/admin/del_table" => "admin/dashboard#del_table"
+  get "/admin/del_table/:id" => "admin/dashboard#del_table"
   
   namespace :admin do
   	resources :tables, :categories, :articles, :menus, :notes

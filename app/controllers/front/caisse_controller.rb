@@ -1,9 +1,23 @@
 class Front::CaisseController < ApplicationController
 	def tables
-		@tables = Table.all
+		@tables = Table.all.sort
 	end
 	def table_detail
 		@table = Table.find(params[:id])
+		if @table.occupied
+			@note = Note.where(table_number: @table.table_number, active: true, state: "ACTIVE").first
+		else
+			@note = Note.new
+			@note.table_number = @table.table_number
+			@note.active = true
+			@note.value = 0
+			@note.reference = "T" + @table.table_number.to_s + "-" + Time.now.to_f.to_s
+			@note.currency = "Euro"
+			@note.state = "ACTIVE"
+			@note.save
+			@table.occupied = true
+			@table.save
+		end
 		@menus = Menu.all
 		@articles = Article.all
 	end
@@ -11,14 +25,26 @@ class Front::CaisseController < ApplicationController
 		@note = Note.find(params[:id])
 	end
 	def edition_client
+		@notes=Note.all
 	end
 	def encaisser
 		@note = Note.find(params[:id])
+		@payment_types = Payment.all
 	end
 	def annulation
+		@table = Table.find(params[:id])
+		@note = Note.where(table_number: @table.table_number, active: true).first
+		@table.occupied = false
+		@note.active = false
+		@table.save
+		@note.save
 	end
 
+	def emporter
+		@notes = Note.where(table_number: 0, active: true).compact
+	end
 	def takeaway_detail
+		@note = Note.find(params[:noteId])
 		@menus = Menu.all
 		@articles = Article.all
 	end

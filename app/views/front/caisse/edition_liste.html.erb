@@ -1,108 +1,32 @@
 <div class="content">
 	<table id='Table_Reference' class='table'>
-	<thead>
-	<tr>
-	<th>Référence</th><th>Article</th><th>Note</th>
-	</tr>
-	</thead>
-	<tbody>
-	<tr>
-	<td>xxx</td>
-	<td>yyy</td>
-	<td contenteditable='true'>1</td>
-	</tr>
-	<tr>
-	<td>xxx</td>
-	<td>yyy</td>
-	<td contenteditable='true'>1</td>
-	</tr>
-	<tr>
-	<td>xxx</td>
-	<td>yyy</td>
-	<td contenteditable='true'>1</td>
-	</tr>
-	<tr>
-	<td>xxx</td>
-	<td>yyy</td>
-	<td contenteditable='true'>1</td>
-	</tr>
-	<tr>
-	<td></td>
-	<td></td>
-	<td contenteditable='true'></td>
-	</tr>
-	<tr>
-	<td></td>
-	<td></td>
-	<td contenteditable='true'></td>
-	</tr>
-	<tr>
-	<td></td>
-	<td></td>
-	<td contenteditable='true'></td>
-	</tr>
-	<tr>
-	<td></td>
-	<td></td>
-	<td contenteditable='true'></td>
-	</tr>
-	<tr>
-	<td></td>
-	<td></td>
-	<td contenteditable='true'></td>
-	</tr>
-	<tr>
-	<td></td>
-	<td></td>
-	<td contenteditable='true'></td>
-	</tr>
-	<tr>
-	<td></td>
-	<td></td>
-	<td contenteditable='true'></td>
-	</tr>
-	<tr>
-	<td></td>
-	<td></td>
-	<td contenteditable='true'></td>
-	</tr>
-	<tr>
-	<td></td>
-	<td></td>
-	<td contenteditable='true'></td>
-	</tr>
-	<tr>
-	<td></td>
-	<td></td>
-	<td contenteditable='true'></td>
-	</tr>
-	<tr>
-	<td></td>
-	<td></td>
-	<td contenteditable='true'></td>
-	</tr>
-	<tr>
-	<td></td>
-	<td></td>
-	<td contenteditable='true'></td>
-	</tr>
-	<tr>
-	<td></td>
-	<td></td>
-	<td contenteditable='true'></td>
-	</tr>
-	<tr>
-	<td></td>
-	<td></td>
-	<td contenteditable='true'></td>
-	</tr>
-	<tr>
-	<td></td>
-	<td></td>
-	<td contenteditable='true'></td>
-	</tr>
-	</tbody>
+		<thead>
+			<tr>
+				<th>Référence</th>
+				<th>Description</th>
+				<th>Note</th>
+			</tr>
+		</thead>
+		<tbody id="edition_liste_tbody">
+			<% @note.getMenus.each do |menu| %>
+				<tr>
+					<td>menu.code</td>
+					<td>menu.name</td>
+					<td contenteditable='true'>1</td>
+				</tr>
+			<% end %>
+			<% @note.getArticles.each do |article| %>
+				<tr>
+					<td>article.code</td>
+					<td>article.name</td>
+					<td contenteditable='true'>1</td>
+				</tr>
+			<% end %>
+		</tbody>
 	</table>
 	
 	<button onclick="goBack()"> Valider </button>
-</div>	
+</div>
+
+<script>
+</script>

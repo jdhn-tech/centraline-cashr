@@ -1,50 +1,82 @@
-
 <div id="takeaway_detail" class="content">
 	<table id='Table_Detail' class='table'>
 	<thead>
 		<tr>
-		<th colspan="2" rowspan="2"><img src="/assets/ecommerce.png" onclick="toggleTakeawayDetail()"></th>
-		<th colspan="5">N° Emporter :</th>
+			<th colspan="2" rowspan="2"><img src="/assets/ecommerce.png" onclick="toggleTakeawayDetail()"></th>
+			<th colspan="5">Ref : <%=@note.reference%><br>Emporter</th>
 		</tr>
 		<tr>
-		<th>Code</th><th>Description</th><th>Prix Unité</th><th>Note</th><th>Etat</th>
+			<th>Code</th>
+			<th>Nom</th>
+			<th>Prix Unité</th>
+			<th>Note</th>
+			<th>Etat</th>
 		</tr>
 	</thead>
 	
-	<tbody>
-		<%=  %>
-		<tr>
-			<td>
-				<button type="button" class="add btn btn-default btn-lg">1</button>
-			</td>
-			<td>
-				<button type="button" class="del btn btn-default btn-lg"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
-			</td>
-			<td>1</td>
-			<td>Sushi</td>
-			<td>3.00€</td>
-			<td></td>
-			<td></td>
-		</tr>
-		<%  %>
+	<tbody id='takeaway_detail_note'>
+		<% @note.getMenus.each do |menu| %>
+			<tr>
+				<td>
+					<button type='button' class='btn btn-default btn-lg' onClick='duplicateLineNote(this)'><span class='glyphicon glyphicon-duplicate' aria-hidden='true'></span></button>
+				</td>
+				<td>
+					<button type='button' class='btn btn-default btn-lg' onClick='removeLineNote(this)'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button>
+				</td>
+				<td class='table_note_code'><%=menu.code%></td>
+				<td><%=menu.name%></td>
+				<td class='table_note_price'><%=menu.price%></td>
+				<td>
+					<button type='button' class='btn btn-default btn-lg' onClick='addNotice(this)'><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span></button>
+				</td>
+				<td></td>
+			</tr>
+		<% end %>
+		<% @note.getArticles.each do |aticle| %>
+			<tr>
+				<td>
+					<button type='button' class='btn btn-default btn-lg' onClick='duplicateLineNote(this)'><span class='glyphicon glyphicon-duplicate' aria-hidden='true'></span></button>
+				</td>
+				<td>
+					<button type='button' class='btn btn-default btn-lg' onClick='removeLineNote(this)'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button>
+				</td>
+				<td class='table_note_code'><%=article.code%></td>
+				<td><%=article.name%></td>
+				<td class='table_note_price'><%=article.price%></td>
+				<td>
+					<button type='button' class='btn btn-default btn-lg' onClick='addNotice(this)'><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span></button>
+				</td>
+				<td></td>
+			</tr>
+		<% end %>
 	</tbody>
 	<tfoot>
 		<tr>
-		<th colspan="7">SUM=554415</th>
+			<th colspan="7" id="takeaway_note_sum">Somme = 0 €</th>
 		</tr>
 	</tfoot>
 	</table>
 	
 	<table id='Table_Bottom' class='Table_Bottom'>
-	<tr>
-	<td><a href="/front/edition_liste">Edition liste</a></td><td><a href="/front/edition_client">Edition Client</a></td><td><a href="/front/encaisser">Encaisser</a></td><td><a href="/front/annulation">Annulation</a></td>
-	</tr>
+		<tr style="height:50px;">
+			<td><a href="/front/edition_liste">Edition liste</a></td>
+			<td><a href="/front/edition_client">Edition Client</a></td>
+			<td><a class="btn" onclick="cashIn()">Encaisser</a></td>
+			<td><a href="/front/annulation">Annulation</a></td>
+		</tr>
 	</table>
 </div>
 
 <%= render "takeaway_book" %>
 
 <script >
+$(document).ready(function() {
+	// var tableNote = {};
+	// var tableKeys = Object.keys(tableNote);
+	// tableKeys.forEach(function(element) {
+	// });
+});
+
 function toggleTakeawayDetail() {
 	if ($("#takeaway_detail").is(":visible")) {
 		$("#takeaway_detail").hide();
@@ -54,18 +86,41 @@ function toggleTakeawayDetail() {
 		$("#takeaway_book").hide();
 	}
 }
-$('.add').on('click', function(){
-  var count = $(this).text();
-  count++;
-  $(this).text(count);
-});
-$('.del').on('click', function(){
-  var count = $(this).parent().parent().find('td:eq(0)').text();
-  if (count > 1){ 
-	count--; 
-	$(this).parent().parent().find('td:eq(0)').children().text(count);
-  } else{
-	$(this).parent().parent().remove();
-  }
-});
+function duplicateLineNote(e) {
+	var thisLine = $(e).parent().parent();
+	$("#takeaway_detail_note").append(thisLine.clone());
+	updateSum();
+}
+function removeLineNote(e) {
+	$(e).parent().parent().remove();
+	updateSum();
+}
+function updateSum() {
+	var sum = 0;
+	$(".table_note_price").each(function(i,obj) {
+		sum += parseFloat($(obj).text());
+	});
+	$("#takeaway_note_sum").text("Somme = "+sum+" €");
+}
+function cashIn() {
+	var tableNote = {
+		"table_id"	: "<%=@table.id%>",
+		"articles"	: ($(".table_note_code").map(function(){return $(this).text();}).get()).join(";")
+	};
+	if (tableNote['articles'] != ""){
+		$.ajax({
+			async: false,
+			url: "/front/notes/create",
+			type: "POST",
+			data: tableNote,
+			dataType: "json",
+			success : function(data) {
+				if (data["success"]){
+					window.location.href = "/front/encaisser/"+data["note_id"];
+				}
+			}
+		});
+	}
+}
+
 </script>

@@ -26,108 +26,248 @@
 						<td class="selection"><%=menu.price.to_f / 100%> €</td>
 					</tr>
 				<%end%>
-			<tr>
-				<th colspan="2">Total</th><th><%=@note.value.to_f / 100%> €</th>
-			</tr>
-			<tr>
-				<th colspan="2">Restant</th><th id="remaining_selection">100€</th>
-			</tr>
 			</tbody>
+			<tfoot>
+				<tr>
+					<th colspan="2">Total</th><th><%=@note.value.to_f / 100%> €</th>
+				</tr>
+				<tr>
+					<th colspan="2">Restant</th><th id="remaining_selection"><%=@note.get_remaining_due.to_f / 100%> €</th>
+				</tr>
+			</tfoot>
 		</table>
 		<button>REEDITION TICKET CLIENT</button>
 	</div>
 	
 	<div class="Quarter">
-		<button>TOTAL</button>
-		<button>MOYEN</button>
+		<button onclick="MoveAllSelectionRows()">TOTAL</button>
+		<!-- <button onclick="PanierMoyen()">MOYEN</button> -->
+		<select onChange="PanierMoyen(this)">
+    		<option selected="selected">MOYEN</option>
+    		<option>1</option>
+    		<option>2</option>
+    		<option>3</option>
+    		<option>4</option>
+    		<option>5</option>
+    		<option>6</option>
+    		<option>7</option>
+		</select>
 	</div>
 
 	<div class="Centre">
 		<table id='Table_Article' class='Table_Article'>
 			<thead>
 				<tr>
-					<th colspan="3">ARTICLE A ENCAISSER</th>
+					<th colspan="3">ARTICLES A ENCAISSER</th>
 				</tr>
 				<tr>
 					<th>Nb</th><th>Dénomination</th><th>Prix Unité</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>code</td>
-					<td>nom</td>
-					<td class="apayer">prix €</td>
-				</tr>
-				<tr>
-					<th colspan="2">Total</th><th id="total_apayer">x €</th>
-				</tr>
-				<tr>
-					<th colspan="2">1 repas</th><th>x €</th>
-				</tr>
 			</tbody>
+			<tfoot>
+				<tr>
+					<th colspan="2">Total</th><th id="total_apayer">0 €</th>
+				</tr>
+				<!-- <tr>
+					<th colspan="2">1 repas</th><th>x €</th>
+				</tr> -->
+			</tfoot>	
 		</table>
 	</div>	
 	
 	<div class="Droite">
 		<table id='Table_Paiement' class='Table_Paiement'>
-		<thead>
-		<tr>
-		<th colspan="2">PAIEMENT</th>
-		</tr>
-		<tr>
-		<th>Montant</th><th>Mode</th>
-		</tr>
-		</thead>
-		<tbody>
-		<tr>
-		<td>3€</td>
-		<td>
-			<select>
-			  <option value="ES">ES</option>
-			  <option value="CB" selected="selected">CB</option>
-			  <option value="TR">TR</option>
-			  <option value="CH">CH</option>
-			  <option value="AUTRES">AUTRES</option>
-			</select>
-		</td>
-		</tr>
-		<tr>
-		<td>5€</td>
-		<td>
-			<select>
-			  <option value="ES">ES</option>
-			  <option value="CB" selected="selected">CB</option>
-			  <option value="TR">TR</option>
-			  <option value="CH">CH</option>
-			  <option value="AUTRES">AUTRES</option>
-			</select>
-
-		</td>
-		</tr>
-		<tr>
-		<th>Total</th><th>25€</th>
-		</tr>
-		<tr>
-		<th>Paiement</th><th>8€</th>
-		</tr>
-		<tr>
-		<th>Reste/à rendre</th><th>17€</th>
-		</tr>
-		</tbody>
+			<thead>
+				<tr>
+					<th colspan="2">PAIEMENT</th>
+				</tr>
+				<tr>
+					<th>Montant</th><th>Mode</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- <tr>
+					<td class="paiement">0€</td>
+					<td>
+						<select>
+						  <option value="ES">ES</option>
+						  <option value="CB" selected="selected">CB</option>
+						  <option value="TR">TR</option>
+						  <option value="CH">CH</option>
+						  <option value="AUTRES">AUTRES</option>
+						</select>
+					</td>
+				</tr> -->
+				<!-- <tr> -->
+					<!-- <td>5€</td> -->
+					<!-- <td> -->
+						<!-- <select> -->
+						<%# @payment_types.each do |mode| %>
+						  <!-- <option value="<%#=mode.id%>"><%#=mode.name%></option> -->
+						<%# end %>
+						  <!-- <option value="CB" selected="selected">CB</option>
+						  <option value="TR">TR</option>
+						  <option value="CH">CH</option>
+						  <option value="AUTRES">AUTRES</option> -->
+						<!-- </select> -->
+					<!-- </td> -->
+				<!-- </tr> -->
+			</tbody>
+			<tfoot>
+				<tr>
+					<th>Total</th><th id="totaux_payes">0 €</th>
+				</tr>
+				<!-- <tr>
+					<th>Payé</th><th id="payee">0€</th>
+				</tr> -->
+				<tr>
+					<th>Reste à payer</th><th id="reste_apayer">0 €</th>
+				</tr>
+			</tfoot>
 		</table>
 		<button>EDITION FACTURE</button>
 	</div>
 </div>
-<script>
-function totalSelection(){
-	var sum = 0;
-	$(".selection").each(function(i,obj) {
-		sum += parseFloat($(obj).text());
-	});
-	$("#remaining_selection").text(sum+" €");
 
-}
-$(document).ready(function(){
+<%= render "keyboard_paiement" %>
+
+<!-- dynamic payment type select object -->
+<div style="display:none;">
+	<select id="payment_type_select">
+		<% @payment_types.each do |mode| %>
+			<option value="<%= mode.id %>"> <%= mode.name %></option>
+		<% end %>
+	</select>
+</div>
+
+<script>
+
+
+$("#Table_Selection tbody").delegate('tr','click', function(e) {
+	var article_table_body = document.getElementById("Table_Article").getElementsByTagName('tbody')[0];
+	var ArticleRow = article_table_body.insertRow(article_table_body.rows.length);
+	var rowIndex = this.rowIndex;
+	document.getElementById("Table_Selection").deleteRow(rowIndex);
+	
+	var i=0;
+	$("td",this).each(function(el){
+		var cell= ArticleRow.insertCell(i);
+		if (i == 2) {cell.setAttribute("class", "article")};
+		cell.innerHTML = $(this).text();
+		i++;
+	})
 	totalSelection();
 });
+
+$("#Table_Article tbody").delegate("tr",'click',function(e) {
+	var selection_table_body = document.getElementById("Table_Selection").getElementsByTagName('tbody')[0];
+	var SelectionRow = selection_table_body.insertRow(selection_table_body.rows.length);
+	var rowIndex = this.rowIndex;
+	document.getElementById("Table_Article").deleteRow(rowIndex);
+	
+	var i=0;
+	$("td",this).each(function(el){
+		var cell= SelectionRow.insertCell(i);
+		if (i == 2) {cell.setAttribute("class", "selection");}
+		cell.innerHTML = $(this).text();
+		i++;
+	})
+	totalSelection();
+});
+
+
+$("#Table_Paiement tfoot").delegate("tr:last",'click',function(e) {
+	//var remain_due=$(this).find('th:last').text();
+	var remain_due=$(':last-child', this).text();
+	if(parseFloat(remain_due) > 0) {
+		var paiement_table_body = document.getElementById("Table_Paiement").getElementsByTagName('tbody')[0];
+		var PaiementRow = paiement_table_body.insertRow(paiement_table_body.rows.length);
+		var montant = PaiementRow.insertCell(0);
+		montant.setAttribute("class","paiement");
+		var mode = PaiementRow.insertCell(1);
+		var total = remain_due;
+		// var mode_paiement='<select> <option value="ES">ES</option> <option value="CB" selected="selected">CB</option> <option value="TR">TR</option>						  <option value="CH">CH</option> <option value="AUTRES">AUTRES</option>	</select>';
+		var mode_paiement = document.getElementById("payment_type_select").cloneNode(true);
+		montant.innerHTML = total;
+		// mode.innerHTML = mode_paiement;		
+		mode.appendChild(mode_paiement);
+	}
+})
+
+
+
+$("#Table_Paiement tbody").delegate("tr td:first-child",'click',function(e) {
+	$(this).each(function(el){
+		$('#modalPaiement').modal('show');
+		var rowIndex = $(this).closest('tr').index();
+		$('#modalPaiement #hide_paiementIndex').val(rowIndex);
+		$('#modalPaiement #write_paiement').text(parseFloat($(this).text()));
+	});
+	
+});
+
+function totalSelection(){
+	var ssum = 0;
+	$(".selection").each(function(i,obj) {
+		ssum += parseFloat($(obj).text());
+	});
+	$("#remaining_selection").text(ssum+" €");
+	var asum = 0;
+	$(".article").each(function(i,obj) {
+		asum += parseFloat($(obj).text());
+	});
+	$("#total_apayer").text(asum+" €");
+	$("#totaux_payes").text(asum+" €");	
+	$("#reste_apayer").text(asum+" €");
+}
+
+function resteAPayer(){
+	var psum = 0;
+	$(".paiement").each(function(i,obj) {
+		psum += parseFloat($(obj).text());
+	});
+	var rest= parseFloat($("#totaux_payes").text()) - psum
+	return rest;
+}
+
+function MoveAllSelectionRows(){
+	var selection_table_body = document.getElementById("Table_Selection").getElementsByTagName('tbody')[0];
+	var article_table_body = document.getElementById("Table_Article").getElementsByTagName('tbody')[0];
+	var srows=selection_table_body.rows;
+	for (var r = 0; r < srows.length; r++) {
+		var cols = srows[r].cells;
+		var ArticleRow = article_table_body.insertRow(r);
+		for (var c = 0; c < cols.length; c++) {
+			var cell= ArticleRow.insertCell(c);
+			if (c == 2) {cell.setAttribute("class", "article")};
+			cell.innerHTML = cols[c].textContent;
+		}
+	}
+	$("#Table_Selection tbody tr").remove();
+	totalSelection();
+}
+function PanierMoyen(e){
+	if(parseInt(e.value)){
+		//alert(e.value);
+		var total = parseFloat($("#remaining_selection").text());
+		var nbClient=parseInt(e.value);
+
+		var selection_table_body = document.getElementById("Table_Selection").getElementsByTagName('tbody')[0];
+		$("#Table_Selection tbody tr").remove(); 
+		for(var i =1; i <= nbClient; i++){
+			var SelectionRow = selection_table_body.insertRow(selection_table_body.rows.length);
+			var nb = SelectionRow.insertCell(0);
+			var denomination=SelectionRow.insertCell(1);
+			var prix=SelectionRow.insertCell(2);
+			prix.setAttribute("class","selection");
+			
+			nb.innerHTML = i;
+			denomination.innerHTML = "Panier Moyen sur "+nbClient+" personne";		
+			prix.innerHTML=total/nbClient+" €";
+		}
+	}
+}
+
 </script>

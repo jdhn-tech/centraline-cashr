@@ -1,20 +1,25 @@
 <div class="content">
+	<div class='tableImage col-xs-5 col-sm-4 col-md-3 col-lg-2 col-xl-1'>
+		<div>
+			<a href="/front/takeaway/create"><span class="glyphicon glyphicon-plus" aria-hidden="true" style="font-size:50px;"></span></a>
+		</div>
+	</div>
 	<table id='Menus' class='table'>
 	<thead>
 		<th>Action</th><th>Date</th><th>Contenu</th><th>TTC</th><th>Etat</th>
 	</thead>
 	<tbody>
-		<%=  %>
+		<% @notes.each do |note| %>
 			<tr>
 				<td>
-					<a href="/front/takeaway_detail"><span style="font-size:2em;" class="glyphicon glyphicon-folder-open"/></a>
+					<a href="/front/takeaway_detail/<%=note.id%>"><span style="font-size:2em;" class="glyphicon glyphicon-folder-open"/></a>
 				</td>
-				<td>04/10/2017</td>
-				<td>Sushi,Pizza,Soupe</td>
-				<td>---</td>
-				<td>En cours</td>
+				<td><%=note.updated_at%></td>
+				<td><%=note.getMenus.concat(note.getArticles)%></td>
+				<td><%=note.value.to_f / 100%></td>
+				<td><%=note.state%></td>
 			</tr>
-		<%  %>
+		<% end %>
 	</tbody>
 	</table>
 </div>

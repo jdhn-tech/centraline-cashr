@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171108160955) do
+ActiveRecord::Schema.define(version: 20171104084829) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,16 +59,16 @@ ActiveRecord::Schema.define(version: 20171108160955) do
   create_table "notes", force: :cascade do |t|
     t.integer "value"
     t.string "currency"
-    t.integer "platform"
+    t.string "reference"
+    t.integer "table_number"
+    t.integer "seats"
     t.text "menu_ids", default: [], array: true
     t.text "article_ids", default: [], array: true
-    t.text "notices", default: [], array: true
+    t.text "notice_ids", default: [], array: true
     t.string "state"
     t.boolean "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "table_id"
-    t.index ["table_id"], name: "index_notes_on_table_id"
   end
 
   create_table "payments", force: :cascade do |t|
@@ -94,8 +94,10 @@ ActiveRecord::Schema.define(version: 20171108160955) do
     t.integer "table_number"
     t.integer "table_capacity"
     t.integer "floor_number"
+    t.boolean "occupied"
     t.boolean "terrace"
     t.boolean "smoker"
+    t.boolean "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -137,5 +139,4 @@ ActiveRecord::Schema.define(version: 20171108160955) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "notes", "tables"
 end

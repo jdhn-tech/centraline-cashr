@@ -32,7 +32,12 @@ namespace :admin do
     Menu.create(:id => 8, :code => 'ME08', :name => 'Menu 8', :price => 1750, :category_id => 8, :article_ids => ["2","5","7","8"])
   	Menu.create(:id => 9, :code => 'ME09', :name => 'Menu 9', :price => 1750, :category_id => 8, :article_ids => ["2","5","7","8"])
 
-  	# 
+  	# Paiements
+    Payment.create(:id => 1, :name => 'Espèces')
+    Payment.create(:id => 2, :name => 'Ticket Restaurant')
+    Payment.create(:id => 3, :name => 'Carte Bleue')
+    Payment.create(:id => 4, :name => 'Carte Restaurant')
+    Payment.create(:id => 5, :name => 'Chèque bancaire')
   end
 
 end

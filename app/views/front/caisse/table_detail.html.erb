@@ -1,37 +1,69 @@
 <div id="table_detail" class="content">
-	<div style="overflow:scroll;height:400px;width:100%;overflow:auto">
-		<table id='Table_Detail' class='table'>
-			<thead>
-				<tr>
-					<th colspan="2" rowspan="2"><img src="/assets/table1.png" onclick="toggleTableDetail()"> 
-					<button class="btn" onclick="addCodeManually()">Ajouter Manuellement</button> </th>
-					<th colspan="5">Ref : <%=@table.table_number%><br>N° Table : <%=@table.table_number.to_s.rjust(2,'0')%></th>
-				</tr>
-				<tr>
-					<th style="width:10%">Code</th>
-					<th style="width:10%">Nom</th>
-					<th style="width:10%">Prix Unité</th>
-					<th style="width:45%">Note</th>
-					<th style="width:10%">Etat</th>
-				</tr>
-			</thead>
-			
-			<tbody id='table_detail_note'>
-				
-			</tbody>
-			<tfoot>
-				<tr>
-					<th colspan="7" id="table_note_sum">Somme = 0 €</th>
-				</tr>
-			</tfoot>
-		</table>
-	</div>
+	<table id='Table_Detail' class='table'>
+	<thead>
+		<tr>
+			<th colspan="2" rowspan="2"><img src="/assets/table1.png" onclick="toggleTableDetail()"> 
+			<button class="btn" onclick="addCodeManually()">Ajouter Manuellement</button> </th>
+			<th colspan="5">Ref : <%=@note.reference%><br>N° Table : <%=@table.table_number.to_s.rjust(2,'0')%></th>
+		</tr>
+		<tr>
+			<th style="width:10%">Code</th>
+			<th style="width:10%">Nom</th>
+			<th style="width:10%">Prix Unité</th>
+			<th style="width:45%">Note</th>
+			<th style="width:10%">Etat</th>
+		</tr>
+	</thead>
+	
+	<tbody id='table_detail_note'>
+		<% @note.getMenus.each do |menu| %>
+			<tr>
+				<td>
+					<button type='button' class='btn btn-default btn-lg' onClick='duplicateLineNote(this)'><span class='glyphicon glyphicon-duplicate' aria-hidden='true'></span></button>
+				</td>
+				<td>
+					<button type='button' class='btn btn-default btn-lg' onClick='removeLineNote(this)'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button>
+				</td>
+				<td class='table_note_code'><%=menu.code%></td>
+				<td><%=menu.name%></td>
+				<td class='table_note_price'><%=menu.price.to_f / 100%> €</td>
+				<td>
+					<button type='button' class='btn btn-default btn-lg' onClick='addNotice(this)'><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span></button>
+				</td>
+				<td></td>
+			</tr>
+		<% end %>
+		<% @note.getArticles.each do |article| %>
+			<tr>
+				<td>
+					<button type='button' class='btn btn-default btn-lg' onClick='duplicateLineNote(this)'><span class='glyphicon glyphicon-duplicate' aria-hidden='true'></span></button>
+				</td>
+				<td>
+					<button type='button' class='btn btn-default btn-lg' onClick='removeLineNote(this)'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button>
+				</td>
+				<td class='table_note_code'><%=article.code%></td>
+				<td><%=article.name%></td>
+				<td class='table_note_price'><%=article.price.to_f / 100%> €</td>
+				<td>
+					<button type='button' class='btn btn-default btn-lg' onClick='addNotice(this)'><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span></button>
+				</td>
+				<td></td>
+			</tr>
+		<% end %>
+	</tbody>
+	<tfoot>
+		<tr>
+			<th colspan="7" id="table_note_sum">Somme = 0 €</th>
+		</tr>
+	</tfoot>
+	</table>
+	
 	<table id='Table_Bottom' class='Table_Bottom'>
 		<tr style="height:50px;">
-			<td><a href="/front/edition_liste">Edition liste</a></td>
-			<td><a href="/front/edition_client">Edition Client</a></td>
-			<td><a class="btn" onclick="cashIn()">Encaisser</a></td>
-			<td><a href="/front/annulation">Annulation</a></td>
+			<td><a class="btn" href="/front/edition_liste/<%=@note.id%>">Edition liste</a></td>
+			<td><a class="btn" href="/front/edition_client">Edition Client</a></td>
+			<td><a class="btn" href="/front/encaisser/<%=@note.id%>">Encaisser</a></td>
+			<td><a class="btn" href="/front/annulation/<%=@table.id%>">Annulation</a></td>
 		</tr>
 	</table>	
 </div>
@@ -46,7 +78,24 @@ $(document).ready(function() {
 	// var tableKeys = Object.keys(tableNote);
 	// tableKeys.forEach(function(element) {
 	// });
+	updateSum();
 });
+
+function updateNote(){
+	var items = ($(".table_note_code").map(function(){return $(this).text();}).get()).join(";");
+	
+	$.ajax({
+		async: false,
+		url: "/front/notes/update/<%=@note.id%>?articles="+escape(items),
+		type: "GET",
+		success : function(data) {
+
+		},
+		error : function(data) {
+
+		}
+	})
+}
 
 function toggleTableDetail() {
 	if ($("#table_detail").is(":visible")) {
@@ -61,10 +110,12 @@ function duplicateLineNote(e) {
 	var thisLine = $(e).parent().parent();
 	$("#table_detail_note").append(thisLine.clone());
 	updateSum();
+	updateNote();
 }
 function removeLineNote(e) {
 	$(e).parent().parent().remove();
 	updateSum();
+	updateNote();
 }
 function updateSum() {
 	var sum = 0;
@@ -73,34 +124,14 @@ function updateSum() {
 	});
 	$("#table_note_sum").text("Somme = "+sum+" €");
 }
-function cashIn() {
-	var tableNote = {
-		"table_id"	: "<%=@table.id%>",
-		"articles"	: ($(".table_note_code").map(function(){return $(this).text();}).get()).join(";")
-	};
-	if (tableNote['articles'] != ""){
-		$.ajax({
-			async: false,
-			url: "/front/notes/create",
-			type: "POST",
-			data: tableNote,
-			dataType: "json",
-			success : function(data) {
-				if (data["success"]){
-					window.location.href = "/front/encaisser/"+data["note_id"];
-				}
-			}
-		});
-	}
-}
 function addCodeManually(){
 	$('#modalAddCodeManually').modal('show');
 }
 
+
 function addNotice(e) {
-	alert($(e).parent().parent());
-	//alert(("#table_detail_note").rows[0]);
-	///$('#hide_ligne').text($(e).index()+1);
-	//$('#modalAddNotice').modal('show');	
+	var rowIndex = $(e).closest('tr').index();
+	$('#modalAddNotice #hide_tableIndex').val(rowIndex);
 }
+
 </script>

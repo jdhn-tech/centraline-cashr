@@ -2,10 +2,8 @@ class Table < ApplicationRecord
 
 	validates :table_number, :presence => true, :uniqueness => true
 
-	has_many :seats
-
 	def getActiveNote
-		# return Note.where()
+		return self.active ? Note.where(table_id: self.id, active: true) : null
 	end
 	
 end
