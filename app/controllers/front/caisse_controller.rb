@@ -28,6 +28,7 @@ class Front::CaisseController < ApplicationController
 	end
 	def encaisser
 		@note = Note.find(params[:id])
+		@payment_types = Payment.all
 	end
 	def annulation
 		@table = Table.find(params[:id])

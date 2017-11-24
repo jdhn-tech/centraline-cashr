@@ -121,6 +121,15 @@
 
 <%= render "keyboard_paiement" %>
 
+<!-- dynamic payment type select object -->
+<div style="display:none;">
+	<select id="payment_type_select">
+		<% @payment_types.each do |mode| %>
+			<option value="<%= mode.id %>"> <%= mode.name %></option>
+		<% end %>
+	</select>
+</div>
+
 <script>
 
 
@@ -165,10 +174,9 @@ $("#Table_Article tfoot").delegate("tr",'click',function(e) {
 	var mode = PaiementRow.insertCell(1);
 
 	var total = this.cells[1].textContent;
-	var mode_paiement='<select> <option value="ES">ES</option> <option value="CB" selected="selected">CB</option> <option value="TR">TR</option>						  <option value="CH">CH</option> <option value="AUTRES">AUTRES</option>	</select>';
-	
+	var payment_type_clone = document.getElementById("payment_type_select").cloneNode(true);
 	montant.innerHTML = total;
-	mode.innerHTML = mode_paiement;
+	mode.appendChild(payment_type_clone);
 	$("#Table_Article tbody tr").remove();
 	totalSelection();
 });
@@ -211,14 +219,14 @@ function MoveAllSelectionRows(){
 	var srows=selection_table_body.rows;
 	for (var r = 0; r < srows.length; r++) {
 		var cols = srows[r].cells;
-		var ArticleRow = article_table_body.insertRow(r);		
+		var ArticleRow = article_table_body.insertRow(r);
 		for (var c = 0; c < cols.length; c++) {
 			var cell= ArticleRow.insertCell(c);
 			if (c == 2) {cell.setAttribute("class", "article")};
 			cell.innerHTML = cols[c].textContent;
 		}
-	}	
-	$("#Table_Selection tbody tr").remove(); 
+	}
+	$("#Table_Selection tbody tr").remove();
 	totalSelection();
 }
 
