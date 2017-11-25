@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   get "/front/table_add_seat/:id" => "front/caisse#table_add_seat"
   post "/front/notes/create" => "front/notes#create"
   get "/front/notes/update/:id" => "front/notes#update_note"
-  post "/front/takeaway/create" => "front/notes#create_takeaway"
+  get "/front/takeaway/create" => "front/notes#create_takeaway"
   get "/front/get_code/:code" => "front/caisse#get_code"
 
   namespace :front do

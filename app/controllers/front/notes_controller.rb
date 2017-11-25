@@ -8,7 +8,7 @@ class Front::NotesController < ApplicationController
 		my_note.currency = "Euro"
 		my_note.reference = "EMP-" + Time.now.to_f.to_s
 		my_note.save
-		redirect_to "/front/takeaway_detail/" + my_note.id
+		redirect_to "/front/takeaway_detail/" + my_note.id.to_s
 	end
 	def update_note
 		my_note = Note.find params[:id]
