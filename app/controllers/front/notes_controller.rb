@@ -4,7 +4,7 @@ class Front::NotesController < ApplicationController
 		my_note.table_number = 0
 		my_note.value = 0
 		my_note.active = true
-		my_note.state = ""
+		my_note.state = "EN_COURS"
 		my_note.currency = "Euro"
 		my_note.reference = "EMP-" + Time.now.to_f.to_s
 		my_note.save
@@ -12,7 +12,7 @@ class Front::NotesController < ApplicationController
 	end
 	def update_note
 		my_note = Note.find params[:id]
-		if (my_note.state != "ACTIVE")
+		if (my_note.state != "ACTIVE" && my_note.state != "EN_COURS")
 			render :json => {:success => false, :code => 403}.to_json
 			return
 		end

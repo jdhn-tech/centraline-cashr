@@ -14,9 +14,9 @@
 				<td>
 					<a href="/front/takeaway_detail/<%=note.id%>"><span style="font-size:2em;" class="glyphicon glyphicon-folder-open"/></a>
 				</td>
-				<td><%=note.updated_at%></td>
-				<td><%=note.getMenus.concat(note.getArticles)%></td>
-				<td><%=note.value.to_f / 100%></td>
+				<td><%=note.updated_at.strftime("%d/%m/%Y %H:%M:%S")%></td>
+				<td><%=(note.getMenus+note.getArticles).map{|a|a.code}.join(";")%></td>
+				<td><%=note.value.to_f / 100%> €</td>
 				<td><%=note.state%></td>
 			</tr>
 		<% end %>
