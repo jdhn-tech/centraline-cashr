@@ -40,21 +40,28 @@ $(function(){
 		
 		// Enter
 		if ($this.hasClass('enter')) {
-			var code = $write_paiement.html();
-			var rowIndex=document.getElementById('hide_paiementIndex').value;
-			$("#Table_Paiement tbody tr:eq("+rowIndex+") td:eq(0)").text(code+"€");
-			$write_paiement.html("");
-			var remain_due=resteAPayer();
-			$("#Table_Paiement tfoot tr:eq(1) th:eq(1)").text(remain_due+"€");
-			if(remain_due <= 0 ){
-				$("#Table_Article tbody tr").remove();
-				var asum = 0;
-				$(".article").each(function(i,obj) {
-					asum += parseFloat($(obj).text());
-				});
-				$("#total_apayer").text(asum+" €");
-			}
-			return code;
+			var money = $write_paiement.html();
+			if(!isNaN(parseFloat(money))){
+				var rowIndex=document.getElementById('hide_paiementIndex').value;
+				$("#Table_Paiement tbody tr:eq("+rowIndex+") td:eq(0)").text(money+"€");
+				$write_paiement.html("");
+				var remain_due=resteAPayer();
+				$("#Table_Paiement tfoot tr:eq(1) th:eq(1)").text(remain_due+" €");
+				if(remain_due > 0 ){
+					var paiement_table_body = document.getElementById("Table_Paiement").getElementsByTagName('tbody')[0];
+					var PaiementRow = paiement_table_body.insertRow(paiement_table_body.rows.length);
+					var montant = PaiementRow.insertCell(0);
+					montant.setAttribute("class","paiement");
+					var mode = PaiementRow.insertCell(1);
+					var total = remain_due;
+					var mode_paiement = document.getElementById("payment_type_select").cloneNode(true);
+					montant.innerHTML = total+" €";
+					mode.appendChild(mode_paiement);
+					var remain_due=resteAPayer();
+					$("#Table_Paiement tfoot tr:eq(1) th:eq(1)").text(remain_due+" €");
+				}
+			}	
+			return money;
 		}
 
 		// Add the character
