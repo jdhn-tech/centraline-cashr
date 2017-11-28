@@ -80,7 +80,6 @@ $(document).ready(function() {
 	// });
 	updateSum();
 });
-
 function updateNote(){
 	var items = ($(".table_note_code").map(function(){return $(this).text();}).get()).join(";");
 	
@@ -96,7 +95,6 @@ function updateNote(){
 		}
 	})
 }
-
 function toggleTableDetail() {
 	if ($("#table_detail").is(":visible")) {
 		$("#table_detail").hide();
@@ -127,11 +125,10 @@ function updateSum() {
 function addCodeManually(){
 	$('#modalAddCodeManually').modal('show');
 }
-
-
 function addNotice(e) {
 	var rowIndex = $(e).closest('tr').index();
 	$('#modalAddNotice #hide_tableIndex').val(rowIndex);
+	$("#modalAddNotice").modal("show");
 }
 
 </script>

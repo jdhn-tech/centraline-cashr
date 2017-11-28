@@ -132,6 +132,7 @@ function addCodeManually(){
 function addNotice(e) {
 	var rowIndex = $(e).closest('tr').index();
 	$('#modalAddNotice #hide_tableIndex').val(rowIndex);
+	$("#modalAddNotice").modal("show");
 }
 
 </script>
