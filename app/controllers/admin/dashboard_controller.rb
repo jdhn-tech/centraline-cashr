@@ -1,6 +1,7 @@
 class Admin::DashboardController < ApplicationController
 	http_basic_authenticate_with :name => "demo", :password => "demo", only: :index
 	def index
+		@admin = true
 		@tables = Table.all
 		@menus = Menu.all
 		@articles = Article.all
