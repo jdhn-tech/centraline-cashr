@@ -16,9 +16,23 @@
 	margin-bottom: 1%;
 }
 
-#Table_Detail  thead  tr th:first-child{
-	width : 15%;
+.content_Table_Detail{
+	height: 400px; 
+	margin: 1%;
+	overflow: auto;
+	width: 100%;
+	position: relative;
 }
+
+
+#Table_Detail{
+	border: 0 none;
+	height: auto;
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
 
 
 .tableImage {
@@ -67,7 +81,7 @@
 	width: 100%;
 	text-align:center;
 	height: 8%;
-	margin_top : 1%;
+	margin-top: 1%;
 }
 
 button {
