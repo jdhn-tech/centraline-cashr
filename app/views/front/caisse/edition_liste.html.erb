@@ -25,8 +25,18 @@
 		</tbody>
 	</table>
 	
-	<button onclick="goBack()"> Valider </button>
+	<!-- <button onclick="goBack()"> Valider </button> -->
+	<button onclick="Printer()"> Imprimer </button>
 </div>
 
 <script>
+
+ function Printer() {
+        var divToPrint = document.getElementById('Table_Reference');
+        newWin = window.open("");
+        newWin.document.write(divToPrint.outerHTML);
+        newWin.print();
+        newWin.close();
+   }
+
 </script>
