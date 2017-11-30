@@ -1,5 +1,6 @@
 class Ticket < ApplicationRecord
 	belongs_to :note
+	has_many :note_entries
 	def getMenus
 		table = []
 		self.menu_ids.each do |id|

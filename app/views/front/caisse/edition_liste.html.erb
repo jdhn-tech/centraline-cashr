@@ -8,25 +8,22 @@
 			</tr>
 		</thead>
 		<tbody id="edition_liste_tbody">
-			<% @note.getMenus.each do |menu| %>
+			<% @note.note_entries.each do |entry| %>
 				<tr>
-					<td>menu.code</td>
-					<td>menu.name</td>
-					<td contenteditable='true'>1</td>
+					<td><%=entry.getCode%></td>
+					<td><%=entry.getName%></td>
+					<td><%=entry.notice%></td>
 				</tr>
 			<% end %>
-			<% @note.getArticles.each do |article| %>
-				<tr>
-					<td>article.code</td>
-					<td>article.name</td>
-					<td contenteditable='true'>1</td>
-				</tr>
-			<% end %>
+			
 		</tbody>
 	</table>
 	
-	<button onclick="goBack()"> Valider </button>
+	<button onclick="validateListe()"> Valider </button>
 </div>
 
 <script>
+function validateListe() {
+	
+}
 </script>

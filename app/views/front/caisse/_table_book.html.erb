@@ -74,6 +74,24 @@
 	</div>
 </div>
 
+<div style="display:none;">
+	<tr id="#table_detail_line">
+		<td>
+			<button type='button' class='btn btn-default btn-lg' onclick='duplicateLineNote(this)'><span class='glyphicon glyphicon-duplicate' aria-hidden='true'></span></button>
+		</td>
+		<td>
+			<button type='button' class='btn btn-default btn-lg' onClick='removeLineNote(this)'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button>
+		</td>
+		<td class='table_note_code'>%CODE%</td>
+		<td>%NOM%</td>
+		<td class='table_note_price'>%PRIX%</td>
+		<td>
+			<button type='button' class='btn btn-default btn-lg' onclick='addNotice(this)' data-toggle='modal' data-target='#modalAddNotice'><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span></button>%NOTE%
+		</td>
+		<td>%ETAT%</td>
+	</tr>
+</div>
+
 <script>
 var table_detail_line = "<tr><td><button type='button' class='btn btn-default btn-lg' onclick='duplicateLineNote(this)'><span class='glyphicon glyphicon-duplicate' aria-hidden='true'></span></button></td><td><button type='button' class='btn btn-default btn-lg' onClick='removeLineNote(this)'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td><td class='table_note_code'>%CODE%</td><td>%NOM%</td><td class='table_note_price'>%PRIX%</td><td><button type='button' class='btn btn-default btn-lg' onclick='addNotice(this)' data-toggle='modal' data-target='#modalAddNotice'><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span></button>%NOTE%</td><td>%ETAT%</td></tr>";
 function tableBookToggleMenus(menuDiv) {
@@ -122,10 +140,16 @@ function addMenuToNote(id,code,name,price,e) {
 	line = line.replace('%PRIX%', price / 100 + ' €');
 	line = line.replace('%NOTE%', '');
 	line = line.replace('%ETAT%', '');
-	$("#table_detail_note").append(line);
-	updateSum();
-	toggleTableDetail();
-	updateNote();
+	$.ajax({
+		async: false,
+		url: "/front/notes/<%=@note.id%>/create_entry/"+code,
+		type: "GET",
+		success : function(data) {
+			$("#table_detail_note").append(line);
+			updateSum();
+			toggleTableDetail();
+		}
+	})
 }
 function addEntryToNote(id,code,name,price,e) {
 	var line = table_detail_line.replace('%CODE%', code);
@@ -133,10 +157,16 @@ function addEntryToNote(id,code,name,price,e) {
 	line = line.replace('%PRIX%', price / 100 + ' €');
 	line = line.replace('%NOTE%', '');
 	line = line.replace('%ETAT%', '');
-	$("#table_detail_note").append(line);
-	updateSum();
-	toggleTableDetail();
-	updateNote();
+	$.ajax({
+		async: false,
+		url: "/front/notes/<%=@note.id%>/create_entry/"+code,
+		type: "GET",
+		success : function(data) {
+			$("#table_detail_note").append(line);
+			updateSum();
+			toggleTableDetail();
+		}
+	})
 }
 function addDishToNote(id,code,name,price,e) {
 	var line = table_detail_line.replace('%CODE%', code);
@@ -144,10 +174,16 @@ function addDishToNote(id,code,name,price,e) {
 	line = line.replace('%PRIX%', price / 100 + ' €');
 	line = line.replace('%NOTE%', '');
 	line = line.replace('%ETAT%', '');
-	$("#table_detail_note").append(line);
-	updateSum();
-	toggleTableDetail();
-	updateNote();
+	$.ajax({
+		async: false,
+		url: "/front/notes/<%=@note.id%>/create_entry/"+code,
+		type: "GET",
+		success : function(data) {
+			$("#table_detail_note").append(line);
+			updateSum();
+			toggleTableDetail();
+		}
+	})
 }
 function addDrinkToNote(id,code,name,price,e) {
 	var line = table_detail_line.replace('%CODE%', code);
@@ -155,10 +191,16 @@ function addDrinkToNote(id,code,name,price,e) {
 	line = line.replace('%PRIX%', price / 100 + ' €');
 	line = line.replace('%NOTE%', '');
 	line = line.replace('%ETAT%', '');
-	$("#table_detail_note").append(line);
-	updateSum();
-	toggleTableDetail();
-	updateNote();
+	$.ajax({
+		async: false,
+		url: "/front/notes/<%=@note.id%>/create_entry/"+code,
+		type: "GET",
+		success : function(data) {
+			$("#table_detail_note").append(line);
+			updateSum();
+			toggleTableDetail();
+		}
+	})
 }
 function addDessertToNote(id,code,name,price,e) {
 	var line = table_detail_line.replace('%CODE%', code);
@@ -166,9 +208,15 @@ function addDessertToNote(id,code,name,price,e) {
 	line = line.replace('%PRIX%', price / 100 + ' €');
 	line = line.replace('%NOTE%', '');
 	line = line.replace('%ETAT%', '');
-	$("#table_detail_note").append(line);
-	updateSum();
-	toggleTableDetail();
-	updateNote();
+	$.ajax({
+		async: false,
+		url: "/front/notes/<%=@note.id%>/create_entry/"+code,
+		type: "GET",
+		success : function(data) {
+			$("#table_detail_note").append(line);
+			updateSum();
+			toggleTableDetail();
+		}
+	})
 }
 </script>
