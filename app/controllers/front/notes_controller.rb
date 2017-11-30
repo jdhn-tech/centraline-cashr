@@ -10,6 +10,9 @@ class Front::NotesController < ApplicationController
 		my_note.save
 		redirect_to "/front/takeaway_detail/" + my_note.id.to_s
 	end
+	def create_ticket
+		my_note = Note.find(params[:id])
+	end
 	def create_entry
 		my_entry = NoteEntry.new
 		my_entry.note_id = params[:id]
@@ -31,5 +34,10 @@ class Front::NotesController < ApplicationController
 		end
 		render :json => {:success => false, :code => 404}.to_json
 		return
+	end
+	def clone_entry
+
+	end
+	def remove_entry
 	end
 end

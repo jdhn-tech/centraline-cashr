@@ -68,10 +68,10 @@ $(function(){
 		if ($this.hasClass('enter')) {
 			var code = $write_notice.html();
 			var rowIndex=document.getElementById('hide_tableIndex').value;
-			var button=$("#takeaway_detail_note tr:eq("+rowIndex+") td:eq(5)").find('button');
-			$("#takeaway_detail_note tr:eq("+rowIndex+") td:eq(5)").text("");
-			$("#takeaway_detail_note tr:eq("+rowIndex+") td:eq(5)").append(button);
-			$("#takeaway_detail_note tr:eq("+rowIndex+") td:eq(5)").append(code);
+			var button=$("#takeaway_detail_note tr:eq("+rowIndex+") td:eq(3)").find('button');
+			$("#takeaway_detail_note tr:eq("+rowIndex+") td:eq(3)").text("");
+			$("#takeaway_detail_note tr:eq("+rowIndex+") td:eq(3)").append(button);
+			$("#takeaway_detail_note tr:eq("+rowIndex+") td:eq(3)").append(code);
 			$write_notice.html("");
 			return code;
 		}

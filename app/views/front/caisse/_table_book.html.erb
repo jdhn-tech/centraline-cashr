@@ -7,18 +7,18 @@
 	<div id="table_book_menus" class="row">
 		<table class='table'>
 			<thead>
-				<th style="text-align:left;"></th>
 				<th style="text-align:left;">Code : Nom</th>
 				<th style="text-align:left;">Liste Articles</th>
 				<th style="text-align:left;">Prix</th>
+				<th style="text-align:left;"></th>
 			</thead>
 			<tbody>
 				<% @menus.each do |menu| %>
 					<tr>
-						<td><button type='button' onClick="addMenuToNote('<%=menu.id%>','<%=menu.code%>','<%=menu.name%>','<%=menu.price%>',this)">Ajouter</button></td>
 						<td><%=menu.code%> : <%=menu.name%></td>
 						<td><%= menu.get_articles.map{|a| a.name}.join(" ; ") %></td>
 						<td><%= menu.price.to_f / 100 %> €</td>
+						<td><button type='button' onClick="addMenuToNote('<%=menu.id%>','<%=menu.code%>','<%=menu.name%>','<%=menu.price%>',this)">Ajouter</button></td>
 					</tr>
 				<% end %>
 			</tbody>
@@ -28,10 +28,10 @@
 		<table class='table'>
 			<% @articles.map{|a| a if a.category_ids.include?("4")}.compact.each do |article| %>
 				<tr>
-					<td><button type='button' onClick="addEntryToNote('<%=article.id%>','<%=article.code%>','<%=article.name%>','<%=article.price%>',this)">Ajouter</button></td>
 					<td><%= article.code %></td>
 					<td><%= article.name %></td>
 					<td><%= article.price.to_f / 100 %> €</td>
+					<td><button type='button' onClick="addEntryToNote('<%=article.id%>','<%=article.code%>','<%=article.name%>','<%=article.price%>',this)">Ajouter</button></td>
 				</tr>
 			<% end %>
 		</table>
@@ -40,10 +40,10 @@
 		<table class='table'>
 			<% @articles.map{|a| a if (a.category_ids & ["5"]).any?}.compact.each do |article| %>
 				<tr>
-					<td><button type='button' onClick="addDishToNote('<%=article.id%>','<%=article.code%>','<%=article.name%>','<%=article.price%>',this)">Ajouter</button></td>
 					<td><%= article.code %></td>
 					<td><%= article.name %></td>
 					<td><%= article.price.to_f / 100 %> €</td>
+					<td><button type='button' onClick="addDishToNote('<%=article.id%>','<%=article.code%>','<%=article.name%>','<%=article.price%>',this)">Ajouter</button></td>
 				</tr>
 			<% end %>
 		</table>
@@ -52,10 +52,10 @@
 		<table class='table'>
 			<% @articles.map{|a| a if (a.category_ids & ["1","2"]).any?}.compact.each do |article| %>
 				<tr>
-					<td><button type='button' onClick="addDrinkToNote('<%=article.id%>','<%=article.code%>','<%=article.name%>','<%=article.price%>',this)">Ajouter</button></td>
 					<td><%= article.code %></td>
 					<td><%= article.name %></td>
 					<td><%= article.price.to_f / 100 %> €</td>
+					<td><button type='button' onClick="addDrinkToNote('<%=article.id%>','<%=article.code%>','<%=article.name%>','<%=article.price%>',this)">Ajouter</button></td>
 				</tr>
 			<% end %>
 		</table>
@@ -64,10 +64,10 @@
 		<table class='table'>
 			<% @articles.map{|a| a if (a.category_ids & ["7"]).any?}.compact.each do |article| %>
 				<tr>
-					<td><button type='button' onClick="addDessertToNote('<%=article.id%>','<%=article.code%>','<%=article.name%>','<%=article.price%>',this)">Ajouter</button></td>
 					<td><%= article.code %></td>
 					<td><%= article.name %></td>
 					<td><%= article.price.to_f / 100 %> €</td>
+					<td><button type='button' onClick="addDessertToNote('<%=article.id%>','<%=article.code%>','<%=article.name%>','<%=article.price%>',this)">Ajouter</button></td>
 				</tr>
 			<% end %>
 		</table>
@@ -93,7 +93,9 @@
 </div>
 
 <script>
-var table_detail_line = "<tr><td><button type='button' class='btn btn-default btn-lg' onclick='duplicateLineNote(this)'><span class='glyphicon glyphicon-duplicate' aria-hidden='true'></span></button></td><td><button type='button' class='btn btn-default btn-lg' onClick='removeLineNote(this)'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td><td class='table_note_code'>%CODE%</td><td>%NOM%</td><td class='table_note_price'>%PRIX%</td><td><button type='button' class='btn btn-default btn-lg' onclick='addNotice(this)' data-toggle='modal' data-target='#modalAddNotice'><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span></button>%NOTE%</td><td>%ETAT%</td></tr>";
+// var table_detail_line = "<tr><td><button type='button' class='btn btn-default btn-lg' onclick='duplicateLineNote(this)'><span class='glyphicon glyphicon-duplicate' aria-hidden='true'></span></button></td><td><button type='button' class='btn btn-default btn-lg' onClick='removeLineNote(this)'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td><td class='table_note_code'>%CODE%</td><td>%NOM%</td><td class='table_note_price'>%PRIX%</td><td><button type='button' class='btn btn-default btn-lg' onclick='addNotice(this)' x><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span></button>%NOTE%</td><td>%ETAT%</td></tr>";
+
+var table_detail_line = "<tr><td class='table_note_code'>%CODE%</td><td>%NOM%</td><td class='table_note_price'>%PRIX%</td><td><button type='button' class='btn btn-default btn-lg' onclick='addNotice(this)'><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span></button>%NOTE%</td><td>%ETAT%</td><td><button type='button' class='btn btn-default btn-lg' onclick='duplicateLineNote(this)'><span class='glyphicon glyphicon-duplicate' aria-hidden='true'></span></button></td><td><button type='button' class='btn btn-default btn-lg' onClick='removeLineNote(this)'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td></tr>";
 function tableBookToggleMenus(menuDiv) {
 	$("div[id^='table_book_select_menu'").hide();
 	$("#"+menuDiv).show();

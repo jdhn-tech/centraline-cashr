@@ -2,7 +2,7 @@
 	<table id='Table_Reference' class='table'>
 		<thead>
 			<tr>
-				<th>Référence</th>
+				<th>N° Table</th>
 				<th>Description</th>
 				<th>Note</th>
 			</tr>
@@ -10,20 +10,27 @@
 		<tbody id="edition_liste_tbody">
 			<% @note.note_entries.each do |entry| %>
 				<tr>
-					<td><%=entry.getCode%></td>
-					<td><%=entry.getName%></td>
+					<td><%=@note.table_number%></td>
+					<td><%=entry.getCode%> : <%=entry.getName%></td>
 					<td><%=entry.notice%></td>
 				</tr>
 			<% end %>
 			
 		</tbody>
 	</table>
-	
-	<button onclick="validateListe()"> Valider </button>
+
+	<!-- <button onclick="goBack()"> Valider </button> -->
+	<button onclick="Printer()"> Imprimer </button>
 </div>
 
 <script>
-function validateListe() {
-	
+
+function Printer() {
+	var divToPrint = document.getElementById('Table_Reference');
+	newWin = window.open("");
+	newWin.document.write(divToPrint.outerHTML);
+	newWin.print();
+	newWin.close();
 }
+
 </script>

@@ -12,18 +12,11 @@
 				</tr>
 			</thead>
 			<tbody>
-				<%@note.getMenus.each do |menu|%>
+				<%@note.note_entries.each do |entry|%>
 					<tr>
-						<td><%=menu.code%></td>
-						<td><%=menu.name%></td>
-						<td class="selection"><%=menu.price.to_f / 100%> €</td>
-					</tr>
-				<%end%>
-				<%@note.getArticles.each do |menu|%>
-					<tr>
-						<td><%=menu.code%></td>
-						<td><%=menu.name%></td>
-						<td class="selection"><%=menu.price.to_f / 100%> €</td>
+						<td><%=entry.getCode%></td>
+						<td><%=entry.getName%></td>
+						<td class="selection"><%=entry.value.to_f / 100%> €</td>
 					</tr>
 				<%end%>
 			</tbody>
@@ -269,10 +262,28 @@ function payer(){
 }
 
  function validerPaiment(){
-	$("#Table_Article tbody tr").remove();
-	$("#Table_Paiement tbody tr").remove();
-	totalSelection();
-
+ 	var data = {};
+ 	var paid = 0;
+ 	var method = "";
+ 	$(".paiement").each(function(i,element){
+		method = $(element).parent().find("td:last").find("option:selected").text();
+		paid += parseFloat($(element).text());
+		data[method+i] = parseFloat($(element).text());
+ 	})
+ 	data["paid"] = paid;
+	data["total_apayer"] = parseFloat($("#totaux_payes").text());
+ 	$.ajax({
+		async: false,
+		url: "/front/notes/<%=@note.id%>/create_ticket",
+		type: "POST",
+		dataType: "json",
+		data: "data",
+		success : function(data) {
+			$("#Table_Article tbody tr").remove();
+			$("#Table_Paiement tbody tr").remove();
+			totalSelection();
+		}
+	})
 	// var data = {};
 	// var paid = 0;
 	// var method = "";
