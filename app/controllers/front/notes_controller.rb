@@ -10,32 +10,34 @@ class Front::NotesController < ApplicationController
 		my_note.save
 		redirect_to "/front/takeaway_detail/" + my_note.id.to_s
 	end
-	def update_note
-		my_note = Note.find params[:id]
-		if (my_note.state != "ACTIVE" && my_note.state != "EN_COURS")
-			render :json => {:success => false, :code => 403}.to_json
+	def create_ticket
+		my_note = Note.find(params[:id])
+	end
+	def create_entry
+		my_entry = NoteEntry.new
+		my_entry.note_id = params[:id]
+		my_entry.status = "NEW"
+		if (Menu.exists?(code: params[:code]))
+			my_menu = Menu.find_by(code: params[:code])
+			my_entry.menu_id = my_menu.id
+			my_entry.value = my_menu.price
+			my_entry.save
+			render :json => {:success => true, :code => 200}.to_json
+			return
+		elsif (Article.exists?(code: params[:code]))
+			my_article = Article.find_by(code: params[:code])
+			my_entry.article_id = my_article.id
+			my_entry.value = my_article.price
+			my_entry.save
+			render :json => {:success => true, :code => 200}.to_json
 			return
 		end
-		elements = params[:articles].split(";")
-		my_note.value = 0
-		my_menu_ids = []
-		my_article_ids = []
-		elements.each do |e|
-			if (Menu.exists?(code: e))
-				my_menu = Menu.find_by(code: e)
-				my_menu_ids << my_menu.id
-				my_note.value += my_menu.price
+		render :json => {:success => false, :code => 404}.to_json
+		return
+	end
+	def clone_entry
 
-			end
-			if (Article.exists?(code: e))
-				my_article = Article.find_by(code: e)
-				my_article_ids << my_article.id
-				my_note.value += my_article.price
-			end
-		end
-		my_note.menu_ids = my_menu_ids.sort
-		my_note.article_ids = my_article_ids.sort
-		my_note.save
-		render :json => {:success => true, :code => 200}.to_json
+	end
+	def remove_entry
 	end
 end

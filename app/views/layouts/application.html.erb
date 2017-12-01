@@ -9,6 +9,7 @@
 </head>
 
 <body id="application_body">
+	<% if !@admin %>
 	<div class="header">
 		<table id='Head' class='Head' style="height:60px">
 		<tr>
@@ -24,10 +25,24 @@
 		</tr>
 		</table>
 	</div>
+	<% else %>
+	<% end %>
 	<%= yield %>
 	<p class="notice"><%= notice %></p>
 	<p class="alert"><%= alert %></p>
+	
 <script type="text/javascript">
+var fullscreenDiv    = document.getElementById("application_body");
+var fullscreenFunc   = fullscreenDiv.requestFullscreen;
+
+if (!fullscreenFunc) {
+  ['mozRequestFullScreen',
+   'msRequestFullscreen',
+   'webkitRequestFullScreen'].forEach(function (req) {
+     fullscreenFunc = fullscreenFunc || fullscreenDiv[req];
+   });
+}
+
 function fullScreen() {
 	// Document.exitFullscreen();
 	// var elem = document.getElementById("application_body"); // Make the body go full screen.
@@ -36,6 +51,7 @@ function fullScreen() {
 	// } else {
 	// 	alert ("nofullscreen");
 	// }
+	fullscreenFunc.call(fullscreenDiv);
 }
 // Click toggle fullscreen mode
 // document.onclick = function (event) { 

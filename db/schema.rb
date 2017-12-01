@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171104084829) do
+ActiveRecord::Schema.define(version: 20171130073901) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20171104084829) do
   create_table "categories", force: :cascade do |t|
     t.string "code"
     t.string "name"
+    t.float "vat"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -56,6 +57,20 @@ ActiveRecord::Schema.define(version: 20171104084829) do
     t.index ["category_id"], name: "index_menus_on_category_id"
   end
 
+  create_table "note_entries", force: :cascade do |t|
+    t.bigint "note_id", null: false
+    t.bigint "article_id"
+    t.bigint "menu_id"
+    t.string "notice"
+    t.integer "value"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_note_entries_on_article_id"
+    t.index ["menu_id"], name: "index_note_entries_on_menu_id"
+    t.index ["note_id"], name: "index_note_entries_on_note_id"
+  end
+
   create_table "notes", force: :cascade do |t|
     t.integer "value"
     t.string "currency"
@@ -82,14 +97,6 @@ ActiveRecord::Schema.define(version: 20171104084829) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "seats", force: :cascade do |t|
-    t.bigint "table_id"
-    t.boolean "occupied"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["table_id"], name: "index_seats_on_table_id"
-  end
-
   create_table "tables", force: :cascade do |t|
     t.integer "table_number"
     t.integer "table_capacity"
@@ -106,6 +113,7 @@ ActiveRecord::Schema.define(version: 20171104084829) do
     t.integer "value"
     t.string "currency"
     t.bigint "note_id"
+    t.boolean "paid"
     t.text "article_ids", default: [], array: true
     t.text "menu_ids", default: [], array: true
     t.datetime "created_at", null: false

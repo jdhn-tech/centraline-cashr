@@ -12,18 +12,11 @@
 				</tr>
 			</thead>
 			<tbody>
-				<%@note.getMenus.each do |menu|%>
+				<%@note.note_entries.each do |entry|%>
 					<tr>
-						<td><%=menu.code%></td>
-						<td><%=menu.name%></td>
-						<td class="selection"><%=menu.price.to_f / 100%> €</td>
-					</tr>
-				<%end%>
-				<%@note.getArticles.each do |menu|%>
-					<tr>
-						<td><%=menu.code%></td>
-						<td><%=menu.name%></td>
-						<td class="selection"><%=menu.price.to_f / 100%> €</td>
+						<td><%=entry.getCode%></td>
+						<td><%=entry.getName%></td>
+						<td class="selection"><%=entry.value.to_f / 100%> €</td>
 					</tr>
 				<%end%>
 			</tbody>
@@ -41,7 +34,6 @@
 	
 	<div class="Quarter">
 		<button onclick="MoveAllSelectionRows()">TOTAL</button>
-		<!-- <button onclick="PanierMoyen()">MOYEN</button> -->
 		<select onChange="PanierMoyen(this)">
     		<option selected="selected">MOYEN</option>
     		<option>1</option>
@@ -75,6 +67,7 @@
 				</tr> -->
 			</tfoot>	
 		</table>
+		<button onclick="payer()">PAYER</button>
 	</div>	
 	
 	<div class="Droite">
@@ -127,7 +120,8 @@
 				</tr>
 			</tfoot>
 		</table>
-		<button>EDITION FACTURE</button>
+		<!-- <button>EDITION FACTURE</button> -->
+		<button onclick="validerPaiment()">VALIDER</button>
 	</div>
 </div>
 
@@ -146,19 +140,21 @@
 
 
 $("#Table_Selection tbody").delegate('tr','click', function(e) {
-	var article_table_body = document.getElementById("Table_Article").getElementsByTagName('tbody')[0];
-	var ArticleRow = article_table_body.insertRow(article_table_body.rows.length);
-	var rowIndex = this.rowIndex;
-	document.getElementById("Table_Selection").deleteRow(rowIndex);
-	
-	var i=0;
-	$("td",this).each(function(el){
-		var cell= ArticleRow.insertCell(i);
-		if (i == 2) {cell.setAttribute("class", "article")};
-		cell.innerHTML = $(this).text();
-		i++;
-	})
-	totalSelection();
+	var paiement_table_body = document.getElementById("Table_Paiement").getElementsByTagName('tbody')[0];
+	if(paiement_table_body.rows.length == 0){
+		var article_table_body = document.getElementById("Table_Article").getElementsByTagName('tbody')[0];
+		var ArticleRow = article_table_body.insertRow(article_table_body.rows.length);
+		var rowIndex = this.rowIndex;
+		document.getElementById("Table_Selection").deleteRow(rowIndex);
+		var i=0;
+		$("td",this).each(function(el){
+			var cell= ArticleRow.insertCell(i);
+			if (i == 2) {cell.setAttribute("class", "article")};
+			cell.innerHTML = $(this).text();
+			i++;
+		})
+		totalSelection();
+	}
 });
 
 $("#Table_Article tbody").delegate("tr",'click',function(e) {
@@ -166,7 +162,6 @@ $("#Table_Article tbody").delegate("tr",'click',function(e) {
 	var SelectionRow = selection_table_body.insertRow(selection_table_body.rows.length);
 	var rowIndex = this.rowIndex;
 	document.getElementById("Table_Article").deleteRow(rowIndex);
-	
 	var i=0;
 	$("td",this).each(function(el){
 		var cell= SelectionRow.insertCell(i);
@@ -175,35 +170,15 @@ $("#Table_Article tbody").delegate("tr",'click',function(e) {
 		i++;
 	})
 	totalSelection();
+	document.getElementById("Table_Paiement").getElementsByTagName('tbody')[0].deleteRow(0);
+	
 });
-
-
-$("#Table_Paiement tfoot").delegate("tr:last",'click',function(e) {
-	//var remain_due=$(this).find('th:last').text();
-	var remain_due=$(':last-child', this).text();
-	if(parseFloat(remain_due) > 0) {
-		var paiement_table_body = document.getElementById("Table_Paiement").getElementsByTagName('tbody')[0];
-		var PaiementRow = paiement_table_body.insertRow(paiement_table_body.rows.length);
-		var montant = PaiementRow.insertCell(0);
-		montant.setAttribute("class","paiement");
-		var mode = PaiementRow.insertCell(1);
-		var total = remain_due;
-		// var mode_paiement='<select> <option value="ES">ES</option> <option value="CB" selected="selected">CB</option> <option value="TR">TR</option>						  <option value="CH">CH</option> <option value="AUTRES">AUTRES</option>	</select>';
-		var mode_paiement = document.getElementById("payment_type_select").cloneNode(true);
-		montant.innerHTML = total;
-		// mode.innerHTML = mode_paiement;		
-		mode.appendChild(mode_paiement);
-	}
-})
-
-
 
 $("#Table_Paiement tbody").delegate("tr td:first-child",'click',function(e) {
 	$(this).each(function(el){
 		$('#modalPaiement').modal('show');
 		var rowIndex = $(this).closest('tr').index();
 		$('#modalPaiement #hide_paiementIndex').val(rowIndex);
-		$('#modalPaiement #write_paiement').text(parseFloat($(this).text()));
 	});
 	
 });
@@ -250,7 +225,6 @@ function MoveAllSelectionRows(){
 }
 function PanierMoyen(e){
 	if(parseInt(e.value)){
-		//alert(e.value);
 		var total = parseFloat($("#remaining_selection").text());
 		var nbClient=parseInt(e.value);
 
@@ -268,6 +242,71 @@ function PanierMoyen(e){
 			prix.innerHTML=total/nbClient+" €";
 		}
 	}
+}
+
+function payer(){
+	var total_apayer=parseFloat($("#total_apayer").text());
+	var paiement_table_body = document.getElementById("Table_Paiement").getElementsByTagName('tbody')[0];
+	if((total_apayer > 0) && (paiement_table_body.rows.length == 0)){
+		var PaiementRow = paiement_table_body.insertRow(paiement_table_body.rows.length);
+		var montant = PaiementRow.insertCell(0);
+		montant.setAttribute("class","paiement");
+		var mode = PaiementRow.insertCell(1);
+		var total = total_apayer;
+		var mode_paiement = document.getElementById("payment_type_select").cloneNode(true);
+		montant.innerHTML = total + " €";
+		mode.appendChild(mode_paiement);
+		var remain_due=resteAPayer();
+		$("#Table_Paiement tfoot tr:eq(1) th:eq(1)").text(remain_due+" €");
+	}
+}
+
+ function validerPaiment(){
+ 	var data = {};
+ 	var paid = 0;
+ 	var method = "";
+ 	$(".paiement").each(function(i,element){
+		method = $(element).parent().find("td:last").find("option:selected").text();
+		paid += parseFloat($(element).text());
+		data[method+i] = parseFloat($(element).text());
+ 	})
+ 	data["paid"] = paid;
+	data["total_apayer"] = parseFloat($("#totaux_payes").text());
+ 	$.ajax({
+		async: false,
+		url: "/front/notes/<%=@note.id%>/create_ticket",
+		type: "POST",
+		dataType: "json",
+		data: "data",
+		success : function(data) {
+			$("#Table_Article tbody tr").remove();
+			$("#Table_Paiement tbody tr").remove();
+			totalSelection();
+		}
+	})
+	// var data = {};
+	// var paid = 0;
+	// var method = "";
+	// $(".paiement").each(function(i,element){
+	// 	method = $(element).parent().find("td:last").find("option:selected").text();
+	// 	paid += parseFloat($(element).text());
+	// 	data[method+i] = parseFloat($(element).text());
+	// });
+	// data["paid"] = paid;
+	// data["total_apayer"] = parseFloat($("#totaux_payes").text());
+	// $.ajax({
+	// 	async: false,
+	// 	url: "/front/tickets/create_ticket/",
+	// 	type: "POST",
+	// 	dataType: "json",
+	// 	data: data,
+	// 	success : function(data) {
+
+	// 	},
+	// 	error : function(data) {
+
+	// 	}
+	// })
 }
 
 </script>

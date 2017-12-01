@@ -16,14 +16,13 @@ Rails.application.routes.draw do
 
   # Method calls
   get "/front/table_add_seat/:id" => "front/caisse#table_add_seat"
-  post "/front/notes/create" => "front/notes#create"
-  get "/front/notes/update/:id" => "front/notes#update_note"
   get "/front/takeaway/create" => "front/notes#create_takeaway"
   get "/front/get_code/:code" => "front/caisse#get_code"
-
-  namespace :front do
-    resources :tables
-  end
+  post "/front/notes/create" => "front/notes#create"
+  post "/front/notes/:id/create_ticket" => "front/notes#create_ticket"
+  get "/front/notes/:id/create_entry/:code" => "front/notes#create_entry"
+  get "/front/notes/:id/clone_entry/:entry_id" => "front/notes#clone_entry"
+  get "/front/notes/:id/remove_entry/:entry_id" => "front/notes#remove_entry"
 
   # Admin contains no root path
   get "/admin/dashboard" => "admin/dashboard#index"

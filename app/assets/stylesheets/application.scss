@@ -13,12 +13,14 @@
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "admin/navbar-fixed-side";
 @import "front/caisse";
 
 body {
 	font-size: 14px;
 	margin: 0;
 	padding: 0;
+	/*background-color: #F5F5DC;*/
 	background-color: black;
 	color: white;
 	font-family : Arial, Sans-Serif;

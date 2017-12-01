@@ -1,7 +1,9 @@
+<!-- le fichier delivery_controller.rb a creer -->
+
 <div class="content">
 	<div class='tableImage col-xs-5 col-sm-4 col-md-3 col-lg-2 col-xl-1'>
 		<div>
-			<a href="/front/takeaway/create"><span class="glyphicon glyphicon-plus" aria-hidden="true" style="font-size:50px;"></span></a>
+			<a href="/front/delivery/create"><span class="glyphicon glyphicon-plus" aria-hidden="true" style="font-size:50px;"></span></a>
 		</div>
 	</div>
 	<table id='Menus' class='table'>
@@ -12,7 +14,7 @@
 			<% @notes.each do |note| %>
 				<tr>
 					<td>
-						<a href="/front/takeaway_detail/<%=note.id%>"><span style="font-size:2em;" class="glyphicon glyphicon-folder-open"/></a>
+						<a href="/front/delivery_detail/<%=note.id%>"><span style="font-size:2em;" class="glyphicon glyphicon-folder-open"/></a>
 					</td>
 					<td><%=note.updated_at.strftime("%d/%m/%Y %H:%M:%S")%></td>
 					<td><%=(note.getMenus+note.getArticles).map{|a|a.code}.join(";")%></td>
