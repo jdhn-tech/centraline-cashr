@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171130073901) do
+ActiveRecord::Schema.define(version: 20171201074012) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,7 +61,8 @@ ActiveRecord::Schema.define(version: 20171130073901) do
     t.bigint "note_id", null: false
     t.bigint "article_id"
     t.bigint "menu_id"
-    t.string "notice"
+    t.bigint "notice_id"
+    t.text "notice", default: [], array: true
     t.integer "value"
     t.string "status"
     t.datetime "created_at", null: false
@@ -69,6 +70,7 @@ ActiveRecord::Schema.define(version: 20171130073901) do
     t.index ["article_id"], name: "index_note_entries_on_article_id"
     t.index ["menu_id"], name: "index_note_entries_on_menu_id"
     t.index ["note_id"], name: "index_note_entries_on_note_id"
+    t.index ["notice_id"], name: "index_note_entries_on_notice_id"
   end
 
   create_table "notes", force: :cascade do |t|
@@ -82,6 +84,12 @@ ActiveRecord::Schema.define(version: 20171130073901) do
     t.text "notice_ids", default: [], array: true
     t.string "state"
     t.boolean "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "notices", force: :cascade do |t|
+    t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

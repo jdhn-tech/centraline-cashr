@@ -38,7 +38,7 @@
 						</td>
 						<td><%=entry.status%></td>
 						<td>
-							<button type='button' class='btn btn-default btn-lg' onClick='duplicateLineNote(this, <%=entry.id%>)'><span class='glyphicon glyphicon-duplicate' aria-hidden='true'></span></button>
+							<button type='button' class='btn btn-default btn-lg' onClick='duplicateLineNote(this, <%=entry.id%>)'><span class='glyphicon glyphicon-duplicate'></span><%=entry.notice%></button>
 						</td>
 						<td>
 							<button type='button' class='btn btn-default btn-lg' onClick='removeLineNote(this, <%=entry.id%>)'><span class='glyphicon glyphicon-trash'></span></button>
@@ -138,18 +138,18 @@ $("#Article-input").on('input', function () {
     }).length) {
         $.ajax({
 			async: false,
-			url: "/front/get_code/"+code,
+			url: "/front/notes/<%=@note.id%>/create_entry/"+code,
 			type: "GET",
 			success : function(data) {
 				if (data["success"]){
 					var line = table_detail_line.replace('%CODE%', data["code"]);
 					line = line.replace('%NOM%', data["name"]);
 					line = line.replace('%PRIX%', data["price"] / 100 + ' €');
-					line = line.replace('%NOTE%', '');
-					line = line.replace('%ETAT%', '');
+					line = line.replace('%NOTE%', data["notice"]);
+					line = line.replace('%ETAT%', data["status"]);
 					$("#table_detail_note").append(line);
 					updateSum();
-					updateNote();
+					// updateNote();
 					$("#Article-input").val('');
 				}
 			}
