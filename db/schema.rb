@@ -61,7 +61,6 @@ ActiveRecord::Schema.define(version: 20171201074012) do
     t.bigint "note_id", null: false
     t.bigint "article_id"
     t.bigint "menu_id"
-    t.bigint "notice_id"
     t.text "notice", default: [], array: true
     t.integer "value"
     t.string "status"
@@ -70,7 +69,6 @@ ActiveRecord::Schema.define(version: 20171201074012) do
     t.index ["article_id"], name: "index_note_entries_on_article_id"
     t.index ["menu_id"], name: "index_note_entries_on_menu_id"
     t.index ["note_id"], name: "index_note_entries_on_note_id"
-    t.index ["notice_id"], name: "index_note_entries_on_notice_id"
   end
 
   create_table "notes", force: :cascade do |t|
@@ -89,6 +87,7 @@ ActiveRecord::Schema.define(version: 20171201074012) do
   end
 
   create_table "notices", force: :cascade do |t|
+    t.string "image"
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -122,8 +121,6 @@ ActiveRecord::Schema.define(version: 20171201074012) do
     t.string "currency"
     t.bigint "note_id"
     t.boolean "paid"
-    t.text "article_ids", default: [], array: true
-    t.text "menu_ids", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["note_id"], name: "index_tickets_on_note_id"

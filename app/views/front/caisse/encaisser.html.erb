@@ -13,10 +13,10 @@
 			</thead>
 			<tbody>
 				<%@note.note_entries.each do |entry|%>
-					<tr>
+					<tr id="entry<%=entry.id%>">
 						<td><%=entry.getCode%></td>
 						<td><%=entry.getName%></td>
-						<td class="selection"><%=entry.value.to_f / 100%> €</td>
+						<td><%=entry.value.to_f / 100%> €</td>
 					</tr>
 				<%end%>
 			</tbody>
@@ -81,32 +81,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<!-- <tr>
-					<td class="paiement">0€</td>
-					<td>
-						<select>
-						  <option value="ES">ES</option>
-						  <option value="CB" selected="selected">CB</option>
-						  <option value="TR">TR</option>
-						  <option value="CH">CH</option>
-						  <option value="AUTRES">AUTRES</option>
-						</select>
-					</td>
-				</tr> -->
-				<!-- <tr> -->
-					<!-- <td>5€</td> -->
-					<!-- <td> -->
-						<!-- <select> -->
-						<%# @payment_types.each do |mode| %>
-						  <!-- <option value="<%#=mode.id%>"><%#=mode.name%></option> -->
-						<%# end %>
-						  <!-- <option value="CB" selected="selected">CB</option>
-						  <option value="TR">TR</option>
-						  <option value="CH">CH</option>
-						  <option value="AUTRES">AUTRES</option> -->
-						<!-- </select> -->
-					<!-- </td> -->
-				<!-- </tr> -->
+
 			</tbody>
 			<tfoot>
 				<tr>
@@ -140,6 +115,7 @@
 
 
 $("#Table_Selection tbody").delegate('tr','click', function(e) {
+	console.log($(this).closest('tr').attr('id').replace('entry',''));
 	var paiement_table_body = document.getElementById("Table_Paiement").getElementsByTagName('tbody')[0];
 	if(paiement_table_body.rows.length == 0){
 		var article_table_body = document.getElementById("Table_Article").getElementsByTagName('tbody')[0];

@@ -5,8 +5,6 @@ class CreateTickets < ActiveRecord::Migration[5.1]
 			t.string :currency
 			t.references :note
 			t.boolean :paid
-			t.text :article_ids, array: true, default: []
-			t.text :menu_ids, array: true, default: []
 			t.timestamps
 		end
 	end

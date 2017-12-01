@@ -12,7 +12,7 @@
 								
 							<% end %>
 							<% Article.all.map(&:code).each do |code| %>
-								<option value=<%=code%>>
+								<option value=<%=code%> >
 							<% end %>
 						</datalist>
 					</th> 
@@ -27,32 +27,15 @@
 			</thead>
 			
 			<tbody id='takeaway_detail_note'>
-				<% @note.getMenus.each do |menu| %>
+				<% @note.note_entries.each do |entry| %>
 					<tr>
-						<td class='takeaway_note_code'><%=menu.code%></td>
-						<td><%=menu.name%></td>
-						<td class='takeaway_note_price'><%=menu.price.to_f / 100%> €</td>
+						<td class='takeaway_note_code'><%=entry.getCode%></td>
+						<td><%=entry.getName%></td>
+						<td class='takeaway_note_price'><%=entry.value.to_f / 100%> €</td>
 						<td>
-							<button type='button' class='btn btn-default btn-lg' onClick='addNotice(this)'><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span></button>
+							<button type='button' class='btn btn-default btn-lg' onClick='addNotice(this)'><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span></button><%=entry.notice.join(";")%>
 						</td>
-						<td></td>
-						<td>
-							<button type='button' class='btn btn-default btn-lg' onClick='duplicateLineNote(this)'><span class='glyphicon glyphicon-duplicate' aria-hidden='true'></span></button>
-						</td>
-						<td>
-							<button type='button' class='btn btn-default btn-lg' onClick='removeLineNote(this)'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button>
-						</td>
-					</tr>
-				<% end %>
-				<% @note.getArticles.each do |article| %>
-					<tr>
-						<td class='takeaway_note_code'><%=article.code%></td>
-						<td><%=article.name%></td>
-						<td class='takeaway_note_price'><%=article.price.to_f / 100%> €</td>
-						<td>
-							<button type='button' class='btn btn-default btn-lg' onClick='addNotice(this)'><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span></button>
-						</td>
-						<td></td>
+						<td><%=entry.status%></td>
 						<td>
 							<button type='button' class='btn btn-default btn-lg' onClick='duplicateLineNote(this)'><span class='glyphicon glyphicon-duplicate' aria-hidden='true'></span></button>
 						</td>

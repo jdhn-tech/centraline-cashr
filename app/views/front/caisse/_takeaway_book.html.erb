@@ -75,7 +75,6 @@
 </div>
 
 <script>
-// var takeaway_detail_line = "<tr><td><button type='button' class='btn btn-default btn-lg' onclick='duplicateLineNote(this)'><span class='glyphicon glyphicon-duplicate' aria-hidden='true'></span></button></td><td><button type='button' class='btn btn-default btn-lg' onClick='removeLineNote(this)'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td><td class='takeaway_note_code'>%CODE%</td><td>%NOM%</td><td class='takeaway_note_price'>%PRIX%</td><td><button type='button' class='btn btn-default btn-lg' onclick='addNotice(this)' data-toggle='modal' data-target='#modalAddNotice'><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span></button>%NOTE%</td><td>%ETAT%</td></tr>";
 
 var takeaway_detail_line = "<tr><td class='takeaway_note_code'>%CODE%</td><td>%NOM%</td><td class='takeaway_note_price'>%PRIX%</td><td><button type='button' class='btn btn-default btn-lg' onclick='addNotice(this)'><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span></button>%NOTE%</td><td>%ETAT%</td><td><button type='button' class='btn btn-default btn-lg' onclick='duplicateLineNote(this)'><span class='glyphicon glyphicon-duplicate' aria-hidden='true'></span></button></td><td><button type='button' class='btn btn-default btn-lg' onClick='removeLineNote(this)'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td></tr>";
 function tableBookToggleMenus(menuDiv) {
@@ -119,58 +118,88 @@ function toggleDessertSelect() {
 }
 
 function addMenuToNote(id,code,name,price,e) {
-	var line = takeaway_detail_line.replace('%CODE%', code);
-	line = line.replace('%NOM%', name);
-	line = line.replace('%PRIX%', price / 100 + ' €');
-	line = line.replace('%NOTE%', '');
-	line = line.replace('%ETAT%', '');
-	$("#takeaway_detail_note").append(line);
-	updateSum();
-	toggleTableDetail();
-	updateNote();
+	$.ajax({
+		async: false,
+		url: "/front/notes/<%=@note.id%>/create_entry/"+code,
+		type: "GET",
+		success : function(data) {
+			var line = takeaway_detail_line.replace('%CODE%', code);
+			line = line.replace('%NOM%', data["name"]);
+			line = line.replace('%PRIX%', data["price"] / 100 + ' €');
+			line = line.replace('%NOTE%', data["notice"]);
+			line = line.replace('%ETAT%', data["status"]);
+			$("#takeaway_detail_note").append(line);
+			updateSum();
+			toggleTableDetail();
+		}
+	})
 }
 function addEntryToNote(id,code,name,price,e) {
-	var line = takeaway_detail_line.replace('%CODE%', code);
-	line = line.replace('%NOM%', name);
-	line = line.replace('%PRIX%', price / 100 + ' €');
-	line = line.replace('%NOTE%', '');
-	line = line.replace('%ETAT%', '');
-	$("#takeaway_detail_note").append(line);
-	updateSum();
-	toggleTableDetail();
-	updateNote();
+	$.ajax({
+		async: false,
+		url: "/front/notes/<%=@note.id%>/create_entry/"+code,
+		type: "GET",
+		success : function(data) {
+			var line = takeaway_detail_line.replace('%CODE%', code);
+			line = line.replace('%NOM%', data["name"]);
+			line = line.replace('%PRIX%', data["price"] / 100 + ' €');
+			line = line.replace('%NOTE%', data["notice"]);
+			line = line.replace('%ETAT%', data["status"]);
+			$("#takeaway_detail_note").append(line);
+			updateSum();
+			toggleTableDetail();
+		}
+	})
 }
 function addDishToNote(id,code,name,price,e) {
-	var line = takeaway_detail_line.replace('%CODE%', code);
-	line = line.replace('%NOM%', name);
-	line = line.replace('%PRIX%', price / 100 + ' €');
-	line = line.replace('%NOTE%', '');
-	line = line.replace('%ETAT%', '');
-	$("#takeaway_detail_note").append(line);
-	updateSum();
-	toggleTableDetail();
-	updateNote();
+	$.ajax({
+		async: false,
+		url: "/front/notes/<%=@note.id%>/create_entry/"+code,
+		type: "GET",
+		success : function(data) {
+			var line = takeaway_detail_line.replace('%CODE%', code);
+			line = line.replace('%NOM%', data["name"]);
+			line = line.replace('%PRIX%', data["price"] / 100 + ' €');
+			line = line.replace('%NOTE%', data["notice"]);
+			line = line.replace('%ETAT%', data["status"]);
+			$("#takeaway_detail_note").append(line);
+			updateSum();
+			toggleTableDetail();
+		}
+	})
 }
 function addDrinkToNote(id,code,name,price,e) {
-	var line = takeaway_detail_line.replace('%CODE%', code);
-	line = line.replace('%NOM%', name);
-	line = line.replace('%PRIX%', price / 100 + ' €');
-	line = line.replace('%NOTE%', '');
-	line = line.replace('%ETAT%', '');
-	$("#takeaway_detail_note").append(line);
-	updateSum();
-	toggleTableDetail();
-	updateNote();
+	$.ajax({
+		async: false,
+		url: "/front/notes/<%=@note.id%>/create_entry/"+code,
+		type: "GET",
+		success : function(data) {
+			var line = takeaway_detail_line.replace('%CODE%', code);
+			line = line.replace('%NOM%', data["name"]);
+			line = line.replace('%PRIX%', data["price"] / 100 + ' €');
+			line = line.replace('%NOTE%', data["notice"]);
+			line = line.replace('%ETAT%', data["status"]);
+			$("#takeaway_detail_note").append(line);
+			updateSum();
+			toggleTableDetail();
+		}
+	})
 }
 function addDessertToNote(id,code,name,price,e) {
-	var line = takeaway_detail_line.replace('%CODE%', code);
-	line = line.replace('%NOM%', name);
-	line = line.replace('%PRIX%', price / 100 + ' €');
-	line = line.replace('%NOTE%', '');
-	line = line.replace('%ETAT%', '');
-	$("#takeaway_detail_note").append(line);
-	updateSum();
-	toggleTableDetail();
-	updateNote();
+	$.ajax({
+		async: false,
+		url: "/front/notes/<%=@note.id%>/create_entry/"+code,
+		type: "GET",
+		success : function(data) {
+			var line = takeaway_detail_line.replace('%CODE%', code);
+			line = line.replace('%NOM%', data["name"]);
+			line = line.replace('%PRIX%', data["price"] / 100 + ' €');
+			line = line.replace('%NOTE%', data["notice"]);
+			line = line.replace('%ETAT%', data["status"]);
+			$("#takeaway_detail_note").append(line);
+			updateSum();
+			toggleTableDetail();
+		}
+	})
 }
 </script>
