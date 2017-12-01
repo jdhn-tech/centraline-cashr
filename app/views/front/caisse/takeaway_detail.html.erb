@@ -4,9 +4,7 @@
 			<thead>
 				<tr>
 					<th colspan="5">Ref : <%=@note.reference%><br>A Emporter</th>
-					<!-- <th colspan="2" rowspan="2"><img src="/assets/ecommerce.png" onclick="toggleTableDetail()">  -->
 					<th colspan="2" rowspan="2"><button class="btn" onclick="toggleTableDetail()">Menus</button>
-					<!-- <button class="btn" onclick="addCodeManually()">Ajouter Manuellement</button> </th> -->
 						<input type="text" list="AllArticlesCode" id="Article-input">
 						<datalist id="AllArticlesCode">
 							<% Menu.all.map(&:code).each do |code| %>
@@ -82,7 +80,6 @@
 </div>
 
 <%= render "takeaway_book" %>
-<%#= render "keyboard_takeaway" %>
 <%= render "keyboard_takeaway_notice" %>
 
 <script >
@@ -137,9 +134,6 @@ function updateSum() {
 	});
 	$("#takeaway_note_sum").text("Somme = "+sum+" €");
 }
-// function addCodeManually(){
-// 	$('#modalAddCodeManually').modal('show');
-// }
 
 
 function addNotice(e) {

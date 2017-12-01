@@ -4,9 +4,7 @@
 			<thead>
 				<tr>
 					<th colspan="5">Ref : <%=@note.reference%><br>N° Table : <%=@table.table_number.to_s.rjust(2,'0')%></th>
-					<!-- <th colspan="2" rowspan="2"><img src="/assets/table1.png" onclick="toggleTableDetail()">  -->
 					<th colspan="2" rowspan="2"><button class="btn" onclick="toggleTableDetail()">Menus</button>
-					<!-- <button class="btn" onclick="addCodeManually()">Ajouter Manuellement</button> -->
 						<input type="text" list="AllArticlesCode" id="Article-input">
 						<datalist id="AllArticlesCode">
 							<% Menu.all.map(&:code).each do |code| %>
@@ -66,7 +64,6 @@
 </div>
 
 <%= render "table_book" %>
-<%#= render "keyboard" %>
 <%= render "keyboard_notice" %>
 
 <script >

@@ -1,60 +1,78 @@
 <div class="content">
 	<!-- <span class="right">N° Commande:  2</span><span class="left">Ticket de caisse: 5</span>​ -->
-
-	<table id='Table_Client_Detail' class='table'>
-		<thead>
-			<tr>
-				<th colspan="4">Identité de société</th>
-			</tr>
-			<tr>
-				<th>Référence</th><th>Article</th><th>Prix TTC</th><!--<th>Taux TVA</th>-->
-			</tr>
-		</thead>
-		<tbody>
-			<% @notes.each do |note| %>
+	<div id="Client_Note_Imprimable" style="text-align: center">
+		<table id='Table_Client_Detail' class='table'>
+			<thead>
 				<tr>
-					<td><%=note.reference%></td>
-					<td><%=(note.getMenus.map{|e|e.code} + note.getArticles.map{|e|e.code}).join(" ; ")%></td>
-					<td><%=note.value.to_f / 100%> €</td>
-					<!-- <td>1</td> -->
+					<th colspan="4">Identité de société</th>
 				</tr>
-			<% end %>
-		</tbody>
-		<tfoot>
-			<tr>
-				<th colspan="4">Total TTC</th>
-			</tr>
-		</tfoot>
-	</table>
-	
-	
-	<table id='Table_Detail_Vente' class='table'>
-		<thead>
-			<tr>
-				<th colspan="4">Détails Vente</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>xxx</td>
-				<td></td>
-				<td>1</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>xxx</td>
-				<td></td>
-				<td>1</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>xxx</td>
-				<td></td>
-				<td>1</td>
-				<td></td>
-			</tr>
-		</tbody>
-	</table>
-	
-	<p> A votre aimable réglement </p>
+				<tr>
+					<th style="width:20%">Référence</th>
+					<th style="width:60%">Article</th>
+					<th>Prix TTC</th>
+					<th>Taux TVA</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @notes.each do |note| %>
+					<tr>
+						<td><%=note.reference%></td>
+						<td><%=(note.getMenus.map{|e|e.code} + note.getArticles.map{|e|e.code}).join(" ; ")%></td>
+						<td><%=note.value.to_f / 100%> €</td>
+						<td>20 %</td>
+					</tr>
+				<% end %>
+			</tbody>
+			<tfoot>
+				<tr>
+					<!-- <th colspan="4">Total TTC : <%#=@note.getTotal.to_f / 100%> €</th> -->
+					<th colspan="4">Total TTC : </th>
+				</tr>
+			</tfoot>
+		</table>
+		
+		
+		<table id='Table_Detail_Vente' class='table'>
+			<thead>
+				<tr>
+					<th colspan="4">Détails Vente</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="width:25%">HT 10%</td>
+					<td style="width:25%" id='ht10Percent'></td>
+					<td style="width:25%">HT 20%</td>
+					<td style="width:25%" id='ht20Percent'></td>
+				</tr>
+				<tr>
+					<td>TVA 10%</td>
+					<td></td>
+					<td>TVA 20%</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>TTC 10%</td>
+					<td></td>
+					<td>TTC 20%</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<p style="text-align: center"> A votre aimable réglement </p>
+	</div>	
+	<button onclick="Printer()"> Imprimer </button>
 </div>
+
+<script>
+
+function Printer() {
+	var divToPrint = document.getElementById('Client_Note_Imprimable');
+	newWin = window.open("");
+	newWin.document.write(divToPrint.outerHTML);
+	newWin.print();
+	newWin.close();
+}
+
+</script>
