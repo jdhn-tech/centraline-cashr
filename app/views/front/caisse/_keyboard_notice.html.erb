@@ -52,7 +52,7 @@
 $(function(){
 	var $write_notice = $('#write_notice');
 	
-	$('#keyboard_notice li').click(function(){
+	$('#keyboard_notice li').click(function(event){
 		var $this = $(this),
 			character = $this.html(); 
 		
@@ -69,10 +69,18 @@ $(function(){
 			var code = $write_notice.html();
 			var rowIndex=document.getElementById('hide_tableIndex').value;
 			var button=$("#table_detail_note tr:eq("+rowIndex+") td:eq(3)").find('button');
-			$("#table_detail_note tr:eq("+rowIndex+") td:eq(3)").text("");
-			$("#table_detail_note tr:eq("+rowIndex+") td:eq(3)").append(button);
-			$("#table_detail_note tr:eq("+rowIndex+") td:eq(3)").append(code);
 			$write_notice.html("");
+			$.ajax({
+				async: false,
+				url: "/front/entry/"+notice_entry_id+"/create_notice?notice="+code,
+				type: "POST",
+				success : function(data) {
+					$("#table_detail_note tr:eq("+rowIndex+") td:eq(3)").text("");
+					$("#table_detail_note tr:eq("+rowIndex+") td:eq(3)").append(button);
+					$("#table_detail_note tr:eq("+rowIndex+") td:eq(3)").append(" "+data["notices"]);
+				}
+			})
+			notice_entry_id = 0;
 			return code;
 		}
 

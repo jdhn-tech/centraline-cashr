@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   get "/front/notes/:id/create_entry/:code" => "front/notes#create_entry"
   get "/front/notes/:id/clone_entry/:entry_id" => "front/notes#clone_entry"
   get "/front/notes/:id/remove_entry/:entry_id" => "front/notes#remove_entry"
-  get "/front/entry/:id/create_notice" => "front/notes#create_notice"
+  post "/front/entry/:id/create_notice" => "front/notes#create_notice"
 
   # Admin contains no root path
   get "/admin/dashboard" => "admin/dashboard#index"

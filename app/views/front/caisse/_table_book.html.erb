@@ -93,7 +93,6 @@
 </div>
 
 <script>
-var table_detail_line = "<tr><td class='table_note_code'>%CODE%</td><td>%NOM%</td><td class='table_note_price'>%PRIX%</td><td><button type='button' class='btn btn-default btn-lg' onclick='addNotice(this)'><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span></button>%NOTE%</td><td>%ETAT%</td><td><button type='button' class='btn btn-default btn-lg' onclick='duplicateLineNote(this)'><span class='glyphicon glyphicon-duplicate' aria-hidden='true'></span></button></td><td><button type='button' class='btn btn-default btn-lg' onClick='removeLineNote(this)'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td></tr>";
 function tableBookToggleMenus(menuDiv) {
 	$("div[id^='table_book_select_menu'").hide();
 	$("#"+menuDiv).show();
@@ -145,6 +144,7 @@ function addMenuToNote(id,code,name,price,e) {
 			line = line.replace('%PRIX%', data["price"] / 100 + ' €');
 			line = line.replace('%NOTE%', data["notice"]);
 			line = line.replace('%ETAT%', data["status"]);
+			line = line.replace(/%ENTRY_ID%/g, data["entry_id"]);
 			$("#table_detail_note").append(line);
 			updateSum();
 			toggleTableDetail();
@@ -162,6 +162,7 @@ function addEntryToNote(id,code,name,price,e) {
 			line = line.replace('%PRIX%', data["price"] / 100 + ' €');
 			line = line.replace('%NOTE%', data["notice"]);
 			line = line.replace('%ETAT%', data["status"]);
+			line = line.replace(/%ENTRY_ID%/g, data["entry_id"]);
 			$("#table_detail_note").append(line);
 			updateSum();
 			toggleTableDetail();
@@ -179,6 +180,7 @@ function addDishToNote(id,code,name,price,e) {
 			line = line.replace('%PRIX%', data["price"] / 100 + ' €');
 			line = line.replace('%NOTE%', data["notice"]);
 			line = line.replace('%ETAT%', data["status"]);
+			line = line.replace(/%ENTRY_ID%/g, data["entry_id"]);
 			$("#table_detail_note").append(line);
 			updateSum();
 			toggleTableDetail();
@@ -197,6 +199,7 @@ function addDrinkToNote(id,code,name,price,e) {
 			line = line.replace('%PRIX%', data["price"] / 100 + ' €');
 			line = line.replace('%NOTE%', data["notice"]);
 			line = line.replace('%ETAT%', data["status"]);
+			line = line.replace(/%ENTRY_ID%/g, data["entry_id"]);
 			$("#table_detail_note").append(line);
 			updateSum();
 			toggleTableDetail();
@@ -214,6 +217,7 @@ function addDessertToNote(id,code,name,price,e) {
 			line = line.replace('%PRIX%', data["price"] / 100 + ' €');
 			line = line.replace('%NOTE%', data["notice"]);
 			line = line.replace('%ETAT%', data["status"]);
+			line = line.replace(/%ENTRY_ID%/g, data["entry_id"]);
 			$("#table_detail_note").append(line);
 			updateSum();
 			toggleTableDetail();

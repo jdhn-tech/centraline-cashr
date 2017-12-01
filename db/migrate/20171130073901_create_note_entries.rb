@@ -4,7 +4,7 @@ class CreateNoteEntries < ActiveRecord::Migration[5.1]
 			t.references	:note,		null: false
 			t.references	:article
 			t.references	:menu
-			t.text			:notice_ids, array: true, default: []
+			t.text			:notices, array: true, default: []
 			t.integer		:value
 			t.string		:status
 			t.timestamps

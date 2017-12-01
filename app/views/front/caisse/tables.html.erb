@@ -1,4 +1,12 @@
+
 <div class="content">
+<input id="itest" list="test">
+<datalist id="test">
+	<option value="One">
+	<option value="Two">
+	<option value="Three">
+</datalist>
+<button id="showDatalist">Show</button>
 	<% @tables.each do |table| %>
 		<% unless table.id == 1 %>
 		<div class='tableImage col-xs-5 col-sm-4 col-md-3 col-lg-2 col-xl-1'>
@@ -25,3 +33,9 @@
 		</div>
 	</div> -->
 </div>
+<script type="text/javascript">
+$('#showDatalist').on('click', function(){
+	var x = document.getElementById("test");
+	x.focus();
+})
+</script>

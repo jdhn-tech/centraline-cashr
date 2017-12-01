@@ -15,10 +15,10 @@ class Front::NotesController < ApplicationController
 		# my_ticket.entry_ids = 
 	end
 	def create_notice
-		my_entry = Entry.find(params[:id])
-		my_entry.note_ids << params[:message]
+		my_entry = NoteEntry.find(params[:id])
+		my_entry.notices << params[:notice].to_s
 		my_entry.save
-		render :json => {:success => true}.to_json
+		render :json => {:success => true, :notices => my_entry.notices.join(" ; ")}.to_json
 	end
 	def create_entry
 		my_entry = NoteEntry.new
@@ -40,7 +40,7 @@ class Front::NotesController < ApplicationController
 				:name => my_menu.name,
 				:price => my_menu.price,
 				:status => my_entry.status,
-				:notice => my_entry.notice
+				:notice => my_entry.notices
 			}.to_json
 			return
 		elsif (Article.exists?(code: params[:code]))
@@ -51,22 +51,45 @@ class Front::NotesController < ApplicationController
 			render :json => {
 				:success => true,
 				:entry_id => my_entry.id,
-				:code => my_article.code,
-				:name => my_article.name,
-				:price => my_article.price,
+				:code => my_entry.getCode,
+				:name => my_entry.getName,
+				:price => my_entry.value,
 				:status => my_entry.status,
-				:notice => my_entry.notice
+				:notice => my_entry.notices
 			}.to_json
 			return
 		end
 		render :json => {:success => false}.to_json
-		return
 	end
 	def clone_entry
-
+		my_entry = NoteEntry.find(params[:entry_id])
+		if my_entry.nil?
+			render :json => {:success => false}.to_json
+			return
+		end
+		new_entry = NoteEntry.new
+		new_entry.note_id = my_entry.note_id
+		new_entry.article_id = my_entry.article_id
+		new_entry.menu_id = my_entry.menu_id
+		new_entry.value = my_entry.value
+		new_entry.status = my_entry.status
+		# new_entry.notices = my_entry.notices
+		new_entry.save
+		render :json => {
+			:success => true,
+			:entry_id => new_entry.id,
+			:code => new_entry.getCode,
+			:name => new_entry.getName,
+			:price => new_entry.value,
+			:status => new_entry.status,
+			:notice => new_entry.notices
+		}.to_json
 	end
 	def remove_entry
-		Entry.find(params[:entry_id]).destroy
-		render :json => {:success => true}.to_json
+		if NoteEntry.find(params[:entry_id]).destroy.nil?
+			render :json => {:success => false}.to_json
+		else
+			render :json => {:success => true}.to_json
+		end
 	end
 end

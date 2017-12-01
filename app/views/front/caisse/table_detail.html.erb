@@ -34,7 +34,7 @@
 						<td><%=entry.getName%></td>
 						<td class='table_note_price'><%=entry.value.to_f / 100%> €</td>
 						<td>
-							<button type='button' class='btn btn-default btn-lg' onClick='addNotice(this, <%=entry.id%>)'><span class='glyphicon glyphicon glyphicon-plus'></span></button><%=entry.notice.join(" ; ")%>
+							<button type='button' class='btn btn-default btn-lg' onClick='addNotice(this, <%=entry.id%>)'><span class='glyphicon glyphicon glyphicon-plus'></span></button> <%=entry.notices.join(" ; ")%>
 						</td>
 						<td><%=entry.status%></td>
 						<td>
@@ -67,21 +67,8 @@
 <%= render "keyboard_notice" %>
 
 <script >
-function updateNote(){
-	var items = ($(".table_note_code").map(function(){return $(this).text();}).get()).join(";");
-	
-	$.ajax({
-		async: false,
-		url: "/front/notes/update/<%=@note.id%>?articles="+escape(items),
-		type: "GET",
-		success : function(data) {
-
-		},
-		error : function(data) {
-
-		}
-	})
-}
+var table_detail_line = "<tr id='entry%ENTRY_ID%'><td class='table_note_code'>%CODE%</td><td>%NOM%</td><td class='table_note_price'>%PRIX%</td><td><button type='button' class='btn btn-default btn-lg' onclick='addNotice(this, %ENTRY_ID%)'><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span></button>%NOTE%</td><td>%ETAT%</td><td><button type='button' class='btn btn-default btn-lg' onclick='duplicateLineNote(this, %ENTRY_ID%)'><span class='glyphicon glyphicon-duplicate' aria-hidden='true'></span></button></td><td><button type='button' class='btn btn-default btn-lg' onClick='removeLineNote(this, %ENTRY_ID%)'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td></tr>";
+notice_entry_id = 0;
 function toggleTableDetail() {
 	if ($("#table_detail").is(":visible")) {
 		$("#table_detail").hide();
@@ -99,7 +86,13 @@ function duplicateLineNote(e, entry_id) {
 		url: "/front/notes/<%=@note.id%>/clone_entry/"+entry_id,
 		type: "GET",
 		success : function(data) {
-			$("#table_detail_note").append(thisLine.clone());
+			var line = table_detail_line.replace('%CODE%', data["code"]);
+			line = line.replace('%NOM%', data["name"]);
+			line = line.replace('%PRIX%', data["price"] / 100 + ' €');
+			line = line.replace('%NOTE%', data["notice"]);
+			line = line.replace('%ETAT%', data["status"]);
+			line = line.replace(/%ENTRY_ID%/g, data["entry_id"]);
+			$("#table_detail_note").append(line);
 			updateSum();
 		}
 	})
@@ -123,15 +116,15 @@ function updateSum() {
 	$("#table_note_sum").text("Somme = "+sum+" €");
 }
 
-function addNotice(e) {
+function addNotice(e, entry_id) {
 	$('#modalAddNotice').modal('show');
 	var rowIndex = $(e).closest('tr').index();
+	notice_entry_id = entry_id;
 	$('#modalAddNotice #hide_tableIndex').val(rowIndex);
 	$("#modalAddNotice").modal("show");
 }
 
 $("#Article-input").on('input', function () {
-	var table_detail_line = "<tr><td class='table_note_code'>%CODE%</td><td>%NOM%</td><td class='table_note_price'>%PRIX%</td><td><button type='button' class='btn btn-default btn-lg' onclick='addNotice(this, %ENTRY_ID%)'><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span></button>%NOTE%</td><td>%ETAT%</td><td><button type='button' class='btn btn-default btn-lg' onclick='duplicateLineNote(this, %ENTRY_ID%)'><span class='glyphicon glyphicon-duplicate' aria-hidden='true'></span></button></td><td><button type='button' class='btn btn-default btn-lg' onClick='removeLineNote(this, %ENTRY_ID%)'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td></tr>";
     var code = this.value;
     if($('#AllArticlesCode').find('option').filter(function(){
         return this.value.toUpperCase() === code.toUpperCase();        
@@ -141,18 +134,15 @@ $("#Article-input").on('input', function () {
 			url: "/front/notes/<%=@note.id%>/create_entry/"+code,
 			type: "GET",
 			success : function(data) {
-				if (data["success"]){
-					var line = table_detail_line.replace('%CODE%', data["code"]);
-					line = line.replace('%NOM%', data["name"]);
-					line = line.replace('%PRIX%', data["price"] / 100 + ' €');
-					line = line.replace('%NOTE%', data["notice"]);
-					line = line.replace('%ETAT%', data["status"]);
-					line = line.replace('%ENTRY_ID%', data["entry_id"]);
-					$("#table_detail_note").append(line);
-					updateSum();
-					// updateNote();
-					$("#Article-input").val('');
-				}
+				var line = table_detail_line.replace('%CODE%', data["code"]);
+				line = line.replace('%NOM%', data["name"]);
+				line = line.replace('%PRIX%', data["price"] / 100 + ' €');
+				line = line.replace('%NOTE%', data["notice"]);
+				line = line.replace('%ETAT%', data["status"]);
+				line = line.replace(/%ENTRY_ID%/g, data["entry_id"]);
+				$("#table_detail_note").append(line);
+				updateSum();
+				$("#Article-input").val('');
 			}
 		});
     }

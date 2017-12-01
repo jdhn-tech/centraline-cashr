@@ -1,6 +1,5 @@
 class NoteEntry < ApplicationRecord
 	belongs_to	:note
-	has_many	:notices
 	validates_presence_of :article_id, :unless => :menu_id?
 	validates_presence_of :menu_id, :unless => :article_id?
 

@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 20171201074012) do
     t.bigint "note_id", null: false
     t.bigint "article_id"
     t.bigint "menu_id"
-    t.text "notice", default: [], array: true
+    t.text "notices", default: [], array: true
     t.integer "value"
     t.string "status"
     t.datetime "created_at", null: false
