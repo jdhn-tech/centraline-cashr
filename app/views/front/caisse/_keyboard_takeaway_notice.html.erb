@@ -52,7 +52,7 @@
 $(function(){
 	var $write_notice = $('#write_notice');
 	
-	$('#keyboard_notice li').click(function(event){
+	$('#keyboard_notice li').click(function(){
 		var $this = $(this),
 			character = $this.html(); 
 		
@@ -68,19 +68,11 @@ $(function(){
 		if ($this.hasClass('enter')) {
 			var code = $write_notice.html();
 			var rowIndex=document.getElementById('hide_tableIndex').value;
-			var button=$("#table_detail_note tr:eq("+rowIndex+") td:eq(3)").find('button');
+			var button=$("#takeaway_detail_note tr:eq("+rowIndex+") td:eq(3)").find('button');
+			$("#takeaway_detail_note tr:eq("+rowIndex+") td:eq(3)").text("");
+			$("#takeaway_detail_note tr:eq("+rowIndex+") td:eq(3)").append(button);
+			$("#takeaway_detail_note tr:eq("+rowIndex+") td:eq(3)").append(code);
 			$write_notice.html("");
-			$.ajax({
-				async: false,
-				url: "/front/entry/"+notice_entry_id+"/create_notice?notice="+code,
-				type: "POST",
-				success : function(data) {
-					$("#table_detail_note tr:eq("+rowIndex+") td:eq(3)").text("");
-					$("#table_detail_note tr:eq("+rowIndex+") td:eq(3)").append(button);
-					$("#table_detail_note tr:eq("+rowIndex+") td:eq(3)").append(" "+data["notices"]);
-				}
-			})
-			notice_entry_id = 0;
 			return code;
 		}
 

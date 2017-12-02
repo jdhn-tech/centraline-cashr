@@ -1,6 +1,11 @@
 namespace :admin do
   desc "Generates test data for demo"
   task generate_test_data: :environment do
+    # Tables
+    Table.create(:id => 1, :table_number => Table.count, :occupied => false)
+    Table.create(:id => 2, :table_number => Table.count, :occupied => false)
+    Table.create(:id => 3, :table_number => Table.count, :occupied => false)
+
   	# Categories
   	Category.create(:id => 1, :code => 'BS', :name => 'boisson soft')
   	Category.create(:id => 2, :code => 'BA', :name => 'boisson alcoolisée')

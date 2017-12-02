@@ -1,63 +1,58 @@
 <div id="table_detail" class="content">
-	<table id='Table_Detail' class='table'>
-	<thead>
-		<tr>
-			<th colspan="2" rowspan="2"><img src="/assets/table1.png" onclick="toggleTableDetail()"> 
-			<button class="btn" onclick="addCodeManually()">Ajouter Manuellement</button> </th>
-			<th colspan="5">Ref : <%=@note.reference%><br>N° Table : <%=@table.table_number.to_s.rjust(2,'0')%></th>
-		</tr>
-		<tr>
-			<th style="width:10%">Code</th>
-			<th style="width:10%">Nom</th>
-			<th style="width:10%">Prix Unité</th>
-			<th style="width:45%">Note</th>
-			<th style="width:10%">Etat</th>
-		</tr>
-	</thead>
-	
-	<tbody id='table_detail_note'>
-		<% @note.getMenus.each do |menu| %>
-			<tr>
-				<td>
-					<button type='button' class='btn btn-default btn-lg' onClick='duplicateLineNote(this)'><span class='glyphicon glyphicon-duplicate' aria-hidden='true'></span></button>
-				</td>
-				<td>
-					<button type='button' class='btn btn-default btn-lg' onClick='removeLineNote(this)'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button>
-				</td>
-				<td class='table_note_code'><%=menu.code%></td>
-				<td><%=menu.name%></td>
-				<td class='table_note_price'><%=menu.price.to_f / 100%> €</td>
-				<td>
-					<button type='button' class='btn btn-default btn-lg' onClick='addNotice(this)'><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span></button>
-				</td>
-				<td></td>
-			</tr>
-		<% end %>
-		<% @note.getArticles.each do |article| %>
-			<tr>
-				<td>
-					<button type='button' class='btn btn-default btn-lg' onClick='duplicateLineNote(this)'><span class='glyphicon glyphicon-duplicate' aria-hidden='true'></span></button>
-				</td>
-				<td>
-					<button type='button' class='btn btn-default btn-lg' onClick='removeLineNote(this)'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button>
-				</td>
-				<td class='table_note_code'><%=article.code%></td>
-				<td><%=article.name%></td>
-				<td class='table_note_price'><%=article.price.to_f / 100%> €</td>
-				<td>
-					<button type='button' class='btn btn-default btn-lg' onClick='addNotice(this)'><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span></button>
-				</td>
-				<td></td>
-			</tr>
-		<% end %>
-	</tbody>
-	<tfoot>
-		<tr>
-			<th colspan="7" id="table_note_sum">Somme = 0 €</th>
-		</tr>
-	</tfoot>
-	</table>
-	
+	<div class="content_Table_Detail">
+		<table id='Table_Detail' class='table table-scroll table-striped'>
+			<thead>
+				<tr>
+					<th colspan="5">Ref : <%=@note.reference%><br>N° Table : <%=@table.table_number.to_s.rjust(2,'0')%></th>
+					<th colspan="2" rowspan="2"><button class="btn" onclick="toggleTableDetail()">Menus</button>
+						<input type="text" list="AllArticlesCode" id="Article-input">
+						<datalist id="AllArticlesCode">
+							<% Menu.all.map(&:code).each do |code| %>
+								<option value=<%=code%> >
+								
+							<% end %>
+							<% Article.all.map(&:code).each do |code| %>
+								<option value=<%=code%>>
+							<% end %>
+						</datalist>
+					</th> 
+				</tr>
+				<tr>
+					<th style="width:10%">Code</th>
+					<th style="width:10%">Nom</th>
+					<th style="width:10%">Prix Unité</th>
+					<th style="width:45%">Note</th>
+					<th style="width:10%">Etat</th>
+				</tr>
+			</thead>
+			
+			<tbody id='table_detail_note'>
+				<% @note.note_entries.each do |entry| %>
+					<tr id="entry<%=entry.id%>">
+						
+						<td class='table_note_code'><%=entry.getCode%></td>
+						<td><%=entry.getName%></td>
+						<td class='table_note_price'><%=entry.value.to_f / 100%> €</td>
+						<td>
+							<button type='button' class='btn btn-default btn-lg' onClick='addNotice(this, <%=entry.id%>)'><span class='glyphicon glyphicon glyphicon-plus'></span></button> <%=entry.notices.join(" ; ")%>
+						</td>
+						<td><%=entry.status%></td>
+						<td>
+							<button type='button' class='btn btn-default btn-lg' onClick='duplicateLineNote(this, <%=entry.id%>)'><span class='glyphicon glyphicon-duplicate'></span></button>
+						</td>
+						<td>
+							<button type='button' class='btn btn-default btn-lg' onClick='removeLineNote(this, <%=entry.id%>)'><span class='glyphicon glyphicon-trash'></span></button>
+						</td>
+					</tr>
+				<% end %>
+			</tbody>
+			<tfoot>
+				<tr>
+					<th colspan="7" id="table_note_sum">Somme = <%=@note.getTotal.to_f / 100%> €</th>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
 	<table id='Table_Bottom' class='Table_Bottom'>
 		<tr style="height:50px;">
 			<td><a class="btn" href="/front/edition_liste/<%=@note.id%>">Edition liste</a></td>
@@ -69,34 +64,11 @@
 </div>
 
 <%= render "table_book" %>
-<%= render "keyboard" %>
 <%= render "keyboard_notice" %>
 
 <script >
-$(document).ready(function() {
-	// var tableNote = {};
-	// var tableKeys = Object.keys(tableNote);
-	// tableKeys.forEach(function(element) {
-	// });
-	updateSum();
-});
-
-function updateNote(){
-	var items = ($(".table_note_code").map(function(){return $(this).text();}).get()).join(";");
-	
-	$.ajax({
-		async: false,
-		url: "/front/notes/update/<%=@note.id%>?articles="+escape(items),
-		type: "GET",
-		success : function(data) {
-
-		},
-		error : function(data) {
-
-		}
-	})
-}
-
+var table_detail_line = "<tr id='entry%ENTRY_ID%'><td class='table_note_code'>%CODE%</td><td>%NOM%</td><td class='table_note_price'>%PRIX%</td><td><button type='button' class='btn btn-default btn-lg' onclick='addNotice(this, %ENTRY_ID%)'><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span></button>%NOTE%</td><td>%ETAT%</td><td><button type='button' class='btn btn-default btn-lg' onclick='duplicateLineNote(this, %ENTRY_ID%)'><span class='glyphicon glyphicon-duplicate' aria-hidden='true'></span></button></td><td><button type='button' class='btn btn-default btn-lg' onClick='removeLineNote(this, %ENTRY_ID%)'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td></tr>";
+notice_entry_id = 0;
 function toggleTableDetail() {
 	if ($("#table_detail").is(":visible")) {
 		$("#table_detail").hide();
@@ -106,16 +78,35 @@ function toggleTableDetail() {
 		$("#table_book").hide();
 	}
 }
-function duplicateLineNote(e) {
+function duplicateLineNote(e, entry_id) {
 	var thisLine = $(e).parent().parent();
-	$("#table_detail_note").append(thisLine.clone());
-	updateSum();
-	updateNote();
+	console.log(thisLine);
+	$.ajax({
+		async: false,
+		url: "/front/notes/<%=@note.id%>/clone_entry/"+entry_id,
+		type: "GET",
+		success : function(data) {
+			var line = table_detail_line.replace('%CODE%', data["code"]);
+			line = line.replace('%NOM%', data["name"]);
+			line = line.replace('%PRIX%', data["price"] / 100 + ' €');
+			line = line.replace('%NOTE%', data["notice"]);
+			line = line.replace('%ETAT%', data["status"]);
+			line = line.replace(/%ENTRY_ID%/g, data["entry_id"]);
+			$("#table_detail_note").append(line);
+			updateSum();
+		}
+	})
 }
-function removeLineNote(e) {
-	$(e).parent().parent().remove();
-	updateSum();
-	updateNote();
+function removeLineNote(e, entry_id) {
+	$.ajax({
+		async: false,
+		url: "/front/notes/<%=@note.id%>/remove_entry/"+entry_id,
+		type: "GET",
+		success : function(data) {
+			$(e).parent().parent().remove();
+			updateSum();
+		}
+	})
 }
 function updateSum() {
 	var sum = 0;
@@ -124,14 +115,37 @@ function updateSum() {
 	});
 	$("#table_note_sum").text("Somme = "+sum+" €");
 }
-function addCodeManually(){
-	$('#modalAddCodeManually').modal('show');
-}
 
-
-function addNotice(e) {
+function addNotice(e, entry_id) {
+	$('#modalAddNotice').modal('show');
 	var rowIndex = $(e).closest('tr').index();
+	notice_entry_id = entry_id;
 	$('#modalAddNotice #hide_tableIndex').val(rowIndex);
+	$("#modalAddNotice").modal("show");
 }
+
+$("#Article-input").on('input', function () {
+    var code = this.value;
+    if($('#AllArticlesCode').find('option').filter(function(){
+        return this.value.toUpperCase() === code.toUpperCase();        
+    }).length) {
+        $.ajax({
+			async: false,
+			url: "/front/notes/<%=@note.id%>/create_entry/"+code,
+			type: "GET",
+			success : function(data) {
+				var line = table_detail_line.replace('%CODE%', data["code"]);
+				line = line.replace('%NOM%', data["name"]);
+				line = line.replace('%PRIX%', data["price"] / 100 + ' €');
+				line = line.replace('%NOTE%', data["notice"]);
+				line = line.replace('%ETAT%', data["status"]);
+				line = line.replace(/%ENTRY_ID%/g, data["entry_id"]);
+				$("#table_detail_note").append(line);
+				updateSum();
+				$("#Article-input").val('');
+			}
+		});
+    }
+});
 
 </script>
