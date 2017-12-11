@@ -19,6 +19,6 @@ class Note < ApplicationRecord
 		self.note_entries.map(&:value).sum
 	end
 	def get_remaining_due
-		return (self.value - self.tickets.map(&:value).sum)
+		return (self.getTotal - self.tickets.map(&:value).sum)
 	end
 end
