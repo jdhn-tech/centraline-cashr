@@ -1,5 +1,5 @@
 #!/bin/bash
-rake db:drop
-rake db:setup
-rake db:migrate
-rake admin:generate_test_data
+RAILS_ENV=development rake db:drop
+RAILS_ENV=development rake db:setup
+RAILS_ENV=development rake db:migrate
+RAILS_ENV=development rake admin:generate_test_data
