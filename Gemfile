@@ -27,7 +27,9 @@ gem 'paperclip', '~> 5.1.0'
 gem 'devise', '~> 4.3.0'
 gem 'cancancan', '~> 2.0.0'
 
+
 gem 'jquery-rails', '~> 4.3.1'
+gem 'jquery-ui-rails', '~> 6.0.1'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks

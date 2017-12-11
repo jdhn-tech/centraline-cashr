@@ -1,9 +1,17 @@
 <!-- le fichier delivery_controller.rb a creer -->
 
 <div class="content">
-	<div class='tableImage col-xs-5 col-sm-4 col-md-3 col-lg-2 col-xl-1'>
+	<!-- <div class='tableImage col-xs-5 col-sm-4 col-md-3 col-lg-2 col-xl-1'> -->
+	<div>	
 		<div>
-			<a href="/front/delivery/create"><span class="glyphicon glyphicon-plus" aria-hidden="true" style="font-size:50px;"></span></a>
+			<input type="text" list="AllCustomers" id="Customer-input" placeholder="Chercher client par N° tel ">
+			<datalist id="AllCustomers">
+				<%# Customer.all.map(&:number).each do |number| %>
+					<!-- <option value=<%#=number%> > -->
+				<%# end %>
+			</datalist>
+			<!-- <a href="/front/emporter/create"><span class="glyphicon glyphicon-plus" aria-hidden="true" style="font-size:50px;"></span></a> -->
+			<button class="btn">Nouveau client</button>
 		</div>
 	</div>
 	<table id='Menus' class='table'>
@@ -11,17 +19,36 @@
 			<th>Action</th><th>Date</th><th>Contenu</th><th>TTC</th><th>Etat</th>
 		</thead>
 		<tbody>
-			<% @notes.each do |note| %>
-				<tr>
-					<td>
-						<a href="/front/delivery_detail/<%=note.id%>"><span style="font-size:2em;" class="glyphicon glyphicon-folder-open"/></a>
-					</td>
-					<td><%=note.updated_at.strftime("%d/%m/%Y %H:%M:%S")%></td>
-					<td><%=(note.getMenus+note.getArticles).map{|a|a.code}.join(";")%></td>
-					<td><%=note.value.to_f / 100%> €</td>
-					<td><%=note.state%></td>
-				</tr>
-			<% end %>
+			<tr>
+				<td>
+					<span style="font-size:2em;" class="glyphicon glyphicon-folder-open"/>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
 		</tbody>
 	</table>
 </div>
+
+<script >
+$("#Customer-input").on('input', function () {
+    var number = this.value;
+    if($('#AllCustomers').find('option').filter(function(){
+        return this.value.toUpperCase() === code.toUpperCase();        
+    }).length) {
+  //       $.ajax({
+		// 	async: false,
+		// 	url: "/front/notes/<%#=@note.id%>/create_entry/"+code,
+		// 	type: "GET",
+		// 	success : function(data) {
+		// 		if (data["success"]){
+		// 			$("#Customer-input").val('');
+		// 		}
+		// 	}
+		// });
+    }
+});
+
+</script>
