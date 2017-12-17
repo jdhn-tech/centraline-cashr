@@ -33,7 +33,7 @@
 						<td><%=entry.getName%></td>
 						<td class='takeaway_note_price'><%=entry.value.to_f / 100%> €</td>
 						<td>
-							<button type='button' class='btn btn-default btn-lg' onClick='addNotice(this)'><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span></button><%=entry.notice.join(";")%>
+							<button type='button' class='btn btn-default btn-lg' onClick='addNotice(this)'><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span></button><%=entry.notices.join(";")%>
 						</td>
 						<td><%=entry.status%></td>
 						<td>

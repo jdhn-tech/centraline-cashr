@@ -1,4 +1,5 @@
-<div class="content row">
+<div class="content">
+	<div class="row">
 	<div class="Gauche">
 		<table id='Table_Selection' class='Table_Selection'>
 			<thead>
@@ -98,6 +99,7 @@
 		<!-- <button>EDITION FACTURE</button> -->
 		<button onclick="validerPaiment()">VALIDER</button>
 	</div>
+	</div>
 </div>
 
 <%= render "keyboard_paiement" %>
@@ -115,11 +117,14 @@
 
 
 $("#Table_Selection tbody").delegate('tr','click', function(e) {
-	console.log($(this).closest('tr').attr('id').replace('entry',''));
+	var id_name = $(this).closest('tr').attr('id');
+	console.log(id_name);
+	var entry_id = $(this).closest('tr').attr('id').replace('entry','').replace('moyenne','');
 	var paiement_table_body = document.getElementById("Table_Paiement").getElementsByTagName('tbody')[0];
 	if(paiement_table_body.rows.length == 0){
 		var article_table_body = document.getElementById("Table_Article").getElementsByTagName('tbody')[0];
 		var ArticleRow = article_table_body.insertRow(article_table_body.rows.length);
+		ArticleRow.setAttribute("id", "entry"+entry_id);
 		var rowIndex = this.rowIndex;
 		document.getElementById("Table_Selection").deleteRow(rowIndex);
 		var i=0;
@@ -134,8 +139,12 @@ $("#Table_Selection tbody").delegate('tr','click', function(e) {
 });
 
 $("#Table_Article tbody").delegate("tr",'click',function(e) {
+	var id_name = $(this).closest('tr').attr('id');
+	console.log(id_name);
+	var entry_id = $(this).closest('tr').attr('id').replace('entry','').replace('moyenne','');
 	var selection_table_body = document.getElementById("Table_Selection").getElementsByTagName('tbody')[0];
 	var SelectionRow = selection_table_body.insertRow(selection_table_body.rows.length);
+	SelectionRow.setAttribute("id", "entry"+entry_id);
 	var rowIndex = this.rowIndex;
 	document.getElementById("Table_Article").deleteRow(rowIndex);
 	var i=0;
@@ -146,7 +155,7 @@ $("#Table_Article tbody").delegate("tr",'click',function(e) {
 		i++;
 	})
 	totalSelection();
-	document.getElementById("Table_Paiement").getElementsByTagName('tbody')[0].deleteRow(0);
+	// document.getElementById("Table_Paiement").getElementsByTagName('tbody')[0].deleteRow(0);
 	
 });
 
@@ -199,6 +208,7 @@ function MoveAllSelectionRows(){
 	$("#Table_Selection tbody tr").remove();
 	totalSelection();
 }
+
 function PanierMoyen(e){
 	if(parseInt(e.value)){
 		var total = parseFloat($("#remaining_selection").text());
@@ -208,6 +218,7 @@ function PanierMoyen(e){
 		$("#Table_Selection tbody tr").remove(); 
 		for(var i =1; i <= nbClient; i++){
 			var SelectionRow = selection_table_body.insertRow(selection_table_body.rows.length);
+			SelectionRow.setAttribute("id", "moyenne"+i+"/"+nbClient);
 			var nb = SelectionRow.insertCell(0);
 			var denomination=SelectionRow.insertCell(1);
 			var prix=SelectionRow.insertCell(2);
@@ -244,7 +255,7 @@ function payer(){
  	$(".paiement").each(function(i,element){
 		method = $(element).parent().find("td:last").find("option:selected").text();
 		paid += parseFloat($(element).text());
-		data[method+i] = parseFloat($(element).text());
+		data[method.trim()+"|"+i] = parseFloat($(element).text());
  	})
  	data["paid"] = paid;
 	data["total_apayer"] = parseFloat($("#totaux_payes").text());
@@ -253,11 +264,12 @@ function payer(){
 		url: "/front/notes/<%=@note.id%>/create_ticket",
 		type: "POST",
 		dataType: "json",
-		data: "data",
+		data: data,
 		success : function(data) {
 			$("#Table_Article tbody tr").remove();
 			$("#Table_Paiement tbody tr").remove();
 			totalSelection();
+			// $( ".content" ).load(location.href+" .row");
 		}
 	})
 	// var data = {};

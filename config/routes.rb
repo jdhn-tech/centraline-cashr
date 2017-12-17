@@ -6,9 +6,9 @@ Rails.application.routes.draw do
   root to: "front/caisse#tables"
   get "/front/caisse" => "front/caisse#tables"
   get "/front/emporter" => "front/caisse#emporter"
-  get "/front/edition_client" => "front/caisse#edition_client"
   get "/front/delivery" => "front/caisse#delivery"
   
+  get "/front/edition_client/:id" => "front/caisse#edition_client"
   get "/front/encaisser/:id" => "front/caisse#encaisser"
   get "/front/edition_liste/:id" => "front/caisse#edition_liste"
   get "/front/annulation/:id" => "front/caisse#annulation"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171201074012) do
+ActiveRecord::Schema.define(version: 20171215103239) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,20 @@ ActiveRecord::Schema.define(version: 20171201074012) do
     t.datetime "last_visit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "menu_article_associations", force: :cascade do |t|
+    t.bigint "menu_id"
+    t.bigint "article_id"
+    t.bigint "menu_section_id"
+    t.boolean "choosable"
+    t.index ["article_id"], name: "index_menu_article_associations_on_article_id"
+    t.index ["menu_id"], name: "index_menu_article_associations_on_menu_id"
+    t.index ["menu_section_id"], name: "index_menu_article_associations_on_menu_section_id"
+  end
+
+  create_table "menu_sections", force: :cascade do |t|
+    t.string "name"
   end
 
   create_table "menus", force: :cascade do |t|

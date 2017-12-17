@@ -11,8 +11,10 @@ class Front::NotesController < ApplicationController
 		redirect_to "/front/takeaway_detail/" + my_note.id.to_s
 	end
 	def create_ticket
+		my_ticket = Ticket.new
 		my_ticket.note_id = params[:id]
 		# my_ticket.entry_ids = 
+		render :json => {:success => true}.to_json
 	end
 	def create_notice
 		my_entry = NoteEntry.find(params[:id])
