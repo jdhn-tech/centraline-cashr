@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   get "/admin/del_table/:id" => "admin/dashboard#del_table"
   
   namespace :admin do
+    root "admin/dashboard#index"
   	resources :tables, :categories, :articles, :menus, :notes
   end
 end
