@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CentralineCashr</title>
+	<%= csrf_meta_tags %>
+	<link href="/assets/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+	<%= stylesheet_link_tag    'admin/admin', media: 'all', 'data-turbolinks-track': 'reload' %>
+	<%= javascript_include_tag 'admin/admin', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<body id="application_body">
+	<%= yield %>
+	<p class="notice"><%= notice %></p>
+	<p class="alert"><%= alert %></p>
+	
+<script type="text/javascript">
+var fullscreenDiv    = document.getElementById("application_body");
+var fullscreenFunc   = fullscreenDiv.requestFullscreen;
+
+if (!fullscreenFunc) {
+  ['mozRequestFullScreen',
+   'msRequestFullscreen',
+   'webkitRequestFullScreen'].forEach(function (req) {
+     fullscreenFunc = fullscreenFunc || fullscreenDiv[req];
+   });
+}
+
+function fullScreen() {
+	// Document.exitFullscreen();
+	// var elem = document.getElementById("application_body"); // Make the body go full screen.
+	// if (elem.requestFullscreen) {
+	// 	elem.requestFullscreen();
+	// } else {
+	// 	alert ("nofullscreen");
+	// }
+	fullscreenFunc.call(fullscreenDiv);
+}
+// Click toggle fullscreen mode
+// document.onclick = function (event) { 
+//   if (document.fullscreenElement) { 
+//     document.exitFullscreen() 
+//   } else { 
+//     document.documentElement.requestFullscreen() 
+//   } 
+// };
+</script> 
+
+</body>
+</html>
