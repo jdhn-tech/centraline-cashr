@@ -9,7 +9,6 @@
 </head>
 
 <body id="application_body">
-	<% if !@admin %>
 	<div class="header">
 		<table id='Head' class='Head' style="height:60px">
 		<tr>
@@ -25,8 +24,6 @@
 		</tr>
 		</table>
 	</div>
-	<% else %>
-	<% end %>
 	<%= yield %>
 	<p class="notice"><%= notice %></p>
 	<p class="alert"><%= alert %></p>
