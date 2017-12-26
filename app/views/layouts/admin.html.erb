@@ -9,10 +9,20 @@
 </head>
 
 <body id="application_body">
-	<%= yield %>
+	<div id="mySidenav" class="sidenav">
+		<a href="/admin" id="sidebarDashboard" style="background-color: #222;height: 100px;">ADMIN</a>
+		<a href="/admin/tables" id="sidebarTables">Tables</a>
+		<a href="/admin/notes" id="sidebarNotes">Notes</a>
+		<a href="/admin/categories" id="sidebarCategories">Catégories</a>
+		<a href="/admin/articles" id="sidebarArticles">Articles</a>
+		<a href="/admin/menus" id="sidebarMenus">Menus</a>
+		<a href="/admin/clients" id="sidebarClients">Clients</a>
+	</div>
+	<main id="main">
+		<%= yield %>
+	</main>
 	
 <script type="text/javascript">
 </script> 
-
 </body>
 </html>

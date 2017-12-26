@@ -14,7 +14,7 @@ class Front::NotesController < ApplicationController
 		my_ticket = Ticket.new
 		my_ticket.note_id = params[:id]
 		# my_ticket.entry_ids = 
-		render :json => {:success => true}.to_json
+		render :json => {:success => true, :infos => params["method"]}.to_json
 	end
 	def create_notice
 		my_entry = NoteEntry.find(params[:id])

@@ -5,3 +5,14 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "jquery-ui";
+@import "navbar-fixed-side";
+
+body {
+    font-family: "Lato", sans-serif;
+}
+
+main {
+	margin-left: 200px;
+    transition: margin-left .5s;
+    padding: 16px;
+}

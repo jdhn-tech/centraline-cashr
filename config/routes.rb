@@ -26,15 +26,16 @@ Rails.application.routes.draw do
   get "/front/notes/:id/remove_entry/:entry_id" => "front/notes#remove_entry"
   post "/front/entry/:id/create_notice" => "front/notes#create_notice"
 
-  # Admin contains no root path
-  get "/admin/dashboard" => "admin/dashboard#index"
-
-  # Method calls
-  get "/admin/add_table" => "admin/dashboard#add_table"
-  get "/admin/del_table/:id" => "admin/dashboard#del_table"
+  
   
   namespace :admin do
-    root "admin/dashboard#index"
-  	resources :tables, :categories, :articles, :menus, :notes
+    root to: "dashboard#index"
+    get "/dashboard" => "dashboard#index"
+
+    # Method calls
+    get "/add_table" => "tables#add_table"
+    get "/del_table/:id" => "tables#del_table"
+
+    resources :tables, :categories, :articles, :menus, :notes, :clients
   end
 end
