@@ -14,19 +14,14 @@
 			</thead>
 			<tbody>
 				<%out = false%>
-				<%unless out%>
-					<%@note.getUnpaidAverageSplit.each do |split|%>
-						<tr id="<%=split[:name]%>">
-							<td><%=split[:code]%></td>
-							<td><%=split[:name]%></td>
-							<td class="selection"><%=split[:value].to_f / 100%> €</td>
-						</tr>
-					<%end%>
-				<%end%>
-				<%unless out%>
-					<%%>
-					<%%>
-				<%end%>
+				<%@note.getUnpaidAverageSplit.each do |split|%>
+					<tr id="<%=split[:name]%>">
+						<td><%=split[:code]%></td>
+						<td><%=split[:name]%></td>
+						<td class="selection"><%=split[:value].to_f / 100%> €</td>
+					</tr>
+					<%out = true%>
+				<%end unless @note.getUnpaidAverageSplit.nil?%>
 				<%unless out%>
 					<%@note.getUnpaidNoteEntries.each do |entry|%>
 						<tr id="entry<%=entry.id%>">

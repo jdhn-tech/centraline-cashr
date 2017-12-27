@@ -31,7 +31,12 @@ class Front::NotesController < ApplicationController
 		}
 		my_ticket.save
 		if my_note.get_remaining_due <= 0
-			my_note.
+			my_note.state = "FULLY_PAID"
+			my_note.save
+		else
+			my_note.state = "INCOMPLETE_PAYMENT"
+			my_note.save
+		end
 		render :json => {:success => true, :infos => my_ticket}.to_json
 	end
 	def create_notice

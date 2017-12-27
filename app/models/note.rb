@@ -6,13 +6,12 @@ class Note < ApplicationRecord
 		paid_entry_ids = self.tickets.map(&:note_entry_list).reject(&:empty?).join(";").split(";").map{|id| id.to_i}
 		return (NoteEntry.where('id in (?)', all_entry_ids - paid_entry_ids))
 	end
-	def getUnpaidSplit
-		paid_splits = self.tickets.select{|ticket| ticket if !ticket.value_split.empty?}
-	end
-	def getUnpaidAverageSplits
+	def getUnpaidAverageSplit
 		paid_average_splits = self.tickets.select{|ticket| ticket if !ticket.average_split.empty?}
-		remaining_average_splites = 
-		return 
+		return nil if paid_average_splits
+		all_average_splits = paid_average_splits.first.average_split
+		# remaining_average_splits = 
+		return
 	end
 	def getMenus
 		tab = []
