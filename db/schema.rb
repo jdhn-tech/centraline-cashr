@@ -135,6 +135,10 @@ ActiveRecord::Schema.define(version: 20171215103239) do
     t.string "currency"
     t.bigint "note_id"
     t.boolean "paid"
+    t.string "payment_methods"
+    t.string "note_entry_list"
+    t.string "average_split"
+    t.string "value_split"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["note_id"], name: "index_tickets_on_note_id"

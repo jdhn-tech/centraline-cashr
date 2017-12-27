@@ -13,12 +13,28 @@
 				</tr>
 			</thead>
 			<tbody>
-				<%@note.note_entries.each do |entry|%>
-					<tr id="entry<%=entry.id%>">
-						<td><%=entry.getCode%></td>
-						<td><%=entry.getName%></td>
-						<td class="selection"><%=entry.value.to_f / 100%> €</td>
-					</tr>
+				<%out = false%>
+				<%unless out%>
+					<%@note.getUnpaidAverageSplit.each do |split|%>
+						<tr id="<%=split[:name]%>">
+							<td><%=split[:code]%></td>
+							<td><%=split[:name]%></td>
+							<td class="selection"><%=split[:value].to_f / 100%> €</td>
+						</tr>
+					<%end%>
+				<%end%>
+				<%unless out%>
+					<%%>
+					<%%>
+				<%end%>
+				<%unless out%>
+					<%@note.getUnpaidNoteEntries.each do |entry|%>
+						<tr id="entry<%=entry.id%>">
+							<td><%=entry.getCode%></td>
+							<td><%=entry.getName%></td>
+							<td class="selection"><%=entry.value.to_f / 100%> €</td>
+						</tr>
+					<%end%>
 				<%end%>
 			</tbody>
 			<tfoot>
@@ -115,44 +131,23 @@
 
 <script>
 $("#Table_Selection tbody").delegate('tr','click', function(e) {
-	var id_name = $(this).closest('tr').attr('id');
-	var entry_id = $(this).closest('tr').attr('id').replace('entry','').replace('moyenne','');
-	var paiement_table_body = document.getElementById("Table_Paiement").getElementsByTagName('tbody')[0];
-	if(paiement_table_body.rows.length == 0){
-		var article_table_body = document.getElementById("Table_Article").getElementsByTagName('tbody')[0];
-		var ArticleRow = article_table_body.insertRow(article_table_body.rows.length);
-		ArticleRow.setAttribute("id", "entry"+entry_id);
-		var rowIndex = this.rowIndex;
-		document.getElementById("Table_Selection").deleteRow(rowIndex);
-		var i=0;
-		$("td",this).each(function(el){
-			var cell= ArticleRow.insertCell(i);
-			if (i == 2) {cell.setAttribute("class", "article")};
-			cell.innerHTML = $(this).text();
-			i++;
-		})
+	if(document.getElementById("Table_Paiement").getElementsByTagName('tbody')[0].rows.length == 0){
+		var my_element = this;
+		var articles = document.getElementById("Table_Article").getElementsByTagName('tbody')[0];
+		my_element.getElementsByTagName('td')[2].setAttribute("class", "article");
+		articles.appendChild(my_element);
 		totalSelection();
 	}
 });
 
 $("#Table_Article tbody").delegate("tr",'click',function(e) {
-	var id_name = $(this).closest('tr').attr('id');
-	var entry_id = $(this).closest('tr').attr('id').replace('entry','').replace('moyenne','');
-	var selection_table_body = document.getElementById("Table_Selection").getElementsByTagName('tbody')[0];
-	var SelectionRow = selection_table_body.insertRow(selection_table_body.rows.length);
-	SelectionRow.setAttribute("id", "entry"+entry_id);
-	var rowIndex = this.rowIndex;
-	document.getElementById("Table_Article").deleteRow(rowIndex);
-	var i=0;
-	$("td",this).each(function(el){
-		var cell= SelectionRow.insertCell(i);
-		if (i == 2) {cell.setAttribute("class", "selection");}
-		cell.innerHTML = $(this).text();
-		i++;
-	})
-	totalSelection();
-	// document.getElementById("Table_Paiement").getElementsByTagName('tbody')[0].deleteRow(0);
-	
+	if(document.getElementById("Table_Paiement").getElementsByTagName('tbody')[0].rows.length == 0){
+		var my_element = this;
+		var articles = document.getElementById("Table_Selection").getElementsByTagName('tbody')[0];
+		my_element.getElementsByTagName('td')[2].setAttribute("class", "selection");
+		articles.appendChild(my_element);
+		totalSelection();
+	}	
 });
 
 $("#Table_Paiement tbody").delegate("tr td:first-child",'click',function(e) {
@@ -189,19 +184,13 @@ function resteAPayer(){
 }
 
 function MoveAllSelectionRows(){
-	var selection_table_body = document.getElementById("Table_Selection").getElementsByTagName('tbody')[0];
-	var article_table_body = document.getElementById("Table_Article").getElementsByTagName('tbody')[0];
-	var srows=selection_table_body.rows;
-	for (var r = 0; r < srows.length; r++) {
-		var cols = srows[r].cells;
-		var ArticleRow = article_table_body.insertRow(r);
-		for (var c = 0; c < cols.length; c++) {
-			var cell= ArticleRow.insertCell(c);
-			if (c == 2) {cell.setAttribute("class", "article")};
-			cell.innerHTML = cols[c].textContent;
-		}
+	var selections = document.getElementById("Table_Selection").getElementsByTagName('tbody')[0].rows;
+	var articles = document.getElementById("Table_Article").getElementsByTagName('tbody')[0];
+	while (selections.length > 0) {
+		var row = selections[selections.length - 1];
+		row.getElementsByTagName('td')[2].setAttribute("class", "article");
+		articles.appendChild(row);
 	}
-	$("#Table_Selection tbody tr").remove();
 	totalSelection();
 }
 
@@ -245,12 +234,11 @@ function payer(){
 }
 
  function validerPaiment(){
+ 	var ticketInfo = "";
  	$("#Table_Article tbody tr").each(function(i,element){
- 		console.log($(element).attr('id'));
- 		// $(element).find('td').each(function(j,subelement){
- 		// 	console.log($(subelement).text());
- 		// });
+ 		ticketInfo += (ticketInfo == "") ? $(element).attr('id') : ";"+$(element).attr('id');
  	});
+ 	console.log(ticketInfo);
  	if ($(".paiement").length <= 0){
  		alert("ticket vide");
  		return false;
@@ -258,17 +246,18 @@ function payer(){
  	var inData = {};
  	var paid = 0;
  	var method = "";
+ 	inData["ticket_info"] = ticketInfo;
  	$(".paiement").each(function(i,element){
 		method = $(element).parent().find("td:last").find("option:selected").text().trim();
-		paid += parseFloat($(element).text());
+		paid += (parseFloat($(element).text()) * 100);
 		if (method in inData){
-			inData["method_"+method] += "|"+parseFloat($(element).text());
+			inData["method_"+method] += "|"+Math.round(parseFloat($(element).text()) * 100);
 		}else{
-			inData["method_"+method] = parseFloat($(element).text());
+			inData["method_"+method] = Math.round(parseFloat($(element).text()) * 100);
 		}
  	})
  	inData["paid"] = paid;
-	inData["total_apayer"] = parseFloat($("#totaux_payes").text());
+	inData["total_apayer"] = (parseFloat($("#totaux_payes").text()) * 100);
 	console.log(inData);
  	$.ajax({
 		async: false,
@@ -279,33 +268,10 @@ function payer(){
 		success : function(data) {
 			$("#Table_Article tbody tr").remove();
 			$("#Table_Paiement tbody tr").remove();
-			console.log(data["methods"]);
+			console.log(data["infos"]);
 			totalSelection();
 			// $( ".content" ).load(location.href+" .row");
 		}
 	})
-	// var data = {};
-	// var paid = 0;
-	// var method = "";
-	// $(".paiement").each(function(i,element){
-	// 	method = $(element).parent().find("td:last").find("option:selected").text();
-	// 	paid += parseFloat($(element).text());
-	// 	data[method+i] = parseFloat($(element).text());
-	// });
-	// data["paid"] = paid;
-	// data["total_apayer"] = parseFloat($("#totaux_payes").text());
-	// $.ajax({
-	// 	async: false,
-	// 	url: "/front/tickets/create_ticket/",
-	// 	type: "POST",
-	// 	dataType: "json",
-	// 	data: data,
-	// 	success : function(data) {
-
-	// 	},
-	// 	error : function(data) {
-
-	// 	}
-	// })
 }
 </script>
