@@ -1,3 +1,27 @@
+<div class="container-fluid">
+	<table class="table table-bordered table-hover">
+		<thead class="thead-inverse">
+			<tr>
+				<th>#</th>
+				<th>Code</th>
+				<th>Nom</th>
+				<th>Prix HT</th>
+				<th>Prix TTC</th>
+			</tr>
+		</thead>
+			<%@articles.each do |article|%>
+				<tr>
+					<th scope="row"><%=article.id%></th>
+					<td><%=article.code%></td>
+					<td><%=article.name%></td>
+					<td><%=number_with_precision(article.price / 100, :precision => 2)%></td>
+					<td><%=number_with_precision((article.price * (100+article.category.vat)/100) / 100, :precision => 2)%> (<%=article.category.vat.to_s%>% TVA)</td>
+				</tr>
+			<%end%>
+		<tbody>
+		</tbody>
+	</table>
+</div>
 <script>
 	$( document ).ready(function (){
 		document.getElementById("sidebarArticles").style.backgroundColor = "#333";

@@ -1,4 +1,28 @@
-<div>
+<div class="container-fluid">
+	<table class="table table-bordered table-hover">
+		<thead class="thead-inverse">
+			<tr>
+				<th>#</th>
+				<th>Code</th>
+				<th>Nom</th>
+				<th>Articles</th>
+				<th>Prix HT</th>
+				<th>Prix TTC</th>
+			</tr>
+		</thead>
+			<%@menus.each do |menu|%>
+				<tr>
+					<th scope="row"><%=menu.id%></th>
+					<td><%=menu.code%></td>
+					<td><%=menu.name%></td>
+					<td><%=%></td>
+					<td><%=number_with_precision(menu.price / 100, :precision => 2)%></td>
+					<td><%=number_with_precision((menu.price * (100+menu.category.vat)/100) / 100, :precision => 2)%> (<%=menu.category.vat.to_s%>% TVA)</td>
+				</tr>
+			<%end%>
+		<tbody>
+		</tbody>
+	</table>
 </div>
 <script>
 	$( document ).ready(function (){
