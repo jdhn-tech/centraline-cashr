@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get "/front/edition_client/:id" => "front/caisse#edition_client"
   get "/front/encaisser/:id" => "front/caisse#encaisser"
   get "/front/edition_liste/:id" => "front/caisse#edition_liste"
+  get "/front/:table_id/debarasser/:note_id" => "front/caisse#debarasser"
   get "/front/annulation/:id" => "front/caisse#annulation"
   get "/front/table_detail/:id" => "front/caisse#table_detail"
   get "/front/takeaway_detail/:noteId" => "front/caisse#takeaway_detail"

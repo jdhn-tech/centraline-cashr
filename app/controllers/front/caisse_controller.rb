@@ -5,7 +5,7 @@ class Front::CaisseController < ApplicationController
 	def table_detail
 		@table = Table.find(params[:id])
 		if @table.occupied
-			@note = Note.where(table_number: @table.table_number, active: true, state: "ACTIVE").first
+			@note = Note.where(table_number: @table.table_number, active: true).first
 		else
 			@note = Note.new
 			@note.table_number = @table.table_number
@@ -64,5 +64,14 @@ class Front::CaisseController < ApplicationController
 		else
 			render :json => {:success => false}.to_json
 		end	
+	end
+	def debarasser
+		my_note = Note.find(params[:note_id])
+		my_table = Table.find(params[:table_id])
+		my_table.occupied = false
+		my_table.save
+		my_note.active = false
+		my_note.save
+		redirect_to "/"
 	end
 end
