@@ -9,6 +9,7 @@
 				<th>Prix TTC</th>
 			</tr>
 		</thead>
+		<tbody>
 			<%@articles.each do |article|%>
 				<tr>
 					<th scope="row"><%=article.id%></th>
@@ -18,7 +19,6 @@
 					<td><%=number_with_precision((article.price * (100+article.category.vat)/100) / 100, :precision => 2)%> (<%=article.category.vat.to_s%>% TVA)</td>
 				</tr>
 			<%end%>
-		<tbody>
 		</tbody>
 	</table>
 </div>

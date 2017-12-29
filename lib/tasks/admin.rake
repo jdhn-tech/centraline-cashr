@@ -1,10 +1,8 @@
 namespace :admin do
   desc "Generates test data for demo"
   task generate_test_data: :environment do
-    # Tables
-    Table.create(:id => 1, :table_number => Table.count, :occupied => false)
-    Table.create(:id => 2, :table_number => Table.count, :occupied => false)
-    Table.create(:id => 3, :table_number => Table.count, :occupied => false)
+    # Table de livraison
+    Table.create(:id => 0, :table_number => Table.count, :occupied => false)
 
   	# Categories
   	Category.create(:id => 1, :code => 'BS', :name => 'boisson soft', :vat => 5.5)
@@ -26,16 +24,29 @@ namespace :admin do
   	Article.create(:id => 7, :code => 'PF01', :name => 'Salade de Carottes', :price => 1200, :category_id => 6)
   	Article.create(:id => 8, :code => 'DE01', :name => 'Tiramisu', :price => 550, :category_id => 7)
 
+    # menuSections
+    MenuSection.create(:id => 1, :name => "Entrée")
+    MenuSection.create(:id => 2, :name => "Plat")
+    MenuSection.create(:id => 3, :name => "Dessert")
+    MenuSection.create(:id => 4, :name => "Boisson")
+
   	# Menus
   	Menu.create(:id => 1, :code => 'ME01', :name => 'Menu 1', :price => 950, :category_id => 8, :article_ids => ["1","6"])
+      MenuArticle.create(:id => 1, :menu_id => 1, :menu_section_id => 4, :article_id => 1, :choosable => false)
+      MenuArticle.create(:id => 2, :menu_id => 1, :menu_section_id => 2, :article_id => 6, :choosable => false)
     Menu.create(:id => 2, :code => 'ME02', :name => 'Menu 2', :price => 1550, :category_id => 8, :article_ids => ["1","6","8"])
+      MenuArticle.create(:id => 3, :menu_id => 2, :menu_section_id => 4, :article_id => 1, :choosable => false)
+      MenuArticle.create(:id => 4, :menu_id => 2, :menu_section_id => 2, :article_id => 6, :choosable => false)
+      MenuArticle.create(:id => 5, :menu_id => 2, :menu_section_id => 3, :article_id => 8, :choosable => false)
     Menu.create(:id => 3, :code => 'ME03', :name => 'Menu 3', :price => 1550, :category_id => 8, :article_ids => ["1","5","8"])
+      MenuArticle.create(:id => 6, :menu_id => 3, :menu_section_id => 4, :article_id => 1, :choosable => false)
+      MenuArticle.create(:id => 7, :menu_id => 3, :menu_section_id => 2, :article_id => 5, :choosable => false)
+      MenuArticle.create(:id => 8, :menu_id => 3, :menu_section_id => 3, :article_id => 8, :choosable => false)
     Menu.create(:id => 4, :code => 'ME04', :name => 'Menu 4', :price => 1750, :category_id => 8, :article_ids => ["2","5","7","8"])
-   #  Menu.create(:id => 5, :code => 'ME05', :name => 'Menu 5', :price => 1750, :category_id => 8, :article_ids => ["2","5","7","8"])
-   #  Menu.create(:id => 6, :code => 'ME06', :name => 'Menu 6', :price => 1750, :category_id => 8, :article_ids => ["2","5","7","8"])
-   #  Menu.create(:id => 7, :code => 'ME07', :name => 'Menu 7', :price => 1750, :category_id => 8, :article_ids => ["2","5","7","8"])
-   #  Menu.create(:id => 8, :code => 'ME08', :name => 'Menu 8', :price => 1750, :category_id => 8, :article_ids => ["2","5","7","8"])
-   #  Menu.create(:id => 9, :code => 'ME09', :name => 'Menu 9', :price => 1750, :category_id => 8, :article_ids => ["2","5","7","8"])
+      MenuArticle.create(:id => 9, :menu_id => 4, :menu_section_id => 4, :article_id => 2, :choosable => false)
+      MenuArticle.create(:id => 10, :menu_id => 4, :menu_section_id => 2, :article_id => 5, :choosable => false)
+      MenuArticle.create(:id => 11, :menu_id => 4, :menu_section_id => 2, :article_id => 7, :choosable => false)
+      MenuArticle.create(:id => 12, :menu_id => 4, :menu_section_id => 3, :article_id => 8, :choosable => false)
 
   	# Paiements
     Payment.create(:id => 1, :name => 'Espèces')

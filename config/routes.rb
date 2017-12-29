@@ -26,7 +26,8 @@ Rails.application.routes.draw do
   get "/front/notes/:id/clone_entry/:entry_id" => "front/notes#clone_entry"
   get "/front/notes/:id/remove_entry/:entry_id" => "front/notes#remove_entry"
   post "/front/entry/:id/create_notice" => "front/notes#create_notice"
-
+  get "/add_table" => "front/tables#add_table"
+  get "/del_table/:id" => "front/tables#del_table"
   
   
   namespace :admin do
@@ -34,8 +35,7 @@ Rails.application.routes.draw do
     get "/dashboard" => "dashboard#index"
 
     # Method calls
-    get "/add_table" => "tables#add_table"
-    get "/del_table/:id" => "tables#del_table"
+    
 
     resources :tables, :categories, :articles, :menus, :notes, :clients
   end

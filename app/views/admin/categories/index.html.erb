@@ -8,6 +8,7 @@
 				<th>TVA</th>
 			</tr>
 		</thead>
+		<tbody>
 			<%@categories.each do |category|%>
 				<tr>
 					<th scope="row"><%=category.id%></th>
@@ -16,7 +17,6 @@
 					<td><%=category.vat%></td>
 				</tr>
 			<%end%>
-		<tbody>
 		</tbody>
 	</table>
 </div>

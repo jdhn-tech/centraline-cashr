@@ -56,7 +56,7 @@ class Front::NotesController < ApplicationController
 		if (Menu.exists?(code: params[:code]))
 			my_menu = Menu.find_by(code: params[:code])
 			my_entry.menu_id = my_menu.id
-			my_entry.value = my_menu.price
+			my_entry.value = my_menu.price * my_menu.category.vat
 			my_entry.save
 			render :json => {
 				:success => true,

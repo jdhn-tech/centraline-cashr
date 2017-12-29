@@ -4,13 +4,10 @@
 		<div>
 		<!-- Tables -->
 			<p>
-				<%= @tables.count %> tables <a href="/admin/add_table"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+				<%= @tables.count - 1 %> tables occupées</a>
 				<ul>
 					<% @tables.sort.each do |table| %>
-						<li>table <%= table.table_number %>
-						<% if table.table_number > 0 %>
-							<a href="/admin/del_table/<%=table.id%>"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a></li>
-						<% end %>
+						<li>table <%= table.table_number %></li>
 					<% end %>
 				</ul>
 			</p>
@@ -29,10 +26,8 @@
 					<% @categories.each do |category| %>
 						<li> <%= category.code %> : <%= category.name %> </li>
 						<ul>
-							<% @articles.each do |article| %>
-							<% if article.category_ids.include? category.id.to_s %>
+							<% category.articles.each do |article| %>
 								<li> <%= article.code %> : <%= article.name %> .. <%= article.price.to_d / 100 %> € </li>
-							<% end %>
 							<% end %>
 						</ul>
 					<% end %>
@@ -56,22 +51,3 @@
 		document.getElementById("sidebarDashboard").style.backgroundColor = "#333";
 	});
 </script>
-
-<!-- Modal -->
-<!-- <div id="newCategoryModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Ajouter une cagégorie</h4>
-      </div>
-      <div class="modal-body">
-        <form>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-
-  </div>
-</div> -->

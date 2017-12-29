@@ -26,7 +26,7 @@
 	</div>
 	<div id="table_book_entries" class="row" style="display:none;">
 		<table class='table'>
-			<% @articles.map{|a| a if a.category_ids.include?("4")}.compact.each do |article| %>
+			<% @articles.map{|a| a if a.category.id == 4}.compact.each do |article| %>
 				<tr>
 					<td><%= article.code %></td>
 					<td><%= article.name %></td>
@@ -38,7 +38,7 @@
 	</div>
 	<div id="table_book_dishes" class="row" style="display:none;">
 		<table class='table'>
-			<% @articles.map{|a| a if (a.category_ids & ["5"]).any?}.compact.each do |article| %>
+			<% @articles.map{|a| a if a.category.id == 5}.compact.each do |article| %>
 				<tr>
 					<td><%= article.code %></td>
 					<td><%= article.name %></td>
@@ -50,7 +50,7 @@
 	</div>
 	<div id="table_book_drinks" class="row" style="display:none;">
 		<table class='table'>
-			<% @articles.map{|a| a if (a.category_ids & ["1","2"]).any?}.compact.each do |article| %>
+			<% @articles.map{|a| a if a.category.id == 1 || a.category.id == 2}.compact.each do |article| %>
 				<tr>
 					<td><%= article.code %></td>
 					<td><%= article.name %></td>
@@ -62,7 +62,7 @@
 	</div>
 	<div id="table_book_desserts" class="row" style="display:none;">
 		<table class='table'>
-			<% @articles.map{|a| a if (a.category_ids & ["7"]).any?}.compact.each do |article| %>
+			<% @articles.map{|a| a if a.category.id == 7}.compact.each do |article| %>
 				<tr>
 					<td><%= article.code %></td>
 					<td><%= article.name %></td>
