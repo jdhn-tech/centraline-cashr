@@ -1,0 +1,19 @@
+// Place all the styles related to the admin/admin controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "jquery-ui";
+@import "navbar-fixed-side";
+
+body {
+    font-family: "Lato", sans-serif;
+}
+
+main {
+	margin-left: 200px;
+	margin-right: 20px;
+    transition: margin-left .5s;
+    padding: 16px;
+}

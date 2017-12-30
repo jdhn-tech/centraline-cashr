@@ -9,6 +9,7 @@ class CreateNotes < ActiveRecord::Migration[5.1]
 			t.text :menu_ids, array: true, default: []
 			t.text :article_ids, array: true, default: []
 			t.text :notice_ids, array: true, default: []
+			# ACTIVE INCOMPLETE_PAYMENT FULLY_PAID
 			t.string :state
 			t.boolean :active
 			t.timestamps

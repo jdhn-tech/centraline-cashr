@@ -6,10 +6,12 @@ Rails.application.routes.draw do
   root to: "front/caisse#tables"
   get "/front/caisse" => "front/caisse#tables"
   get "/front/emporter" => "front/caisse#emporter"
-  get "/front/edition_client" => "front/caisse#edition_client"
+  get "/front/delivery" => "front/caisse#delivery"
   
+  get "/front/edition_client/:id" => "front/caisse#edition_client"
   get "/front/encaisser/:id" => "front/caisse#encaisser"
   get "/front/edition_liste/:id" => "front/caisse#edition_liste"
+  get "/front/:table_id/debarasser/:note_id" => "front/caisse#debarasser"
   get "/front/annulation/:id" => "front/caisse#annulation"
   get "/front/table_detail/:id" => "front/caisse#table_detail"
   get "/front/takeaway_detail/:noteId" => "front/caisse#takeaway_detail"
@@ -24,15 +26,17 @@ Rails.application.routes.draw do
   get "/front/notes/:id/clone_entry/:entry_id" => "front/notes#clone_entry"
   get "/front/notes/:id/remove_entry/:entry_id" => "front/notes#remove_entry"
   post "/front/entry/:id/create_notice" => "front/notes#create_notice"
-
-  # Admin contains no root path
-  get "/admin/dashboard" => "admin/dashboard#index"
-
-  # Method calls
-  get "/admin/add_table" => "admin/dashboard#add_table"
-  get "/admin/del_table/:id" => "admin/dashboard#del_table"
+  get "/add_table" => "front/tables#add_table"
+  get "/del_table/:id" => "front/tables#del_table"
+  
   
   namespace :admin do
-  	resources :tables, :categories, :articles, :menus, :notes
+    root to: "dashboard#index"
+    get "/dashboard" => "dashboard#index"
+
+    # Method calls
+    
+
+    resources :tables, :categories, :articles, :menus, :notes, :clients
   end
 end

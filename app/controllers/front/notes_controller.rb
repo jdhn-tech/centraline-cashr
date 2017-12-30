@@ -11,8 +11,33 @@ class Front::NotesController < ApplicationController
 		redirect_to "/front/takeaway_detail/" + my_note.id.to_s
 	end
 	def create_ticket
+		my_note = Note.find(params[:id])
+		my_ticket = Ticket.new
+		my_ticket.init
 		my_ticket.note_id = params[:id]
-		# my_ticket.entry_ids = 
+		my_ticket.value = params[:paid]
+		params[:ticket_info].split(";").map{|info|
+			if info.match('entry')
+				my_ticket.note_entry_list += (my_ticket.note_entry_list == "") ? info.gsub("entry", "") : ";"+info.gsub("entry", "")
+			elsif info.match('moyenne')
+				my_ticket.average_split+= (my_ticket.average_split == "") ? info.gsub("moyenne", "") : ";"+info.gsub("moyenne", "")
+			end
+		}
+		paymentMethods = params.select{ |key, value|
+			if (key.match("method_"))
+				paymentMethodId = Payment.find_by(name: key.gsub("method_", "")).id
+				my_ticket.payment_methods += (my_ticket.payment_methods == "") ? paymentMethodId.to_s+":"+value.to_s : ";"+paymentMethodId.to_s+":"+value.to_s
+			end
+		}
+		my_ticket.save
+		if my_note.get_remaining_due <= 0
+			my_note.state = "FULLY_PAID"
+			my_note.save
+		else
+			my_note.state = "INCOMPLETE_PAYMENT"
+			my_note.save
+		end
+		render :json => {:success => true, :infos => my_ticket}.to_json
 	end
 	def create_notice
 		my_entry = NoteEntry.find(params[:id])
@@ -31,7 +56,7 @@ class Front::NotesController < ApplicationController
 		if (Menu.exists?(code: params[:code]))
 			my_menu = Menu.find_by(code: params[:code])
 			my_entry.menu_id = my_menu.id
-			my_entry.value = my_menu.price
+			my_entry.value = my_menu.price * my_menu.category.vat
 			my_entry.save
 			render :json => {
 				:success => true,

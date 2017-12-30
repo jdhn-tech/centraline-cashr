@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171201074012) do
+ActiveRecord::Schema.define(version: 20171229091348) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,9 +20,10 @@ ActiveRecord::Schema.define(version: 20171201074012) do
     t.string "name"
     t.string "portion"
     t.integer "price"
-    t.text "category_ids", default: [], array: true
+    t.bigint "category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_articles_on_category_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -42,6 +43,24 @@ ActiveRecord::Schema.define(version: 20171201074012) do
     t.string "email"
     t.string "phone"
     t.datetime "last_visit"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "menu_articles", force: :cascade do |t|
+    t.bigint "menu_id"
+    t.bigint "article_id"
+    t.bigint "menu_section_id"
+    t.boolean "choosable"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_menu_articles_on_article_id"
+    t.index ["menu_id"], name: "index_menu_articles_on_menu_id"
+    t.index ["menu_section_id"], name: "index_menu_articles_on_menu_section_id"
+  end
+
+  create_table "menu_sections", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -121,6 +140,10 @@ ActiveRecord::Schema.define(version: 20171201074012) do
     t.string "currency"
     t.bigint "note_id"
     t.boolean "paid"
+    t.string "payment_methods"
+    t.string "note_entry_list"
+    t.string "average_split"
+    t.string "value_split"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["note_id"], name: "index_tickets_on_note_id"

@@ -1,0 +1,27 @@
+<div class="container-fluid">
+	<table class="table table-bordered table-hover">
+		<thead class="thead-inverse">
+			<tr>
+				<th>#</th>
+				<th>Code</th>
+				<th>Nom</th>
+				<th>TVA</th>
+			</tr>
+		</thead>
+		<tbody>
+			<%@categories.each do |category|%>
+				<tr>
+					<th scope="row"><%=category.id%></th>
+					<td><%=category.code%></td>
+					<td><%=category.name%></td>
+					<td><%=category.vat%></td>
+				</tr>
+			<%end%>
+		</tbody>
+	</table>
+</div>
+<script>
+	$( document ).ready(function (){
+		document.getElementById("sidebarCategories").style.backgroundColor = "#333";
+	});
+</script>

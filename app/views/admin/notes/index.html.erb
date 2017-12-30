@@ -1,0 +1,32 @@
+<div class="container-fluid">
+	<table class="table table-bordered table-hover">
+		<thead class="thead-inverse">
+			<tr>
+				<th>#</th>
+				<th>Ref</th>
+				<th>Contenu</th>
+				<th>Total</th>
+			</tr>
+		</thead>
+		<tbody>
+			<%@notes.each do |note|%>
+				<tr>
+					<th scope="row"><%=note.id%></th>
+					<td><%=note.reference%></td>
+					<td>
+						<%note.note_entries.each_with_index do |entry, i|%>
+							<%="; " if i > 0%><%=entry.article.nil? ? entry.menu.code : entry.article.code%>
+						<%end%>
+					</td>
+					<td><%=note.getTotal.to_f / 100%> €</td>
+				</tr>
+			<%end%>
+		</tbody>
+	</table>
+</div>
+
+<script>
+	$( document ).ready(function (){
+		document.getElementById("sidebarNotes").style.backgroundColor = "#333";
+	});
+</script>

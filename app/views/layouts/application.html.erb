@@ -9,24 +9,22 @@
 </head>
 
 <body id="application_body">
-	<% if !@admin %>
 	<div class="header">
 		<table id='Head' class='Head' style="height:60px">
 		<tr>
 			<td><a class="btn" href="/front/caisse">TABLE</a></td>
 			<!-- <td><a href="/front/caisse" style="vertical-align:center;display:block;height:100%;">TABLE</a></td> -->
 			<td><a class="btn" href="/front/emporter">EMPORTER</a></td>
-			<td style="background-color: #000;"><a class="btn">LIVRAISON</a></td>
-			<td style="background-color: #000;"><a class="btn">EN LIGNE</a></td>
-			<td style="background-color: #000;"><a class="btn">AUTRES</a></td>
+			<!-- <td><a class="btn" href="/front/delivery">LIVRAISON</a></td>  -->
+			<td style="background-color: #FAAC58;"><a class="btn">LIVRAISON</a></td>
+			<td style="background-color: #FAAC58;"><a class="btn">EN LIGNE</a></td>
+			<td style="background-color: #FAAC58;"><a class="btn">AUTRES</a></td>
 			<!-- <td><a>COM. PAYE</a></td> -->
 			<td><a class="btn" href="/admin/dashboard">ADMIN</a></td>
 			<td><a class="btn" onclick="fullScreen()"><span class="glyphicon glyphicon-fullscreen"></span></a></td>
 		</tr>
 		</table>
 	</div>
-	<% else %>
-	<% end %>
 	<%= yield %>
 	<p class="notice"><%= notice %></p>
 	<p class="alert"><%= alert %></p>

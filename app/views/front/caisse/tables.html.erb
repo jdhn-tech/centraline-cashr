@@ -1,14 +1,7 @@
 
 <div class="content">
-<input id="itest" list="test">
-<datalist id="test">
-	<option value="One">
-	<option value="Two">
-	<option value="Three">
-</datalist>
-<button id="showDatalist">Show</button>
 	<% @tables.each do |table| %>
-		<% unless table.id == 1 %>
+		<% unless table.id == 0 %>
 		<div class='tableImage col-xs-5 col-sm-4 col-md-3 col-lg-2 col-xl-1'>
 			<a href="/front/table_detail/<%=table.id%>">
 				<% if table.occupied %>
@@ -22,20 +15,14 @@
 		</div>
 		<% end %>
 	<% end %>
-	<!-- <div class='tableImage col-xs-5 col-sm-4 col-md-3 col-lg-2 col-xl-1'>
+	<div class='tableImage col-xs-5 col-sm-4 col-md-3 col-lg-2 col-xl-1'>
 		<div style="width:113px; height:113px; vertical-align: center; text-align: center;">
-			<a href="/admin/add_table"><span class="glyphicon glyphicon-plus" aria-hidden="true" style="font-size:75px;"></span></a>
+			<a href="/add_table"><span class="glyphicon glyphicon-plus" aria-hidden="true" style="font-size:75px;"></span></a>
 		</div>
 	</div>
-	<div class='tableImage col-xs-5 col-sm-4 col-md-3 col-lg-2 col-xl-1'>
+	<!-- <div class='tableImage col-xs-5 col-sm-4 col-md-3 col-lg-2 col-xl-1'>
 		<div style="width:113px; height:113px; vertical-align: center; text-align: center;">
 			<a href="/admin/del_table"><span class="glyphicon glyphicon-minus" aria-hidden="true" style="font-size:75px;"></span></a>
 		</div>
 	</div> -->
 </div>
-<script type="text/javascript">
-$('#showDatalist').on('click', function(){
-	var x = document.getElementById("test");
-	x.focus();
-})
-</script>
