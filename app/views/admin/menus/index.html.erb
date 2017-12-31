@@ -10,7 +10,7 @@
 				<tr>
 					<td><label><%=section.name%> : </label></td>
 					<td>
-						<%= select_tag section.id, options_for_select(Article.all.map{|art|[art.name,art.id]}), :multiple => true %>
+						<%= select_tag section.id, options_for_select(Article.all.map{|art|[art.name,art.id]}), :multiple => true, :class => "section_select" %>
 					</td>
 				</tr>
 			<% end %>
@@ -55,16 +55,18 @@
 							<%end%>
 						<%end%>
 					</td>
-					<td><%=number_with_precision(menu.price / 100, :precision => 2)%></td>
-					<td><%=number_with_precision((menu.price * (100+menu.category.vat)/100) / 100, :precision => 2)%> (<%=menu.category.vat.to_s%>% TVA)</td>
+					<td><%=number_with_precision(menu.getHTvalue / 100, :precision => 2)%> €</td>
+					<td><%=number_with_precision(menu.getTTCvalue / 100, :precision => 2)%> € (<%=menu.category.vat.to_s%>% TVA)</td>
 				</tr>
 			<%end%>
 		</tbody>
 	</table>
 </div>
-<script>
+<script type="text/javascript">
 	$( document ).ready(function (){
 		document.getElementById("sidebarMenus").style.backgroundColor = "#333";
-		$('#example-getting-started').multiselect();
+		$('.section_select').each(function(){
+			$(this).multiselect();
+		})
 	});
 </script>

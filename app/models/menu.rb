@@ -9,12 +9,12 @@ class Menu < ApplicationRecord
 		return self.menu_articles.map{|ma|ma.article}
 	end
 
-	def getHTvalue
+	def getTTCvalue
 		return (self.price)
 	end
 
-	def getTTCvalue
-		return (self.price * (1+(self.category.vat/100))).ceil
+	def getHTvalue
+		return (self.price / (1+(self.category.vat/100))).ceil
 	end
 
 end
