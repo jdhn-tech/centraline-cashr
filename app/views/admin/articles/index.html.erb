@@ -1,22 +1,50 @@
 <div class="container-fluid">
+	<div class="collapse" id="collapseForm" style="padding:20px 0 20px 0;">
+		<%= form_tag("", method: "post") do %>
+		<table>
+			<tr>
+				<td><%= label_tag(:name, "Nom : ") %></td>
+				<td><%= text_field_tag(:name) %></td>
+			</tr>
+			<tr>
+				<td><%= label_tag(:category, "Catégorie : ") %></td>
+				<td><%= select_tag 'category', options_for_select(Category.all.map{|c|[c.name,c.id]}) %></td>
+			</tr>
+			<tr>
+				<td><%= label_tag(:price, "Prix TTC : ") %></td>
+				<td><%= text_field_tag(:price) %></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><%= submit_tag("Créer") %></td>
+			</tr>
+		</table>
+		<% end %>
+	</div>
 	<table class="table table-bordered table-hover">
 		<thead class="thead-inverse">
 			<tr>
 				<th>#</th>
 				<th>Code</th>
+				<th>Catégorie</th>
 				<th>Nom</th>
 				<th>Prix HT</th>
 				<th>Prix TTC</th>
 			</tr>
 		</thead>
 		<tbody>
+			<tr>
+				<th scope="row">+</th>
+				<td style="text-align:center;" colspan="999" ><a href="#collapseForm" data-toggle="collapse" aria-expanded="false" aria-controls="collapseForm"><div style="height:100%;width:100%;"><b>ajouter un article</b></div></a></td>
+			</tr>
 			<%@articles.each do |article|%>
 				<tr>
 					<th scope="row"><%=article.id%></th>
 					<td><%=article.code%></td>
+					<td><%=article.category.name%></td>
 					<td><%=article.name%></td>
-					<td><%=number_with_precision(article.price / 100, :precision => 2)%></td>
-					<td><%=number_with_precision((article.price * (100+article.category.vat)/100) / 100, :precision => 2)%> (<%=article.category.vat.to_s%>% TVA)</td>
+					<td><%=number_with_precision(article.getHTvalue/100, :precision => 2)%></td>
+					<td><%=number_with_precision(article.getTTCvalue/100, :precision => 2)%> (<%=article.category.vat.to_s%>% TVA)</td>
 				</tr>
 			<%end%>
 		</tbody>

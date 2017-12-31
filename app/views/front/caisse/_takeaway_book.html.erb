@@ -16,7 +16,7 @@
 				<% @menus.each do |menu| %>
 					<tr>
 						<td><%=menu.code%> : <%=menu.name%></td>
-						<td><%= menu.get_articles.map{|a| a.name}.join(" ; ") %></td>
+						<td><%= menu.getAllArticles.map{|a| a.name}.join(" ; ") %></td>
 						<td><%= menu.price.to_f / 100 %> €</td>
 						<td><button type='button' onClick="addMenuToNote('<%=menu.id%>','<%=menu.code%>','<%=menu.name%>','<%=menu.price%>',this)">Ajouter</button></td>
 					</tr>

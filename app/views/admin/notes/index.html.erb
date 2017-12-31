@@ -15,7 +15,7 @@
 					<td><%=note.reference%></td>
 					<td>
 						<%note.note_entries.each_with_index do |entry, i|%>
-							<%="; " if i > 0%><%=entry.article.nil? ? entry.menu.code : entry.article.code%>
+							<%="; " if i > 0%><%=entry.getArticle.nil? ? entry.getMenu.code : entry.getArticle.code%>
 						<%end%>
 					</td>
 					<td><%=note.getTotal.to_f / 100%> €</td>

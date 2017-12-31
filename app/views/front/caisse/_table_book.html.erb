@@ -16,9 +16,9 @@
 				<% @menus.each do |menu| %>
 					<tr>
 						<td><%=menu.code%> : <%=menu.name%></td>
-						<td><%= menu.get_articles.map{|a| a.name}.join(" ; ") %></td>
-						<td><%= menu.price.to_f / 100 %> €</td>
-						<td><button type='button' onClick="addMenuToNote('<%=menu.id%>','<%=menu.code%>','<%=menu.name%>','<%=menu.price%>',this)">Ajouter</button></td>
+						<td><%= menu.getAllArticles.map{|a| a.name}.join(" ; ") %></td>
+						<td><%= menu.getTTCvalue.to_f / 100 %> €</td>
+						<td><button type='button' onClick="addMenuToNote('<%=menu.id%>','<%=menu.code%>','<%=menu.name%>','<%=menu.getTTCvalue%>',this)">Ajouter</button></td>
 					</tr>
 				<% end %>
 			</tbody>
@@ -30,8 +30,8 @@
 				<tr>
 					<td><%= article.code %></td>
 					<td><%= article.name %></td>
-					<td><%= article.price.to_f / 100 %> €</td>
-					<td><button type='button' onClick="addEntryToNote('<%=article.id%>','<%=article.code%>','<%=article.name%>','<%=article.price%>',this)">Ajouter</button></td>
+					<td><%= article.getTTCvalue.to_f / 100 %> €</td>
+					<td><button type='button' onClick="addEntryToNote('<%=article.id%>','<%=article.code%>','<%=article.name%>','<%=article.getTTCvalue%>',this)">Ajouter</button></td>
 				</tr>
 			<% end %>
 		</table>
@@ -42,8 +42,8 @@
 				<tr>
 					<td><%= article.code %></td>
 					<td><%= article.name %></td>
-					<td><%= article.price.to_f / 100 %> €</td>
-					<td><button type='button' onClick="addDishToNote('<%=article.id%>','<%=article.code%>','<%=article.name%>','<%=article.price%>',this)">Ajouter</button></td>
+					<td><%= article.getTTCvalue.to_f / 100 %> €</td>
+					<td><button type='button' onClick="addDishToNote('<%=article.id%>','<%=article.code%>','<%=article.name%>','<%=article.getTTCvalue%>',this)">Ajouter</button></td>
 				</tr>
 			<% end %>
 		</table>
@@ -54,8 +54,8 @@
 				<tr>
 					<td><%= article.code %></td>
 					<td><%= article.name %></td>
-					<td><%= article.price.to_f / 100 %> €</td>
-					<td><button type='button' onClick="addDrinkToNote('<%=article.id%>','<%=article.code%>','<%=article.name%>','<%=article.price%>',this)">Ajouter</button></td>
+					<td><%= article.getTTCvalue.to_f / 100 %> €</td>
+					<td><button type='button' onClick="addDrinkToNote('<%=article.id%>','<%=article.code%>','<%=article.name%>','<%=article.getTTCvalue%>',this)">Ajouter</button></td>
 				</tr>
 			<% end %>
 		</table>
@@ -66,8 +66,8 @@
 				<tr>
 					<td><%= article.code %></td>
 					<td><%= article.name %></td>
-					<td><%= article.price.to_f / 100 %> €</td>
-					<td><button type='button' onClick="addDessertToNote('<%=article.id%>','<%=article.code%>','<%=article.name%>','<%=article.price%>',this)">Ajouter</button></td>
+					<td><%= article.getTTCvalue.to_f / 100 %> €</td>
+					<td><button type='button' onClick="addDessertToNote('<%=article.id%>','<%=article.code%>','<%=article.name%>','<%=article.getTTCvalue%>',this)">Ajouter</button></td>
 				</tr>
 			<% end %>
 		</table>

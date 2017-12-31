@@ -1,4 +1,15 @@
 <div class="container-fluid">
+	<div class="collapse" id="collapseForm" style="padding:20px 0 20px 0;">
+		<%= form_tag("/admin/categories", method: "post") do %>
+			<%= label_tag(:code, "Code : ") %>
+			<%= text_field_tag(:code) %>
+			<%= label_tag(:name, "Nom : ") %>
+			<%= text_field_tag(:name) %>
+			<%= label_tag(:vat, "TVA : ") %>
+			<%= text_field_tag(:vat) %>
+			<%= submit_tag("Créer") %>
+		<% end %>
+	</div>
 	<table class="table table-bordered table-hover">
 		<thead class="thead-inverse">
 			<tr>
@@ -9,12 +20,16 @@
 			</tr>
 		</thead>
 		<tbody>
+			<tr>
+				<th scope="row">+</th>
+				<td style="text-align:center;" colspan="999" ><a href="#collapseForm" data-toggle="collapse" aria-expanded="false" aria-controls="collapseForm"><div style="height:100%;width:100%;"><b>ajouter une catégorie</b></div></a></td>
+			</tr>
 			<%@categories.each do |category|%>
 				<tr>
 					<th scope="row"><%=category.id%></th>
 					<td><%=category.code%></td>
 					<td><%=category.name%></td>
-					<td><%=category.vat%></td>
+					<td><%=category.vat%>%</td>
 				</tr>
 			<%end%>
 		</tbody>
