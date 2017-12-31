@@ -1,4 +1,30 @@
 <div class="container-fluid">
+	<div class="collapse" id="collapseForm" style="padding:20px 0 20px 0;">
+		<%= form_tag("/admin/menus", method: "post") do %>
+		<table>
+			<tr>
+				<td><%= label_tag(:name, "Nom : ") %></td>
+				<td><%= text_field_tag(:name) %></td>
+			</tr>
+			<% MenuSection.all.each do |section| %>
+				<tr>
+					<td><label><%=section.name%> : </label></td>
+					<td>
+						<%= select_tag section.id, options_for_select(Article.all.map{|art|[art.name,art.id]}), :multiple => true, :class => "section_select" %>
+					</td>
+				</tr>
+			<% end %>
+			<tr>
+				<td><%= label_tag(:price, "Prix TTC : ") %></td>
+				<td><%= text_field_tag(:price) %></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><%= submit_tag("Créer") %></td>
+			</tr>
+		</table>
+		<% end %>
+	</div>
 	<table class="table table-bordered table-hover">
 		<thead class="thead-inverse">
 			<tr>
@@ -11,6 +37,10 @@
 			</tr>
 		</thead>
 		<tbody>
+			<tr>
+				<th scope="row">+</th>
+				<td style="text-align:center;" colspan="999" ><a href="#collapseForm" data-toggle="collapse" aria-expanded="false" aria-controls="collapseForm"><div style="height:100%;width:100%;"><b>ajouter un menu</b></div></a></td>
+			</tr>
 			<%@menus.each do |menu|%>
 				<tr>
 					<th scope="row"><%=menu.id%></th>
@@ -25,15 +55,18 @@
 							<%end%>
 						<%end%>
 					</td>
-					<td><%=number_with_precision(menu.price / 100, :precision => 2)%></td>
-					<td><%=number_with_precision((menu.price * (100+menu.category.vat)/100) / 100, :precision => 2)%> (<%=menu.category.vat.to_s%>% TVA)</td>
+					<td><%=number_with_precision(menu.getHTvalue / 100, :precision => 2)%> €</td>
+					<td><%=number_with_precision(menu.getTTCvalue / 100, :precision => 2)%> € (<%=menu.category.vat.to_s%>% TVA)</td>
 				</tr>
 			<%end%>
 		</tbody>
 	</table>
 </div>
-<script>
+<script type="text/javascript">
 	$( document ).ready(function (){
 		document.getElementById("sidebarMenus").style.backgroundColor = "#333";
+		$('.section_select').each(function(){
+			$(this).multiselect();
+		})
 	});
 </script>
