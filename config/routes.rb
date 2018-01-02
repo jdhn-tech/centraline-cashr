@@ -37,6 +37,6 @@ Rails.application.routes.draw do
     # Method calls
     
 
-    resources :tables, :categories, :articles, :menus, :notes, :clients
+    resources :tables, :categories, :articles, :menus, :notes, :notices, :clients
   end
 end
