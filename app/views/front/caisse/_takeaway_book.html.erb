@@ -17,7 +17,7 @@
 					<tr>
 						<td><%=menu.code%> : <%=menu.name%></td>
 						<td><%= menu.getAllArticles.map{|a| a.name}.join(" ; ") %></td>
-						<td><%= menu.price.to_f / 100 %> €</td>
+						<td><%= menu.getTTCvalue.to_f / 100 %> €</td>
 						<td><button type='button' onClick="addMenuToNote('<%=menu.id%>','<%=menu.code%>','<%=menu.name%>','<%=menu.price%>',this)">Ajouter</button></td>
 					</tr>
 				<% end %>
@@ -26,11 +26,11 @@
 	</div>
 	<div id="takeaway_book_entries" class="row" style="display:none;">
 		<table class='table'>
-			<% @articles.map{|a| a if a.category_ids.include?("4")}.compact.each do |article| %>
+			<% @articles.map{|a| a if a.category.id == 4}.compact.each do |article| %>
 				<tr>
 					<td><%= article.code %></td>
 					<td><%= article.name %></td>
-					<td><%= article.price.to_f / 100 %> €</td>
+					<td><%= article.getTTCvalue.to_f / 100 %> €</td>
 					<td><button type='button' onClick="addEntryToNote('<%=article.id%>','<%=article.code%>','<%=article.name%>','<%=article.price%>',this)">Ajouter</button></td>
 				</tr>
 			<% end %>
@@ -38,11 +38,11 @@
 	</div>
 	<div id="takeaway_book_dishes" class="row" style="display:none;">
 		<table class='table'>
-			<% @articles.map{|a| a if (a.category_ids & ["5"]).any?}.compact.each do |article| %>
+			<% @articles.map{|a| a if a.category.id == 5}.compact.each do |article| %>
 				<tr>
 					<td><%= article.code %></td>
 					<td><%= article.name %></td>
-					<td><%= article.price.to_f / 100 %> €</td>
+					<td><%= article.getTTCvalue.to_f / 100 %> €</td>
 					<td><button type='button' onClick="addDishToNote('<%=article.id%>','<%=article.code%>','<%=article.name%>','<%=article.price%>',this)">Ajouter</button></td>
 				</tr>
 			<% end %>
@@ -50,11 +50,11 @@
 	</div>
 	<div id="takeaway_book_drinks" class="row" style="display:none;">
 		<table class='table'>
-			<% @articles.map{|a| a if (a.category_ids & ["1","2"]).any?}.compact.each do |article| %>
+			<% @articles.map{|a| a if a.category.id == 1 || a.category.id == 2}.compact.each do |article| %>
 				<tr>
 					<td><%= article.code %></td>
 					<td><%= article.name %></td>
-					<td><%= article.price.to_f / 100 %> €</td>
+					<td><%= article.getTTCvalue.to_f / 100 %> €</td>
 					<td><button type='button' onClick="addDrinkToNote('<%=article.id%>','<%=article.code%>','<%=article.name%>','<%=article.price%>',this)">Ajouter</button></td>
 				</tr>
 			<% end %>
@@ -62,11 +62,11 @@
 	</div>
 	<div id="takeaway_book_desserts" class="row" style="display:none;">
 		<table class='table'>
-			<% @articles.map{|a| a if (a.category_ids & ["7"]).any?}.compact.each do |article| %>
+			<% @articles.map{|a| a if a.category_id == 7}.compact.each do |article| %>
 				<tr>
 					<td><%= article.code %></td>
 					<td><%= article.name %></td>
-					<td><%= article.price.to_f / 100 %> €</td>
+					<td><%= article.getTTCvalue.to_f / 100 %> €</td>
 					<td><button type='button' onClick="addDessertToNote('<%=article.id%>','<%=article.code%>','<%=article.name%>','<%=article.price%>',this)">Ajouter</button></td>
 				</tr>
 			<% end %>
