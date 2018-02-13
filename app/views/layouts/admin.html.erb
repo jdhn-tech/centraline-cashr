@@ -10,9 +10,9 @@
 
 <body id="application_body">
 	<div id="mySidenav" class="sidenav">
-		<a href="/admin" id="sidebarDashboard" style="padding:8px;text-align:center;background-color:#222;height:75px;">ADMIN</a>
+		<a href="/front/tables" id="sidebarDashboard" style="padding:8px;text-align:center;background-color:#222;">Service</a>
 		<a href="/admin/tables" id="sidebarTables">Tables</a>
-		<a href="/admin/notes" id="sidebarNotes">Notes</a>
+		<a href="/admin/notes" id="sidebarNotes">Commandes</a>
 		<a href="/admin/notices" id="sidebarNotices">Notices</a>
 		<a href="/admin/categories" id="sidebarCategories">Catégories</a>
 		<a href="/admin/articles" id="sidebarArticles">Articles</a>
@@ -20,6 +20,9 @@
 		<a href="/admin/clients" id="sidebarClients">Clients</a>
 	</div>
 	<main id="main">
+		<% flash.each do |key, value| %>
+			<div class="alert alert-<%= key %>"><%= value %></div>
+		<% end %>
 		<%= yield %>
 	</main>
 	

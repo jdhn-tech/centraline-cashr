@@ -4,8 +4,8 @@ Rails.application.routes.draw do
 
   # Root path is in front
   root to: "front/caisse#tables"
-  get "/front/caisse" => "front/caisse#tables"
-  get "/front/emporter" => "front/caisse#emporter"
+  get "/front/tables" => "front/caisse#tables"
+  get "/front/takeaway" => "front/caisse#emporter"
   get "/front/delivery" => "front/caisse#delivery"
   
   get "/front/edition_client/:id" => "front/caisse#edition_client"
@@ -33,9 +33,9 @@ Rails.application.routes.draw do
   namespace :admin do
     root to: "dashboard#index"
     get "/dashboard" => "dashboard#index"
+    get "/tables/delete/:id" => "tables#delete"
 
     # Method calls
-    
 
     resources :tables, :categories, :articles, :menus, :notes, :notices, :clients
   end

@@ -1,6 +1,8 @@
 class Note < ApplicationRecord
 	has_many :note_entries
 	has_many :tickets
+	# states can be either ACTIVE INCOMPLETE_PAYMENT FULLY_PAID
+	# for takeaway : EN_COURS
 	def getUnpaidNoteEntries
 		all_entry_ids = self.note_entries.map(&:id)
 		paid_entry_ids = self.tickets.map(&:note_entry_list).reject(&:empty?).join(";").split(";").map{|id| id.to_i}
@@ -40,5 +42,31 @@ class Note < ApplicationRecord
 	end
 	def get_remaining_due
 		return (self.getTotal - self.tickets.map(&:value).sum)
+	end
+	def getCommandInfos
+		infos=[]
+		self.tickets.each do |ticket|
+			my_methods = ticket.payment_methods.split(";")
+			my_ticket = []
+			my_methods.each do |my_method|
+				my_ammount = (my_method.split(":").last.to_f / 100).to_s
+				my_payment = Payment.find(my_method.split(":").first).name
+				my_ticket << my_ammount+"€ en "+my_payment
+			end
+			infos << my_ticket
+		end
+		return infos
+	end
+	def state_in_french
+		case self.state
+		when "ACTIVE"
+			return "Non réglé"
+		when "INCOMPLETE_PAYMENT"
+			return "Paiement incomplet"
+		when "FULLY_PAID"
+			return "Totalement réglé"
+		when "EN_COURS"
+			return "En cours de préparation"
+		end
 	end
 end

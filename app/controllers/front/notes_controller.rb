@@ -6,12 +6,16 @@ class Front::NotesController < ApplicationController
 		my_note.active = true
 		my_note.state = "EN_COURS"
 		my_note.currency = "Euro"
-		my_note.reference = "EMP-" + Time.now.to_f.to_s
+		my_note.reference = "EMP-" + DateTime.now.strftime("%d-%m-%Y-%H:%M")
 		my_note.save
 		redirect_to "/front/takeaway_detail/" + my_note.id.to_s
 	end
 	def create_ticket
 		my_note = Note.find(params[:id])
+		if my_note.state == "FULLY_PAID"
+			render :json => {:success => false, :message => ""} 
+			return
+		end
 		my_ticket = Ticket.new
 		my_ticket.init
 		my_ticket.note_id = params[:id]
@@ -46,6 +50,11 @@ class Front::NotesController < ApplicationController
 		render :json => {:success => true, :notices => my_entry.notices.join(" ; ")}.to_json
 	end
 	def create_entry
+		my_note = Note.find(params[:id])
+		if my_note.state == "FULLY_PAID" || my_note.state == "INCOMPLETE_PAYMENT"
+			render :json => {:success => false, :message => "impossible de modifier une commande encaissée"}
+			return
+		end
 		my_entry = NoteEntry.new
 		if my_entry.nil?
 			render :json => {:success => false}.to_json
@@ -88,6 +97,12 @@ class Front::NotesController < ApplicationController
 	end
 	def clone_entry
 		my_entry = NoteEntry.find(params[:entry_id])
+		my_note = my_entry.note
+		if my_note.state == "FULLY_PAID" || my_note.state == "INCOMPLETE_PAYMENT"
+			render :json => {:success => false, :message => "impossible de modifier une commande encaissée"}
+			return
+		end
+		
 		if my_entry.nil?
 			render :json => {:success => false}.to_json
 			return
@@ -111,7 +126,13 @@ class Front::NotesController < ApplicationController
 		}.to_json
 	end
 	def remove_entry
-		if NoteEntry.find(params[:entry_id]).destroy.nil?
+		my_entry = NoteEntry.find(params[:entry_id])
+		my_note = my_entry.note
+		if my_note.state == "FULLY_PAID" || my_note.state == "INCOMPLETE_PAYMENT"
+			render :json => {:success => false, :message => "impossible de modifier une commande encaissée"}
+			return
+		end
+		if my_entry.destroy.nil?
 			render :json => {:success => false}.to_json
 		else
 			render :json => {:success => true}.to_json

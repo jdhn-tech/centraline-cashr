@@ -26,7 +26,7 @@
 	</div>
 	<div id="takeaway_book_entries" class="row" style="display:none;">
 		<table class='table'>
-			<% @articles.map{|a| a if a.category.id == 4}.compact.each do |article| %>
+			<% @articles.where(category_id: 4).compact.each do |article| %>
 				<tr>
 					<td><%= article.code %></td>
 					<td><%= article.name %></td>
@@ -38,7 +38,7 @@
 	</div>
 	<div id="takeaway_book_dishes" class="row" style="display:none;">
 		<table class='table'>
-			<% @articles.map{|a| a if a.category.id == 5}.compact.each do |article| %>
+			<% @articles.where(category_id: 5).each do |article| %>
 				<tr>
 					<td><%= article.code %></td>
 					<td><%= article.name %></td>
@@ -50,7 +50,7 @@
 	</div>
 	<div id="takeaway_book_drinks" class="row" style="display:none;">
 		<table class='table'>
-			<% @articles.map{|a| a if a.category.id == 1 || a.category.id == 2}.compact.each do |article| %>
+			<% @articles.where(category_id: [1,2]).each do |article| %>
 				<tr>
 					<td><%= article.code %></td>
 					<td><%= article.name %></td>
@@ -62,7 +62,7 @@
 	</div>
 	<div id="takeaway_book_desserts" class="row" style="display:none;">
 		<table class='table'>
-			<% @articles.map{|a| a if a.category_id == 7}.compact.each do |article| %>
+			<% @articles.where(category_id: 7).each do |article| %>
 				<tr>
 					<td><%= article.code %></td>
 					<td><%= article.name %></td>
@@ -123,14 +123,19 @@ function addMenuToNote(id,code,name,price,e) {
 		url: "/front/notes/<%=@note.id%>/create_entry/"+code,
 		type: "GET",
 		success : function(data) {
-			var line = takeaway_detail_line.replace('%CODE%', code);
-			line = line.replace('%NOM%', data["name"]);
-			line = line.replace('%PRIX%', data["price"] / 100 + ' €');
-			line = line.replace('%NOTE%', data["notice"]);
-			line = line.replace('%ETAT%', data["status"]);
-			$("#takeaway_detail_note").append(line);
-			updateSum();
-			toggleTableDetail();
+			if (data["success"]) {
+				var line = takeaway_detail_line.replace('%CODE%', code);
+				line = line.replace('%NOM%', data["name"]);
+				line = line.replace('%PRIX%', data["price"] / 100 + ' €');
+				line = line.replace('%NOTE%', data["notice"]);
+				line = line.replace('%ETAT%', data["status"]);
+				line = line.replace(/%ENTRY_ID%/g, data["entry_id"]);
+				$("#takeaway_detail_note").append(line);
+				updateSum();
+				toggleTableDetail();
+			} else {
+				alert(data["message"]);
+			}
 		}
 	})
 }
@@ -140,14 +145,19 @@ function addEntryToNote(id,code,name,price,e) {
 		url: "/front/notes/<%=@note.id%>/create_entry/"+code,
 		type: "GET",
 		success : function(data) {
-			var line = takeaway_detail_line.replace('%CODE%', code);
-			line = line.replace('%NOM%', data["name"]);
-			line = line.replace('%PRIX%', data["price"] / 100 + ' €');
-			line = line.replace('%NOTE%', data["notice"]);
-			line = line.replace('%ETAT%', data["status"]);
-			$("#takeaway_detail_note").append(line);
-			updateSum();
-			toggleTableDetail();
+			if (data["success"]) {
+				var line = takeaway_detail_line.replace('%CODE%', code);
+				line = line.replace('%NOM%', data["name"]);
+				line = line.replace('%PRIX%', data["price"] / 100 + ' €');
+				line = line.replace('%NOTE%', data["notice"]);
+				line = line.replace('%ETAT%', data["status"]);
+				line = line.replace(/%ENTRY_ID%/g, data["entry_id"]);
+				$("#takeaway_detail_note").append(line);
+				updateSum();
+				toggleTableDetail();
+			} else {
+				alert(data["message"]);
+			}
 		}
 	})
 }
@@ -157,14 +167,19 @@ function addDishToNote(id,code,name,price,e) {
 		url: "/front/notes/<%=@note.id%>/create_entry/"+code,
 		type: "GET",
 		success : function(data) {
-			var line = takeaway_detail_line.replace('%CODE%', code);
-			line = line.replace('%NOM%', data["name"]);
-			line = line.replace('%PRIX%', data["price"] / 100 + ' €');
-			line = line.replace('%NOTE%', data["notice"]);
-			line = line.replace('%ETAT%', data["status"]);
-			$("#takeaway_detail_note").append(line);
-			updateSum();
-			toggleTableDetail();
+			if (data["success"]) {
+				var line = takeaway_detail_line.replace('%CODE%', code);
+				line = line.replace('%NOM%', data["name"]);
+				line = line.replace('%PRIX%', data["price"] / 100 + ' €');
+				line = line.replace('%NOTE%', data["notice"]);
+				line = line.replace('%ETAT%', data["status"]);
+				line = line.replace(/%ENTRY_ID%/g, data["entry_id"]);
+				$("#takeaway_detail_note").append(line);
+				updateSum();
+				toggleTableDetail();
+			} else {
+				alert(data["message"]);
+			}
 		}
 	})
 }
@@ -174,14 +189,19 @@ function addDrinkToNote(id,code,name,price,e) {
 		url: "/front/notes/<%=@note.id%>/create_entry/"+code,
 		type: "GET",
 		success : function(data) {
-			var line = takeaway_detail_line.replace('%CODE%', code);
-			line = line.replace('%NOM%', data["name"]);
-			line = line.replace('%PRIX%', data["price"] / 100 + ' €');
-			line = line.replace('%NOTE%', data["notice"]);
-			line = line.replace('%ETAT%', data["status"]);
-			$("#takeaway_detail_note").append(line);
-			updateSum();
-			toggleTableDetail();
+			if (data["success"]) {
+				var line = takeaway_detail_line.replace('%CODE%', code);
+				line = line.replace('%NOM%', data["name"]);
+				line = line.replace('%PRIX%', data["price"] / 100 + ' €');
+				line = line.replace('%NOTE%', data["notice"]);
+				line = line.replace('%ETAT%', data["status"]);
+				line = line.replace(/%ENTRY_ID%/g, data["entry_id"]);
+				$("#takeaway_detail_note").append(line);
+				updateSum();
+				toggleTableDetail();
+			} else {
+				alert(data["message"]);
+			}
 		}
 	})
 }
@@ -191,14 +211,19 @@ function addDessertToNote(id,code,name,price,e) {
 		url: "/front/notes/<%=@note.id%>/create_entry/"+code,
 		type: "GET",
 		success : function(data) {
-			var line = takeaway_detail_line.replace('%CODE%', code);
-			line = line.replace('%NOM%', data["name"]);
-			line = line.replace('%PRIX%', data["price"] / 100 + ' €');
-			line = line.replace('%NOTE%', data["notice"]);
-			line = line.replace('%ETAT%', data["status"]);
-			$("#takeaway_detail_note").append(line);
-			updateSum();
-			toggleTableDetail();
+			if (data["success"]) {
+				var line = takeaway_detail_line.replace('%CODE%', code);
+				line = line.replace('%NOM%', data["name"]);
+				line = line.replace('%PRIX%', data["price"] / 100 + ' €');
+				line = line.replace('%NOTE%', data["notice"]);
+				line = line.replace('%ETAT%', data["status"]);
+				line = line.replace(/%ENTRY_ID%/g, data["entry_id"]);
+				$("#takeaway_detail_note").append(line);
+				updateSum();
+				toggleTableDetail();
+			} else {
+				alert(data["message"]);
+			}
 		}
 	})
 }

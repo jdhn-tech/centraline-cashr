@@ -25,6 +25,6 @@ class Front::TablesController < ApplicationController
 		if !table.occupied && activeNotes.nil?
 			table.destroy
 		end
-		redirect_to "/"
+		redirect_to "/front/tables"
 	end
 end

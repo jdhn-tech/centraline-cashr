@@ -1,5 +1,39 @@
-<div class="container">
-	<h1>TABLES</h1>
+<div class="container-fluid">
+	<div class="collapse" id="collapseForm" style="padding:20px 0 20px 0;">
+		<%= form_tag("/admin/tables", method: "post") do %>
+		<table>
+			<tr>
+				<td><%= label_tag(:description, "Description : ") %></td>
+				<td><%= text_field_tag(:description) %></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><%= submit_tag("Créer") %></td>
+			</tr>
+		</table>
+		<% end %>
+	</div>
+	<table class="table table-bordered table-hover">
+		<thead class="thead-inverse">
+			<tr>
+				<th>Numéro de table</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th scope="row">+</th>
+				<td style="text-align:center;" colspan="999" ><a href="#collapseForm" data-toggle="collapse" aria-expanded="false" aria-controls="collapseForm"><div style="height:100%;width:100%;"><b>ajouter une table</b></div></a></td>
+			</tr>
+			<% @tables.each do |table| %>
+			<% next if table.id == 0 %>
+				<tr>
+					<td><%=table.table_number%></td>
+					<td><a href="/admin/tables/delete/<%=table.id%>"><span class="text-danger glyphicon glyphicon-trash"></span></a></td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
 </div>
 <script>
 	$( document ).ready(function (){

@@ -11,7 +11,8 @@ class Front::CaisseController < ApplicationController
 			@note.table_number = @table.table_number
 			@note.active = true
 			@note.value = 0
-			@note.reference = "T" + @table.table_number.to_s + "-" + Time.now.to_f.to_s
+			# @note.reference = "T" + @table.table_number.to_s + "-" + Time.now.to_f.to_s
+			@note.reference = "T" + @table.table_number.to_s + "-" + DateTime.now.strftime("%d-%m-%Y-%H:%M")
 			@note.currency = "Euro"
 			@note.state = "ACTIVE"
 			@note.save

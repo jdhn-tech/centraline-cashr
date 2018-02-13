@@ -7,8 +7,8 @@
 					<th colspan="3">SELECTION</th>
 				</tr>
 				<tr>
-					<th>Nb</th>
-					<th>Dénomination</th>
+					<th>Code</th>
+					<th>Article</th>
 					<th>Prix Unité</th>
 				</tr>
 			</thead>
@@ -16,7 +16,7 @@
 				<%out = false%>
 				<%out = true if @note.state == "FULLY_PAID"%>
 				<%@note.getUnpaidAverageSplit.each do |split|%>
-					<tr id="<%=split["id"]%>">
+					<tr class="payout_row" id="<%=split["id"]%>">
 						<td><%=split["code"]%></td>
 						<td><%=split["name"]%></td>
 						<td class="selection"><%=split["value"].to_f / 100%> €</td>
@@ -24,7 +24,7 @@
 					<%out = true%>
 				<%end unless @note.getUnpaidAverageSplit.nil?%>
 				<%@note.getUnpaidNoteEntries.each do |entry|%>
-					<tr id="entry<%=entry.id%>">
+					<tr class="payout_row" id="entry<%=entry.id%>">
 						<td><%=entry.getCode%></td>
 						<td><%=entry.getName%></td>
 						<td class="selection"><%=entry.value.to_f / 100%> €</td>
@@ -47,7 +47,6 @@
 		<button onclick="MoveAllSelectionRows()">TOTAL</button>
 		<select onChange="PanierMoyen(this)">
     		<option selected="selected">MOYEN</option>
-    		<option>1</option>
     		<option>2</option>
     		<option>3</option>
     		<option>4</option>
@@ -108,6 +107,7 @@
 		</table>
 		<!-- <button>EDITION FACTURE</button> -->
 		<button onclick="validerPaiment()">VALIDER</button>
+		<button>IMPRESSION NOTE</button>
 	</div>
 	</div>
 </div>
@@ -198,6 +198,7 @@ function PanierMoyen(e){
 		for(var i =1; i <= nbClient; i++){
 			var SelectionRow = selection_table_body.insertRow(selection_table_body.rows.length);
 			SelectionRow.setAttribute("id", "moyenne"+i+"/"+nbClient);
+			SelectionRow.setAttribute("class", "payout_row");
 			var nb = SelectionRow.insertCell(0);
 			var denomination=SelectionRow.insertCell(1);
 			var prix=SelectionRow.insertCell(2);

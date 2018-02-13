@@ -76,6 +76,10 @@ input{
 	height:30%
 }
 
+.modal-content {
+	background-color: #5897A1;
+}
+
 .content #Table_Bottom  {
     background-color: #696969;
 	color: white;
@@ -128,10 +132,8 @@ textarea {
 	color: black;
 }
 
-
-.modal-content {
-	margin: 100px auto;
-	width: 100%;
+.payout_row, .paiement {
+	height: 50px;
 }
 
 #write,#write_notice,#write_paiement,#write_Number {

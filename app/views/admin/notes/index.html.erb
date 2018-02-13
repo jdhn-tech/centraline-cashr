@@ -3,15 +3,24 @@
 		<thead class="thead-inverse">
 			<tr>
 				<th>#</th>
+				<th>Table</th>
 				<th>Ref</th>
 				<th>Contenu</th>
 				<th>Total</th>
+				<th>Etat</th>
 			</tr>
 		</thead>
 		<tbody>
 			<%@notes.each do |note|%>
-				<tr>
+				<tr onclick="showInfos(<%=note.getCommandInfos%>)">
 					<th scope="row"><%=note.id%></th>
+					<td>
+						<%if note.table_number == 0%>
+							Emporter
+						<%else%>
+							N°<%=note.table_number%>
+						<%end%>
+					</td>
 					<td><%=note.reference%></td>
 					<td>
 						<%note.note_entries.each_with_index do |entry, i|%>
@@ -19,13 +28,35 @@
 						<%end%>
 					</td>
 					<td><%=note.getTotal.to_f / 100%> €</td>
+					<td><%=note.state_in_french%></td>
 				</tr>
 			<%end%>
 		</tbody>
 	</table>
 </div>
 
+<div class="modal fade" id="note-info-modal">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-body" id="note-info-modal-body">
+				one<br>two
+			</div>
+		</div>
+	</div>
+</div>
+
 <script>
+	function showInfos(note_infos) { // Is a table of tickets -> tickets = table of value + payment_method
+		var text_infos = "";
+		$.each(note_infos, function(index, value){
+			text_infos += ((index+1) + "e note : ");
+			text_infos += value.join(' | ');
+			text_infos += '\n';
+		});
+		var obj = $("#note-info-modal-body").text(text_infos);
+		obj.html(obj.html().replace(/\n/g,'<br/>'));
+		$("#note-info-modal").modal("show");
+	}
 	$( document ).ready(function (){
 		document.getElementById("sidebarNotes").style.backgroundColor = "#333";
 	});
