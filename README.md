@@ -1,5 +1,9 @@
 # README
 
+## What you need to install
+
+libcups2-dev
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 

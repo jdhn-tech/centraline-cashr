@@ -7,7 +7,7 @@ end
 
 # Inject gentelella back-office in rails
 # gem 'gentelella-rails', '~> 0.1.8'
-
+gem 'cups', '~> 0.1.10'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.4'
 # Use postgresql as the database for Active Record
