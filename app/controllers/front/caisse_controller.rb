@@ -51,6 +51,9 @@ class Front::CaisseController < ApplicationController
 		@articles = Article.all
 	end
 
+	def delivery
+	end
+
 	# Method calls
 	def table_add_seat
 		Seat.create(:table_id => params[:id])
