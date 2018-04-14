@@ -1,8 +1,31 @@
 <div class="content">
+	<% if @note.table_number == 0 %>
+		<h1>Emporter</h1>
+	<% else %>
+		<h1>Table <%= @note.table_number %></h1>
+	<% end %>
+	<table id='Table_Commandes' class='table'>
+		<thead>
+			<tr>
+				<th>Référence de commande</th>
+				<th>Prix Total</th>
+				<th>Statut</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% Table.getTableByNumber(@table_number).getAllNotes.each do |note| %>
+				<tr>
+					<td><%=note.reference%></td>
+					<td><%='%.2f' % (note.getTotal/to_f / 100)%> €</td>
+					<td><%=note.state_in_french%></td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+
 	<table id='Table_Reference' class='table'>
 		<thead>
 			<tr>
-				<th>N° Table</th>
 				<th>Description</th>
 				<th>Note</th>
 			</tr>
@@ -10,8 +33,16 @@
 		<tbody id="edition_liste_tbody">
 			<% @note.note_entries.each do |entry| %>
 				<tr>
-					<td><%=@note.table_number%></td>
-					<td><%=entry.getCode%> : <%=entry.getName%></td>
+					<td>
+						<%=entry.getCode%> : <%=entry.getName%><br>
+						<% if entry.menu_id %>
+							<% entry.getMenu.getAllArticles.each do |article| %>
+								<ul>
+									<li><%= article.code %> : <%= article.name %></li>
+								</ul>
+							<% end %>
+						<% end %>
+					</td>
 					<td><%=entry.notices%></td>
 				</tr>
 			<% end %>
