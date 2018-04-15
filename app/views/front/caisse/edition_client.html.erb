@@ -1,4 +1,6 @@
+<!-- A TRACER / ENREGISTRER LA VALEUR EDITEE => facture client nominatif -->
 <div class="content">
+	<h1 style="text-align: center;">Edition Client</h1>
 	<!-- <span class="right">N° Commande:  2</span><span class="left">Ticket de caisse: 5</span>​ -->
 	<div id="Client_Note_Imprimable" style="text-align: center">
 		<table id='Table_Client_Detail' class='table'>
@@ -7,31 +9,61 @@
 					<th colspan="4">Identité de société</th>
 				</tr>
 				<tr>
-					<th style="width:20%">Référence</th>
-					<th style="width:60%">Articles</th>
-					<th>Prix TTC</th>
-					<th>Taux TVA</th>
+					<th style="width:60%">Designation</th>
+					<!-- <th style="width:60%">Articles</th> -->
+					<th style="width:40%">Prix TTC</th>
 				</tr>
 			</thead>
 			<tbody>
-				<% @notes.each do |note| %>
+				<% @note.note_entries.each do |entry| %>
+				<% item = entry.getMenu || entry.getArticle %>
 					<tr>
-						<td><%=note.reference%></td>
-						<td><%=(note.getMenus.map{|e|e.code} + note.getArticles.map{|e|e.code}).join(" ; ")%></td>
-						<td><%=note.value.to_f / 100%> €</td>
-						<td>20 %</td>
+						<!-- <td><%#=@note.reference%></td> -->
+						<td><%= item.name %></td>
+						<td><%= item.price.to_f / 100 %> €</td>
 					</tr>
 				<% end %>
 			</tbody>
 			<tfoot>
 				<tr>
-					<!-- <th colspan="4">Total TTC : <%#=@note.getTotal.to_f / 100%> €</th> -->
-					<th colspan="4">Total TTC : </th>
+					<th colspan="4">Total TTC : <%=@note.getTotal.to_f / 100%> €</th>
+					<!-- <th colspan="4">Total TTC : </th> -->
 				</tr>
 			</tfoot>
 		</table>
 		
-		
+		<table id='Table_Detail_Vente' class='table'>
+			<thead>
+				<tr>
+					<th>code</th>
+					<th>taux</th>
+					<th>TVA</th>
+					<th>TTC</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @note.note_entries.each do |entry| %>
+				<% item = entry.getMenu || entry.getArticle %>
+				<% if item.is_a? Menu %>
+					<% item.getAllArticles.each do |article| %>
+						<tr>
+							<td><%= article.code %></td>
+							<td><%= article.getVAT %> %</td>
+							<td><%= '%.2f' % ((article.getTTCvalue - article.getHTvalue) / 100) %> €</td>
+							<td><%= '%.2f' % (article.getTTCvalue.to_f / 100) %> €</td>
+						</tr>
+					<% end %>
+				<% else %>
+					<tr>
+						<td><%= item.code %></td>
+						<td>TVA %</td>
+						<td>montant de TVA en €</td>
+						<td><%= '%.2f' % (item.price.to_f / 100) %> €</td>
+					</tr>
+				<% end %>
+				<% end %>
+			</tbody>
+		</table>
 		<table id='Table_Detail_Vente' class='table'>
 			<thead>
 				<tr>

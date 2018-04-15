@@ -8,9 +8,9 @@ Rails.application.routes.draw do
   get "/front/takeaway" => "front/caisse#emporter"
   get "/front/delivery" => "front/caisse#delivery"
   
-  get "/front/edition_client/:id" => "front/caisse#edition_client"
+  get "/front/edition_client/:table" => "front/caisse#edition_client"
   get "/front/encaisser/:id" => "front/caisse#encaisser"
-  get "/front/edition_liste/:id" => "front/caisse#edition_liste"
+  get "/front/edition_liste/:table" => "front/caisse#edition_liste"
   get "/front/:table_id/debarasser/:note_id" => "front/caisse#debarasser"
   get "/front/annulation/:id" => "front/caisse#annulation"
   get "/front/table_detail/:id" => "front/caisse#table_detail"

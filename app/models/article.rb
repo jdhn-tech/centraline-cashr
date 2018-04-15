@@ -6,10 +6,14 @@ class Article < ApplicationRecord
 	validates :price, presence: true
 
 	def getTTCvalue
-		return (self.price)
+		return (price)
 	end
 
 	def getHTvalue
-		return (self.price / (1+(self.category.vat/100)))
+		return (price / (1+(category.vat/100)))
+	end
+
+	def getVAT
+		return (category.vat)
 	end
 end

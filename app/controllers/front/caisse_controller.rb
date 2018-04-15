@@ -11,8 +11,7 @@ class Front::CaisseController < ApplicationController
 			@note.table_number = @table.table_number
 			@note.active = true
 			@note.value = 0
-			# @note.reference = "T" + @table.table_number.to_s + "-" + Time.now.to_f.to_s
-			@note.reference = "T" + @table.table_number.to_s + "-" + DateTime.now.strftime("%d-%m-%Y-%H:%M")
+			@note.reference = "T" + @table.table_number.to_s + "-" + DateTime.now.strftime("%d%m%y-%H%M")
 			@note.currency = "Euro"
 			@note.state = "ACTIVE"
 			@note.save
@@ -23,11 +22,12 @@ class Front::CaisseController < ApplicationController
 		@articles = Article.all
 	end
 	def edition_liste
-		@note = Note.find(params[:id])
-		@table_number = @note.table_number
+		@table = Table.find(params[:table])
+		@note = params[:note] ? Note.find(params[:note]) : @table.getAllNotes.first
 	end
 	def edition_client
-		@notes = Table.find(params[:id]).getAllNotes
+		@table = Table.find(params[:table])
+		@note = params[:note] ? Note.find(params[:note]) : @table.getAllNotes.first
 	end
 	def encaisser
 		@note = Note.find(params[:id])
