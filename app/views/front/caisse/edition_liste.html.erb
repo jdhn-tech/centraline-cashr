@@ -1,12 +1,14 @@
 <div class="content">
 	<% if @table.table_number == 0 %>
-		<h1 style="text-align: center;">Edition Liste Emporter</h1>
+		<h1 style="text-align: center;" class="no-print">Edition Liste</h1>
 	<% else %>
-		<h1 style="text-align: center;">Edition Liste table <%=@table.table_number%></h1>
+		<h1 style="text-align: center;" class="no-print">Edition Liste</h1>
 	<% end %>
-	<%= select_tag "Commandes", options_for_select(@table.getAllNotes.pluck(:reference, :id), params[:note]), :onchange => "window.location.replace('/front/edition_liste/#{@table.id}?note='+this.value)" %>
+	<%= select_tag "Commandes", options_for_select(@table.getAllNotes.pluck(:reference, :id), params[:note]), :onchange => "window.location.replace('/front/edition_liste/#{@table.id}?note='+this.value)", :class => 'no-print' %>
 
-	<h2>Commande : <%= @note.reference %></h2>
+	<h2 class="yes-print">######################</h2>
+	<h2><%= @note.reference %></h2>
+	<h2 class="yes-print">######################</h2>
 	<table id='Table_Reference' class='table'>
 		<thead>
 			<tr>
@@ -36,7 +38,7 @@
 	<%%>
 
 	<!-- <button onclick="goBack()"> Valider </button> -->
-	<button onclick="Printer()"> Imprimer </button>
+	<button onclick="window.print()" class="no-print"> Imprimer </button>
 </div>
 
 <script>

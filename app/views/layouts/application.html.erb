@@ -6,10 +6,17 @@
 	<link href="/assets/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
 	<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+	<style>
+		.yes-print { display: none; }
+	</style>
+	<style type="text/css" media="print">
+	   .no-print { display: none; }
+	   .yes-print { display: inline; }
+	</style>
 </head>
 
 <body id="application_body">
-	<div class="header">
+	<div class="header no-print">
 		<table id='Head' class='Head' style="height:60px">
 		<tr>
 			<td id="nav-table"><a class="btn" href="/front/tables">TABLE</a></td>

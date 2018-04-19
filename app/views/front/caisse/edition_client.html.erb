@@ -1,9 +1,11 @@
 <!-- A TRACER / ENREGISTRER LA VALEUR EDITEE => facture client nominatif -->
 <div class="content">
-	<h1 style="text-align: center;">Edition Client</h1>
 	<!-- <span class="right">N° Commande:  2</span><span class="left">Ticket de caisse: 5</span>​ -->
-	<div id="Client_Note_Imprimable" style="text-align: center">
-		<table id='Table_Client_Detail' class='table'>
+	<div id="Client_Note_Imprimable" style="">
+		<h2 class="yes-print">######################</h2>
+		<h1 style="text-align: center; white-space: nowrap;">Edition Client</h1>
+		<h2 class="yes-print">######################</h2>
+		<table id='Table_Client_Detail' class='table' border="1">
 			<thead>
 				<tr>
 					<th colspan="4">Identité de société</th>
@@ -31,7 +33,6 @@
 				</tr>
 			</tfoot>
 		</table>
-		
 		<table id='Table_Detail_Vente' class='table'>
 			<thead>
 				<tr>
@@ -64,47 +65,16 @@
 				<% end %>
 			</tbody>
 		</table>
-		<table id='Table_Detail_Vente' class='table'>
-			<thead>
-				<tr>
-					<th colspan="4">Détails Vente</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td style="width:25%">HT 10%</td>
-					<td style="width:25%" id='ht10Percent'></td>
-					<td style="width:25%">HT 20%</td>
-					<td style="width:25%" id='ht20Percent'></td>
-				</tr>
-				<tr>
-					<td>TVA 10%</td>
-					<td></td>
-					<td>TVA 20%</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>TTC 10%</td>
-					<td></td>
-					<td>TTC 20%</td>
-					<td></td>
-				</tr>
-			</tbody>
-		</table>
 		
 		<p style="text-align: center"> A votre aimable réglement </p>
 	</div>	
-	<button onclick="Printer()"> Imprimer </button>
+	<button onclick="window.print()" class="no-print"> Imprimer </button>
 </div>
 
 <script>
 
 function Printer() {
-	var divToPrint = document.getElementById('Client_Note_Imprimable');
-	newWin = window.open("");
-	newWin.document.write(divToPrint.outerHTML);
-	newWin.print();
-	newWin.close();
+	window.print();
 }
 
 </script>
