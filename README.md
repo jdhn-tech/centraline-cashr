@@ -9,6 +9,13 @@
 * Rails version : 5.1.4
 
 
+## How to install your environment
+* install Ruby version 2.4.1
+* install PostgreSQL database
+* enter those commands :
+> gem install bundler
+* in project root :
+> bundle install
 
 
 This README would normally document whatever steps are necessary to get the
