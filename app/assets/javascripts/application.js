@@ -17,3 +17,12 @@
 //= require jquery-ui
 //= require bootstrap-sprockets
 //= require bootstrap-multiselect
+
+function lockNote(id) {
+	$.ajax({
+		async: true,
+		url: "/front/notes/<%=@note.id%>/lock",
+		type: "GET",
+		success : function(data) {}
+	})
+}

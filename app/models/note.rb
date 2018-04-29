@@ -57,6 +57,9 @@ class Note < ApplicationRecord
 		end
 		return infos
 	end
+	def getUnpaidNotes
+		where('state in (?)', %(ACTIVE INCOMPLETE_PAYMENT))
+	end
 	def state_in_french
 		case self.state
 		when "ACTIVE"

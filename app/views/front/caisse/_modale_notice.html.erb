@@ -10,7 +10,7 @@
 			<div class="modal-body">
 				<ul>
 				<% Notice.find_each do |notice|%>
-					<li><img src="<%=notice.image%>"/> : <%=notice.description%></li>
+					<li><img onclick="addNoticeToEntry('<%=notice.description%>')" height="75px" width="75px" src="<%=notice.image%>" onerror="this.src='../../assets/chili_pepper_200x200.png';"/> : <%=notice.description%></li>
 				<% end %>
 				</ul>
 			</div>
@@ -19,4 +19,10 @@
 </div>
 
 <script>
+	function addNoticeToEntry(message) {
+		
+		var entry_id ='#entry'+notice_entry_id
+		$(entry_id+' td:eq(3)').append('['+message+']  ');
+
+	}
 </script>

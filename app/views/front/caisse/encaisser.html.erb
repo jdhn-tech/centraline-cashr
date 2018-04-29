@@ -1,114 +1,117 @@
 <div class="content">
 	<div class="row">
-	<div class="Gauche">
-		<table id='Table_Selection' class='Table_Selection'>
-			<thead>
-				<tr>
-					<th colspan="3">SELECTION</th>
-				</tr>
-				<tr>
-					<th>Code</th>
-					<th>Article</th>
-					<th>Prix Unité</th>
-				</tr>
-			</thead>
-			<tbody>
-				<%out = false%>
-				<%out = true if @note.state == "FULLY_PAID"%>
-				<%@note.getUnpaidAverageSplit.each do |split|%>
-					<tr class="payout_row" id="<%=split["id"]%>">
-						<td><%=split["code"]%></td>
-						<td><%=split["name"]%></td>
-						<td class="selection"><%=split["value"].to_f / 100%> €</td>
+		<div class="Gauche">
+			<table id='Table_Selection' class='Table_Selection'>
+				<thead>
+					<tr>
+						<th colspan="3">SELECTION</th>
 					</tr>
-					<%out = true%>
-				<%end unless @note.getUnpaidAverageSplit.nil?%>
-				<%@note.getUnpaidNoteEntries.each do |entry|%>
-					<tr class="payout_row" id="entry<%=entry.id%>">
-						<td><%=entry.getCode%></td>
-						<td><%=entry.getName%></td>
-						<td class="selection"><%=entry.value.to_f / 100%> €</td>
+					<tr>
+						<th>Code</th>
+						<th>Article</th>
+						<th>Prix Unité</th>
 					</tr>
-				<% end unless out%>
-			</tbody>
-			<tfoot>
-				<tr>
-					<th colspan="2">Total</th><th><%=@note.getTotal.to_f / 100%> €</th>
-				</tr>
-				<tr>
-					<th colspan="2">Restant</th><th id="remaining_selection"><%=@note.get_remaining_due.to_f / 100%> €</th>
-				</tr>
-			</tfoot>
-		</table>
-		<button>REEDITION TICKET CLIENT</button>
-	</div>
-	
-	<div class="Quarter">
-		<button onclick="MoveAllSelectionRows()">TOTAL</button>
-		<select onChange="PanierMoyen(this)">
-    		<option selected="selected">MOYEN</option>
-    		<option>2</option>
-    		<option>3</option>
-    		<option>4</option>
-    		<option>5</option>
-    		<option>6</option>
-    		<option>7</option>
-		</select>
-	</div>
+				</thead>
+				<tbody>
+					<%out = false%>
+					<%out = true if @note.state == "FULLY_PAID"%>
+					<%@note.getUnpaidAverageSplit.each do |split|%>
+						<tr class="payout_row" id="<%=split["id"]%>">
+							<td><%=split["code"]%></td>
+							<td><%=split["name"]%></td>
+							<td class="selection"><%=split["value"].to_f / 100%> €</td>
+						</tr>
+						<%out = true%>
+					<%end unless @note.getUnpaidAverageSplit.nil?%>
+					<%@note.getUnpaidNoteEntries.each do |entry|%>
+						<tr class="payout_row" id="entry<%=entry.id%>">
+							<td><%=entry.getCode%></td>
+							<td><%=entry.getName%></td>
+							<td class="selection"><%=entry.value.to_f / 100%> €</td>
+						</tr>
+					<% end unless out%>
+				</tbody>
+				<tfoot>
+					<tr>
+						<th colspan="2">Total</th><th><%=@note.getTotal.to_f / 100%> €</th>
+					</tr>
+					<tr>
+						<th colspan="2">Restant</th><th id="remaining_selection"><%=@note.get_remaining_due.to_f / 100%> €</th>
+					</tr>
+				</tfoot>
+			</table>
+			<button onclick="printEditClient()">REEDITION TICKET CLIENT</button>
+		</div>
+		
+		<div class="Quarter">
+			<button onclick="MoveAllSelectionRows()">TOTAL</button>
+			<select onChange="PanierMoyen(this)">
+	    		<option selected="selected">MOYEN</option>
+	    		<option>2</option>
+	    		<option>3</option>
+	    		<option>4</option>
+	    		<option>5</option>
+	    		<option>6</option>
+	    		<option>7</option>
+			</select>
+		</div>
 
-	<div class="Centre">
-		<table id='Table_Article' class='Table_Article'>
-			<thead>
-				<tr>
-					<th colspan="3">ARTICLES A ENCAISSER</th>
-				</tr>
-				<tr>
-					<th>Nb</th><th>Dénomination</th><th>Prix Unité</th>
-				</tr>
-			</thead>
-			<tbody>
-			</tbody>
-			<tfoot>
-				<tr>
-					<th colspan="2">Total</th><th id="total_apayer">0 €</th>
-				</tr>
-				<!-- <tr>
-					<th colspan="2">1 repas</th><th>x €</th>
-				</tr> -->
-			</tfoot>	
-		</table>
-		<button onclick="payer()">PAYER</button>
-	</div>	
-	
-	<div class="Droite">
-		<table id='Table_Paiement' class='Table_Paiement'>
-			<thead>
-				<tr>
-					<th colspan="2">PAIEMENT</th>
-				</tr>
-				<tr>
-					<th>Montant</th><th>Mode</th>
-				</tr>
-			</thead>
-			<tbody>
+		<div class="Centre" id="print-a-payer">
+			<table id='Table_Article' class='Table_Article'>
+				<thead>
+					<tr class="no-print">
+						<th colspan="3">ARTICLES A ENCAISSER</th>
+					</tr>
+					<tr>
+						<th>Nb</th>
+						<th>Dénomination</th>
+						<th>Prix Unité</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+				<tfoot>
+					<tr class="yes-print">
+						<th colspan="3">==========================================</th>
+					</tr>
+					<tr>
+						<th colspan="2">Total à payer</th>
+						<th id="total_apayer">0 €</th>
+					</tr>
+				</tfoot>
+			</table>
+			<button onclick="payer()" class="no-print">PAYER</button>
+			<button onclick="imprimerNote()" class="no-print">IMPRESSION NOTE</button>
+		</div>	
+		
+		<div class="Droite">
+			<table id='Table_Paiement' class='Table_Paiement'>
+				<thead>
+					<tr>
+						<th colspan="2">PAIEMENT</th>
+					</tr>
+					<tr>
+						<th>Montant</th><th>Mode</th>
+					</tr>
+				</thead>
+				<tbody>
 
-			</tbody>
-			<tfoot>
-				<tr>
-					<th>Total</th><th id="totaux_payes">0 €</th>
-				</tr>
-				<!-- <tr>
-					<th>Payé</th><th id="payee">0€</th>
-				</tr> -->
-				<tr>
-					<th>Reste à payer</th><th id="reste_apayer">0 €</th>
-				</tr>
-			</tfoot>
-		</table>
-		<!-- <button>EDITION FACTURE</button> -->
-		<button onclick="validerPaiment()">VALIDER</button>
-		<button>IMPRESSION NOTE</button>
-	</div>
+				</tbody>
+				<tfoot>
+					<tr>
+						<th>Total</th><th id="totaux_payes">0 €</th>
+					</tr>
+					<!-- <tr>
+						<th>Payé</th><th id="payee">0€</th>
+					</tr> -->
+					<tr>
+						<th>Reste à payer</th><th id="reste_apayer">0 €</th>
+					</tr>
+				</tfoot>
+			</table>
+			<!-- <button>EDITION FACTURE</button> -->
+			<button onclick="validerPaiment()">VALIDER</button>
+		</div>
 	</div>
 </div>
 
@@ -228,7 +231,7 @@ function payer(){
 	}
 }
 
- function validerPaiment(){
+function validerPaiment() {
  	var ticketInfo = "";
  	$("#Table_Article tbody tr").each(function(i,element){
  		ticketInfo += (ticketInfo == "") ? $(element).attr('id') : ";"+$(element).attr('id');
@@ -268,5 +271,27 @@ function payer(){
 			// $( ".content" ).load(location.href+" .row");
 		}
 	})
+}
+
+function imprimerNote() {
+	var mywindow = window.open('', 'PRINT');
+  mywindow.document.write('<html><head></head><body >');
+  element = document.getElementById('print-a-payer').cloneNode(true);
+  var arr=element.getElementsByClassName('no-print');
+  Array.from(arr).forEach(function(item) {
+  	item.remove();
+  });
+  mywindow.document.write(element.innerHTML);
+  mywindow.document.write('</body></html>');
+  mywindow.print();
+  mywindow.close();
+}
+
+function printEditClient() {
+	var mywindow = window.open("/front/edition_client/<%=Table.getTableByNumber(@note.table_number).id%>?note=<%=@note.id%>", 'PRINT')
+	mywindow.addEventListener('load', function(){
+		mywindow.print();
+		mywindow.close();
+	}, true);
 }
 </script>

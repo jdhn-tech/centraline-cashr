@@ -2,6 +2,7 @@ class CreateTables < ActiveRecord::Migration[5.1]
 	def change
 		create_table :tables do |t|
 			t.integer :table_number, :table_capacity, :floor_number
+			t.string :category # EAT_IN TAKEAWAY DELIVERY...
 			t.boolean :occupied
 			t.boolean :terrace
 			t.boolean :smoker

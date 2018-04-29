@@ -13,7 +13,7 @@ class Front::NotesController < ApplicationController
 	def create_ticket
 		my_note = Note.find(params[:id])
 		if my_note.state == "FULLY_PAID"
-			render :json => {:success => false, :message => ""} 
+			render :json => {:success => false, :message => ""}
 			return
 		end
 		my_ticket = Ticket.new
@@ -137,5 +137,10 @@ class Front::NotesController < ApplicationController
 		else
 			render :json => {:success => true}.to_json
 		end
+	end
+
+	def lock
+		success = Note.find(params[:id]).update(locked: true) ? true : false
+		render :json => {:success => success}
 	end
 end

@@ -3,16 +3,16 @@
 	<!-- <span class="right">N° Commande:  2</span><span class="left">Ticket de caisse: 5</span>​ -->
 	<div id="Client_Note_Imprimable" style="">
 		<h2 class="yes-print">######################</h2>
-		<h1 style="text-align: center; white-space: nowrap;">Edition Client</h1>
-		<h2 class="yes-print">######################</h2>
+		<h2 class="no-print" style="text-align: center; white-space: nowrap;">Edition Client</h2>
+		<div class="no-print" style="margin: 10px 0 10px 0">
+			<%= label_tag 'Numéro de commande : ' %>
+			<%= select_tag "Commandes", options_for_select(@table.getAllNotes.pluck(:reference, :id), params[:note]), :onchange => "window.location.replace('/front/edition_liste/#{@table.id}?note='+this.value)", :class => 'no-print' %>
+		</div>
+
 		<table id='Table_Client_Detail' class='table' border="1">
 			<thead>
 				<tr>
-					<th colspan="4">Identité de société</th>
-				</tr>
-				<tr>
-					<th style="width:60%">Designation</th>
-					<!-- <th style="width:60%">Articles</th> -->
+					<th style="width:60%">Désignation</th>
 					<th style="width:40%">Prix TTC</th>
 				</tr>
 			</thead>
@@ -20,19 +20,13 @@
 				<% @note.note_entries.each do |entry| %>
 				<% item = entry.getMenu || entry.getArticle %>
 					<tr>
-						<!-- <td><%#=@note.reference%></td> -->
 						<td><%= item.name %></td>
 						<td><%= item.price.to_f / 100 %> €</td>
 					</tr>
 				<% end %>
 			</tbody>
-			<tfoot>
-				<tr>
-					<th colspan="4">Total TTC : <%=@note.getTotal.to_f / 100%> €</th>
-					<!-- <th colspan="4">Total TTC : </th> -->
-				</tr>
-			</tfoot>
 		</table>
+		<h3 style="text-align: center; white-space: nowrap;">Composition de la commande</h3>
 		<table id='Table_Detail_Vente' class='table'>
 			<thead>
 				<tr>
@@ -64,9 +58,20 @@
 				<% end %>
 				<% end %>
 			</tbody>
+			<tfoot>
+				<tr>
+					<th colspan="4">Total TTC : <%=@note.getTotal.to_f / 100%> €</th>
+				</tr>
+			</tfoot>
 		</table>
 		
-		<p style="text-align: center"> A votre aimable réglement </p>
+		<p style="text-align: center">
+			<span class="yes-print">============================================<br></span>
+			Référence ticket<br>
+			<%= @note.reference %><br>
+			<span class="yes-print">============================================<br></span>
+			<br>A votre aimable réglement
+		</p>
 	</div>	
 	<button onclick="window.print()" class="no-print"> Imprimer </button>
 </div>

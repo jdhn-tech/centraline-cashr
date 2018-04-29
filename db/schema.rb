@@ -101,6 +101,9 @@ ActiveRecord::Schema.define(version: 20180412194352) do
     t.text "notice_ids", default: [], array: true
     t.string "state"
     t.boolean "active"
+    t.boolean "locked", default: false
+    t.boolean "cancelled", default: false
+    t.string "cancel_message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "mode"

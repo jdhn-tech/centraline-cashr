@@ -11,6 +11,9 @@ class CreateNotes < ActiveRecord::Migration[5.1]
 			t.text :notice_ids, array: true, default: []
 			t.string :state
 			t.boolean :active
+			t.boolean :locked, default: false
+			t.boolean :cancelled, default: false
+			t.string :cancel_message
 			t.timestamps
 		end
 	end
