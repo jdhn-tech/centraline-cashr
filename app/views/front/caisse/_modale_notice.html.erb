@@ -20,9 +20,16 @@
 
 <script>
 	function addNoticeToEntry(message) {
-		
 		var entry_id ='#entry'+notice_entry_id
-		$(entry_id+' td:eq(3)').append('['+message+']  ');
-
+		$.ajax({
+		async: false,
+		url: "/front/entry/"+notice_entry_id+"/create_notice?notice="+message,
+		type: "GET",
+		success : function(data) {
+			if (data["success"]) {
+				$(entry_id+' td:eq(3)').append('['+message+']  ');
+			}
+		}
+	})
 	}
 </script>

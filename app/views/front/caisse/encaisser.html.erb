@@ -107,6 +107,9 @@
 					<tr>
 						<th>Reste à payer</th><th id="reste_apayer">0 €</th>
 					</tr>
+					<tr>
+						<th>Montant à rendre</th><th id="montant_rendu">0 €</th>
+					</tr>
 				</tfoot>
 			</table>
 			<!-- <button>EDITION FACTURE</button> -->
@@ -156,7 +159,7 @@ $("#Table_Paiement tbody").delegate("tr td:first-child",'click',function(e) {
 	
 });
 
-function totalSelection(){
+function totalSelection() {
 	var ssum = 0;
 	$(".selection").each(function(i,obj) {
 		ssum += parseFloat($(obj).text());
@@ -171,7 +174,7 @@ function totalSelection(){
 	$("#reste_apayer").text(asum+" €");
 }
 
-function resteAPayer(){
+function resteAPayer() {
 	var psum = 0;
 	$(".paiement").each(function(i,obj) {
 		psum += parseFloat($(obj).text());
@@ -180,7 +183,7 @@ function resteAPayer(){
 	return rest;
 }
 
-function MoveAllSelectionRows(){
+function MoveAllSelectionRows() {
 	var selections = document.getElementById("Table_Selection").getElementsByTagName('tbody')[0].rows;
 	var articles = document.getElementById("Table_Article").getElementsByTagName('tbody')[0];
 	while (selections.length > 0) {
@@ -236,7 +239,6 @@ function validerPaiment() {
  	$("#Table_Article tbody tr").each(function(i,element){
  		ticketInfo += (ticketInfo == "") ? $(element).attr('id') : ";"+$(element).attr('id');
  	});
- 	console.log(ticketInfo);
  	if ($(".paiement").length <= 0){
  		alert("ticket vide");
  		return false;
@@ -256,7 +258,6 @@ function validerPaiment() {
  	})
  	inData["paid"] = paid;
 	inData["total_apayer"] = (parseFloat($("#totaux_payes").text()) * 100);
-	console.log(inData);
  	$.ajax({
 		async: false,
 		url: "/front/notes/<%=@note.id%>/create_ticket",
@@ -266,9 +267,9 @@ function validerPaiment() {
 		success : function(data) {
 			$("#Table_Article tbody tr").remove();
 			$("#Table_Paiement tbody tr").remove();
-			console.log(data["infos"]);
-			totalSelection();
-			// $( ".content" ).load(location.href+" .row");
+			if (data['infos'] == 'to_root') {
+				window.location.replace('/')
+			}
 		}
 	})
 }

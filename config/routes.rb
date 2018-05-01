@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   get "/front/notes/:id/clone_entry/:entry_id" => "front/notes#clone_entry"
   get "/front/notes/:id/remove_entry/:entry_id" => "front/notes#remove_entry"
   get "/front/notes/:id/lock" => "front/notes#lock"
-  post "/front/entry/:id/create_notice" => "front/notes#create_notice"
+  get "/front/entry/:id/create_notice" => "front/notes#create_notice"
   get "/add_table" => "front/tables#add_table"
   get "/del_table/:id" => "front/tables#del_table"
   

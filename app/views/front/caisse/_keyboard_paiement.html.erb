@@ -14,7 +14,7 @@
 				<li class="symbol">8</li>
 				<li class="symbol">9</li>
 				<li class="symbol">0</li>
-				<li class="symbol">,</li>
+				<li class="symbol">.</li>
 				<li class="delete">Delete</li>
 				<li class="enter" data-dismiss="modal">Enter</li>
 			</ul>
@@ -46,7 +46,13 @@ $(function(){
 				$("#Table_Paiement tbody tr:eq("+rowIndex+") td:eq(0)").text(money+"€");
 				$write_paiement.html("");
 				var remain_due=resteAPayer();
-				$("#Table_Paiement tfoot tr:eq(1) th:eq(1)").text(remain_due+" €");
+				if (remain_due >= 0){
+					$("#Table_Paiement tfoot tr:eq(1) th:eq(1)").text(remain_due+" €");
+					$("#Table_Paiement tfoot tr:eq(2) th:eq(1)").text("0 €");
+				} else {
+					$("#Table_Paiement tfoot tr:eq(2) th:eq(1)").text(-remain_due+" €");
+					$("#Table_Paiement tfoot tr:eq(1) th:eq(1)").text("0 €");
+				}
 				if(remain_due > 0 ){
 					var paiement_table_body = document.getElementById("Table_Paiement").getElementsByTagName('tbody')[0];
 					var PaiementRow = paiement_table_body.insertRow(paiement_table_body.rows.length);

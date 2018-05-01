@@ -34,14 +34,24 @@ class Front::NotesController < ApplicationController
 			end
 		}
 		my_ticket.save
+		my_note.update(locked: true)
+		fully_paid = false
 		if my_note.get_remaining_due <= 0
 			my_note.state = "FULLY_PAID"
 			my_note.save
+			my_table = Table.find_by(table_number: my_note.table_number)
+			my_table.update(occupied: false) if my_table
+			my_note.update(active: false)
+			fully_paid = true
 		else
 			my_note.state = "INCOMPLETE_PAYMENT"
 			my_note.save
 		end
-		render :json => {:success => true, :infos => my_ticket}.to_json
+		if fully_paid
+			render :json => {:success => true, :infos => "to_root"}
+		else
+			render :json => {:success => true, :infos => my_ticket}
+		end
 	end
 	def create_notice
 		my_entry = NoteEntry.find(params[:id])
@@ -51,8 +61,8 @@ class Front::NotesController < ApplicationController
 	end
 	def create_entry
 		my_note = Note.find(params[:id])
-		if my_note.state == "FULLY_PAID" || my_note.state == "INCOMPLETE_PAYMENT"
-			render :json => {:success => false, :message => "impossible de modifier une commande encaissée"}
+		if my_note.state == "FULLY_PAID" || my_note.state == "INCOMPLETE_PAYMENT" || my_note.locked
+			render :json => {:success => false, :message => "impossible de modifier une commande encaissée ou éditée"}
 			return
 		end
 		my_entry = NoteEntry.new
@@ -113,7 +123,6 @@ class Front::NotesController < ApplicationController
 		new_entry.menu_id = my_entry.menu_id
 		new_entry.value = my_entry.value
 		new_entry.status = my_entry.status
-		# new_entry.notices = my_entry.notices
 		new_entry.save
 		render :json => {
 			:success => true,

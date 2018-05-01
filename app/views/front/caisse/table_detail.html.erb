@@ -84,7 +84,6 @@ function toggleTableDetail() {
 }
 function duplicateLineNote(e, entry_id) {
 	var thisLine = $(e).parent().parent();
-	console.log(thisLine);
 	$.ajax({
 		async: false,
 		url: "/front/notes/<%=@note.id%>/clone_entry/"+entry_id,
@@ -166,7 +165,7 @@ $(function(){
 		<% Article.all.map(&:code).each do |code| %>
 			"<%=code%>",
 		<% end %>
-  	];
+  ];
 
 	$('#keyboard_number li').click(function(){
 		var $this = $(this)
@@ -189,40 +188,5 @@ $(function(){
 		})
 	});
 });
-
-// $(function() {
-// 	var availableTags = [
-// 		<%# Menu.all.map(&:code).each do |code| %>
-// 			"<%#=code%>",
-// 		<%# end %>
-// 		<%# Article.all.map(&:code).each do |code| %>
-// 			"<%#=code%>",
-// 		<%# end %>
-//   ];
-//   $("#write_Number").autocomplete({
-//     source: availableTags,
-//   });
-
-//   var $write = $('#write_Number');
-
-//   $('#keyboard_number li').click(function() { //kollar hur keyboard skall se ut från keyboard li style.css
-//     var $this = $(this),
-//       character = $this.html(); // If it's a lowercase letter, nothing happens to this variable
-
-//     // Delete
-//     if ($this.hasClass('delete')) {
-//       var html = $write.html(),
-//         txt = html.substr(0, html.length - 1);
-//       $write.html(txt);
-//       $write.autocomplete("search", txt);
-//       return false;
-//     }
-
-//     // Add the character
-//     var txt = $write.html() + character;
-//     $write.html(txt);
-//     $write.autocomplete("search", txt);
-//   });
-// });
 
 </script>
